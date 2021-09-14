@@ -7,12 +7,13 @@
     column-resizing-mode="widget"
     :column-min-width="300"
     :column-auto-width="true"
-    :row-alternation-enabled="true"
     :show-borders="true"
     :height="550"
     @content-ready="onContentReady"
     :column-width="300"
+    :hover-state-enabled="true"
   >
+    
     <DxColumn
       data-field="Amount"
       caption="Tên chính sách"
@@ -53,18 +54,26 @@
       :highlight-search-text="false"
       placeholder="Tìm kiếm"
     />
+
     <DxGrouping :auto-expand-all="false"/>
     <DxPager
       :allowed-page-sizes="pageSizes"
       :show-page-size-selector="true"
+      displayMode="compact"
     />
-    <DxPaging :page-size="10"/>
+    <DxPaging :page-size="10" />
     <DxScrolling column-rendering-mode="virtual"/>
     <DxSelection
         :select-all-mode="allMode"
         :show-check-boxes-mode="checkBoxesMode"
         mode="multiple"
       />
+
+    <template #cellTemplate="{ }">
+      <div>
+          <DxButton icon="edit"/>
+      </div>
+    </template>
   </DxDataGrid>
 </template>
 <script>
@@ -79,10 +88,9 @@ import {
   DxScrolling,
   DxSelection,
 } from 'devextreme-vue/data-grid';
-
 import DataSource from 'devextreme/data/data_source';
 import 'devextreme/data/odata/store';
-
+import DxButton from 'devextreme-vue/button'; 
 
 let collapsed = false;
 
@@ -96,6 +104,7 @@ export default {
     DxSearchPanel,
     DxScrolling,
     DxSelection,
+    DxButton,
   },
   data() {
     return {
@@ -120,7 +129,10 @@ export default {
       allMode: 'page',
       checkBoxesMode: 'always',
     };
-  }
+  },
+  methods: {
+    
+  },
 };
 </script>
 
