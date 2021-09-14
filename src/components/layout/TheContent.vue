@@ -19,7 +19,7 @@
                             </div>
                         </div>
                         <div class="content-body-tool-right">
-                            
+                            <SelectBox/>
                         </div>
                     </div>
                 </div>   
@@ -35,12 +35,14 @@
 import TheFooter from "../layout/TheFooter.vue"
 import ButtonIcon from "../base/BaseButtonIcon.vue"
 import BaseDataGrid from "../base/BaseDataGrid.vue"
+import SelectBox from "../base/BaseSelectBox.vue"
 export default {
     name: "TheContent",
     components: {
         TheFooter,
         ButtonIcon,
-        BaseDataGrid
+        BaseDataGrid,
+        SelectBox,
     },
         
 }

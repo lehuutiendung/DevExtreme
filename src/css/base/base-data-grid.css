@@ -53,11 +53,7 @@
 .dx-datagrid-content .dx-datagrid-table .dx-row
 {
     height: 33px !important;
-}
-
-.dx-datagrid-content .dx-datagrid-table .dx-row:hover{
-    background-color: #737888 !important;
-}
+} 
 
 /* Set border */
 .dx-datagrid-content .dx-datagrid-table .dx-row td
@@ -81,11 +77,6 @@
 .dx-datagrid .dx-row > td {
     padding: 0 16px;
     line-height: 48px;
-}
-
-/* Set background màu trắng */
-.dx-datagrid .dx-row-alt > td, .dx-datagrid .dx-row-alt > tr > td {
-    background-color: #fff;
 }
 
 /* Set màu text của tiêu đề bảng */
@@ -113,4 +104,25 @@
     border-left: none !important;
     border-right: none !important;
     border-bottom: none !important;
+}
+
+/* Click checkbox active màu cho các hàng */
+.dx-data-row.dx-state-hover:not(.dx-selection):not(.dx-row-inserted):not(.dx-row-removed):not(.dx-edit-row) > td:not(.dx-focused) {  
+    background-color: #eafbf2 !important;  
+    color: #333;  
+}  
+  
+.dx-datagrid-rowsview .dx-selection.dx-row > td, .dx-datagrid-rowsview .dx-selection.dx-row:hover > td {  
+    background-color: #eafbf2 !important;  
+    color: #333;  
+}
+
+.dx-datagrid-rowsview .dx-data-row.dx-row.dx-column-lines:hover{
+    background-color: var(--primary-bg) !important;
+    cursor: pointer;
+}
+
+/* Css cho paging */
+.dx-pager .dx-light-pages {
+    display: none;
 }
