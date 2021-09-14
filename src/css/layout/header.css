@@ -1,0 +1,201 @@
+.header-wrap{
+    width: 100%;
+    background: #ffffff;
+    display: flex;
+    height: 56px;
+    align-items: center;
+    box-shadow: 0px 1px 3px 0px rgb(0 0 0 / 16%);
+    -webkit-box-shadow: 0px 1px 3px 0px rgb(0 0 0 / 16%);
+    z-index: 1;
+}
+
+.header-left{
+    display: flex;
+    align-items: center;
+    width: 240px;
+}
+
+.header-left .wrap-button-ninedot{
+    margin: 0 8px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.header-left .wrap-button-ninedot:hover{
+    background: #F2F2F2;
+}
+
+.header-icon{
+    margin: 0 10px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.svg-icon{
+    background: url(../../assets//img/Icon.9254d79.svg) no-repeat;
+    cursor: pointer;
+}
+
+.ninedot{
+    margin: 8px 8px;
+    background-position: -80px -80px;
+    filter: invert(0%) sepia(95%) saturate(100%) hue-rotate(96deg) brightness(0) contrast(104%);
+}
+
+/* Css chung cho text có trong header */
+.header-text{
+    white-space: nowrap;
+    font-weight: 600;
+    max-width: 600px;
+    transition: all .2s ease;
+    font-size: 14px;
+    color: #111;
+    cursor: pointer;
+}
+
+.company-name{
+    display: flex;
+    white-space: nowrap;
+    font-weight: 600;
+    max-width: 600px;
+}
+
+.company-name .logo-app{
+    background: url(../../assets/img/logo-app.svg) no-repeat -0px -0px;
+    background-size: cover;
+}
+
+.company-name .logo-text{
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    padding-left: 16px;
+    font-size: 18px;
+    color: var(--primary);
+    font-weight: bold;
+    line-height: 32px;
+}
+
+.arrow-select{
+    background-position: -80px -360px;
+    width: 14px;
+    height: 14px;
+    transform: rotate(90deg);
+    margin-left: 10px;
+}
+
+.header-right{
+    display: flex;
+    align-items: center;
+    margin-right: 30px;
+    height: inherit;
+}
+
+.header-right .router-item-header{
+    display: flex;
+    height: inherit;
+    margin-right: 24px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.router-item-header .wrap-item{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* CSS cho item trong header được active */
+.router-item-header .wrap-item .active-item-header{
+    color: var(--text-primary-color);
+    font-weight: bold;
+    font-size: 0.95em;
+}
+
+.header-right .item-text{
+    color: #666666;
+    line-height: 56px;
+    white-space: nowrap;
+}
+
+.header-right .border-active{
+    height: 4px;
+    width: 100%;
+    background: var(--primary);
+    position: absolute;
+    bottom: 0;
+    display: none;
+}
+
+
+/* Hover vào các icon hiển thị border-active */
+.router-item-header:hover .border-active{
+    display: block;
+}
+
+/* Border active hiển thị giữ nguyên với item được chọn */
+.header-right .actived{
+    display: block;
+}
+
+.router-item-header .arrow-icon{
+    background-position: -100px -0px;
+    margin-left: 4px;
+    margin-bottom: 4px;
+}
+
+/* Bắt đầu: CSS cho các công cụ thông tin tài khoản*/
+.header-info-account{
+    position: absolute;
+    right: 0;
+    margin-right: 24px;
+}
+
+.header-info-account .wrap-info{
+    display: flex;
+    align-items: center;
+}
+
+.wrap-info .wrap-icon-24{
+    height: 36px;
+    width: 36px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin-right: 8px;
+}
+
+/* Hover vào các icon */
+.wrap-info .wrap-icon-24:hover{
+    background: #EFF1F6;
+    border-radius: 50%;
+}
+
+/* Css hình cho các icon */
+.wrap-info .setting{
+    background-position: -48px -120px;
+}
+
+.wrap-info .noti{
+    background-position: -72px -120px;
+}
+
+.wrap-info .help{
+    background-position: -24px -120px;
+}
+
+.wrap-info .three-dot-circle{
+    background-position: 0 -120px;
+}
+
+/* Css cho ảnh đại diện */
+.wrap-info .avatar-info{
+    background: url(../../assets/img/Avatar.jpg) no-repeat;
+    background-size: cover;
+    border-radius: 50%;
+    margin-left: 16px;
+    cursor: pointer;
+}
+
+
+
+/* Kết thúc: CSS cho các công cụ thông tin tài khoản*/

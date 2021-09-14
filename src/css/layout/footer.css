@@ -1,0 +1,43 @@
+.footer-table{
+    width: 100%;
+    position: absolute;
+    bottom: 0px;
+}
+
+.footer-paginate{
+    display: flex;
+    min-height: 40px;
+    padding: 0 16px;
+    margin: 10px 0;
+    background-color: #F6F6F6;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.paginate-wrap{
+    display: flex;
+    align-items: center;
+}
+
+.number-page-wrap{
+    display: flex;
+    margin-left: 16px;
+    margin-right: 32px;
+    box-sizing: border-box;
+}
+
+.number-page-wrap .prev-page{
+    cursor: pointer;
+    margin-right: 13px;
+}
+
+.number-page-wrap .next-page{
+    cursor: pointer;
+    margin-left: 13px;
+}
+
+.number-page-wrap .number-page{
+    display: flex;
+}
+
+

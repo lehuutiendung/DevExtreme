@@ -1,0 +1,149 @@
+html, body{
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    overflow: hidden;
+    height: 100%;
+
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    text-transform: none;
+    text-decoration: none;
+    -webkit-text-decoration-line: none;
+    text-decoration-line: none;
+    text-decoration-thickness: initial;
+    -webkit-text-decoration-style: initial;
+    text-decoration-style: solid;
+    -webkit-text-decoration-color: initial;
+    text-decoration-color: initial;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+#app{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    position: relative !important;
+    background-color: #F4F5F8;
+}
+
+.icon-16{
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  min-height: 16px;
+}
+
+.icon-20{
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  min-height: 20px;
+}
+
+.icon-24{
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  min-height: 24px;
+}
+
+.icon-32{
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+}
+
+.icon-48{
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  min-height: 48px;
+}
+
+/* Biến CSS */
+:root {
+  --primary: #34b057;
+  --primary-bg: #eafbf2;
+  --text-box-height: 36px;
+  --combo-box-height: 36px;
+  --input-border-radius: 4px;
+  --text-primary-color: #212121;
+  --text-secondary-color: #666;
+  --text-disable-color: #9e9e9e;
+  --text-white-primary-color: #fff;
+  --text-white-secondary-color: #d7dae5;
+  --text-placeholder-color: #666;
+  --input-normal-border-color: #e0e0e0;
+  --input-active-border-color: #34b057;
+  --input-hover-border-color: #34b057;
+  --input-disable-border: #e1e1e1;
+  --input-disable-bg-color: #ebebeb;
+  --input-error-border-color: #ff6161;
+  --combobox-highlight-bg-color: #eafbf2;
+  --combobox-highlight-bg-2-color: rgba(235,251,243,0.4);
+  --combobox-highlight-color: #34b057;
+  --combobox-color: #000;
+  --tab-color: #34b057;
+  --tab-bg: #34b057;
+  --tab-border: #34b057;
+  --button-height: 36px;
+  --button-border-radius: 4px;
+  --button-primary-color: #fff;
+  --button-primary-normal-bg-color: #34b057;
+  --button-primary-normal-border-color: #34b057;
+  --button-primary-hover-bg-color: #02b936;
+  --button-primary-hover-border-color: #02b936;
+  --button-primary-active-bg-color: #198f3b;
+  --button-primary-active-border-color: #198f3b;
+  --button-primary-disabled-color: rgba(255,255,255,0.6);
+  --button-primary-disabled-bg-color: rgba(52,176,87,0.6);
+  --button-primary-disabled-border-color: rgba(52,176,87,0.6);
+  --button-primary-focus-bg-color: #02b936;
+  --button-primary-focus-border-color: #02b936;
+  --grid-loading-color: 52,176,87;
+  --dropdown-item-hover: #eafbf2;
+  --dropdown-item-active-color: #34b057;
+  --date-picker-active-bg: #34b057;
+  --date-picker-range-bg: #eafbf2;
+  --date-picker-hover-bg: #eafbf2;
+  --date-picker-color-today: #34b057;
+  --combobox-selected-bg: #e6e8ed;
+}
+
+/* CSS cho thanh scroll */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #9e9e9e!important;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: #9AA4BB;
+  width: 6px;
+  height: 10px;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1!important;
+}
+
+::-webkit-scrollbar-track {
+  background: #fff;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}

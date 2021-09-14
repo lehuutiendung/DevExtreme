@@ -1,0 +1,116 @@
+.dx-datagrid-group-panel .dx-group-panel-message {
+    display: none;
+}
+
+/* Bắt đầu: CSS cho input search */
+.dx-toolbar .dx-toolbar-after {
+    position: absolute;
+    left: 0;
+    top: -48px;
+}
+
+.dx-toolbar .dx-toolbar-after {
+    padding-left: 5px;
+}
+
+.dx-toolbar-item-content > .dx-texteditor{
+    width: 303px !important;
+}
+
+.dx-texteditor.dx-state-focused.dx-editor-outlined{
+    border-color: var(--input-hover-border-color);
+}
+
+.dx-texteditor.dx-editor-outlined:hover{
+    border-color: var(--input-hover-border-color);
+}
+/* Kết thúc: CSS cho input search */
+
+.dx-datagrid-borders > .dx-datagrid-header-panel {
+    height: 0px !important;
+}
+
+/*Bat dau: CSS cho checkbox */
+.dx-checkbox-icon
+{
+    border-radius: 4px !important;
+    border: 2px solid #737888 !important;
+}
+
+.dx-datagrid-content .dx-datagrid-table.dx-datagrid-table-fixed colgroup col:first-child{
+    width: 58px !important;
+}
+
+/*Ket thuc: CSS cho checkbox */
+
+/*CSS cho  chiều cao của hàng*/
+.dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-select {
+    padding: 0;
+    height: 48px;
+}
+
+/* CSS cho chiều cao của các hàng */
+.dx-datagrid-content .dx-datagrid-table .dx-row
+{
+    height: 33px !important;
+}
+
+.dx-datagrid-content .dx-datagrid-table .dx-row:hover{
+    background-color: #737888 !important;
+}
+
+/* Set border */
+.dx-datagrid-content .dx-datagrid-table .dx-row td
+{
+    border-bottom: 1px solid #ddd !important;
+}
+
+/* CSS cho border các td: Bỏ border cho các td */
+.dx-datagrid .dx-column-lines > td {
+    border-left: none;
+    border-right: none;
+}
+
+
+/* Set border right cho cột chứ 2 */
+.dx-datagrid-content .dx-datagrid-table .dx-row td:nth-child(2){
+    border-right: 1px solid #ddd;
+}
+
+/* Set lại padding */
+.dx-datagrid .dx-row > td {
+    padding: 0 16px;
+    line-height: 48px;
+}
+
+/* Set background màu trắng */
+.dx-datagrid .dx-row-alt > td, .dx-datagrid .dx-row-alt > tr > td {
+    background-color: #fff;
+}
+
+/* Set màu text của tiêu đề bảng */
+.dx-datagrid-nowrap .dx-header-row>td>.dx-datagrid-text-content{
+    font-weight: 700;
+    letter-spacing: 0.14px;
+    color: var(--text-primary-color);
+    
+}
+
+/* Set background cho tiêu đề bảng */
+.dx-datagrid-headers .dx-datagrid-table .dx-row > td {
+    background: #f6f6f6;
+}
+
+.dx-widget .dx-visibility-change-handler
+{
+    border-left: none !important;
+    border-right: none !important;
+}
+
+/* Bỏ border thead */
+.dx-datagrid-borders > .dx-datagrid-headers
+{
+    border-left: none !important;
+    border-right: none !important;
+    border-bottom: none !important;
+}
