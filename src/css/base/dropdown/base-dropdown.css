@@ -1,0 +1,103 @@
+.icon-svg{
+    -webkit-mask-image: url(../../../assets/img/Icon.9254d79.svg);
+    -moz-mask-image: url(../../../assets/img/Icon.9254d79.svg);
+    -ms-mask-image: url(../../../assets/img/Icon.9254d79.svg);
+    -o-mask-image: url(../../../assets/img/Icon.9254d79.svg);
+    mask-image: url(../../../assets/img/Icon.9254d79.svg);
+}
+
+.wrap-dropdown{
+    margin-right: 16px;
+    cursor: pointer;
+    height: 36px;
+    align-items: center;
+    line-height: 36px;
+    font-size: 0.95em;
+    position: relative;
+    min-width: 80px;
+}
+
+.dropdown-content{
+    display: flex;
+    justify-content: space-between;
+    padding-left: 12px;
+    padding-right: 8px;
+    white-space: nowrap;
+}
+
+.border-dropdown{
+    background: transparent;
+    border-radius: 4px;
+    color: var(--text-primary-color);
+    background-color: #ffffff;
+
+}
+
+.dropdown-button{
+    margin-top: 8px;
+    -webkit-mask-repeat: no-repeat;
+    -moz-mask-repeat: no-repeat;
+    -ms-mask-repeat: no-repeat;
+    -o-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    background-color: #707070!important;
+    -webkit-mask-position: -100px 0;
+    margin-left: 8px;
+}
+
+/* CSS cho danh sách chứa dữ liệu của dropdown */
+.wrap-dropdown-data{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 0 rgb(0 0 0 / 0.1);
+    z-index: 990;
+}
+
+/* CSS position cho dropdown "Trạng thái" */
+.status-dropdown{
+    left: -92px;
+}
+
+/* CSS position cho dropdown "Phân trang" */
+.paging-dropdown{
+    bottom: 44px;
+    left: 0;
+}
+
+.dropdown-data-list{
+    padding: 8px 6px;
+    list-style-type: none;
+}
+
+.item{
+    height: 37px;
+    padding: 0 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* CSS cho item được hover */
+.item:hover{
+    background: var(--primary-bg) !important;
+    color: var(--primary);
+}
+
+/* CSS cho item được chọn */
+.choose-item{
+    background: var(--primary-bg) !important;
+    color: var(--primary);
+}
+
+.icon-tick{
+    -webkit-mask-position: -120px -60px;
+    -webkit-mask-repeat: no-repeat;
+    -moz-mask-repeat: no-repeat;
+    -ms-mask-repeat: no-repeat;
+    -o-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    background-color: var(--primary)!important;
+}

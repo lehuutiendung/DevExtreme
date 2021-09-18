@@ -1,0 +1,123 @@
+.wrap-custome-column{
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    z-index: 20;
+    border-radius: 6px;
+    box-shadow: 0 0px 10px rgb(0 0 0 / 18%);
+}
+
+.wrap-custome-column .wrap-custome-column-content{
+    padding: 16px 16px 0 16px;
+}
+
+.wrap-custome-column .custome-row-flex{
+    display: flex;
+    align-items: center;
+}
+
+.wrap-custome-column .custome-title{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.custome-title .button-refresh{
+    display: flex;
+    justify-content: center;
+}
+
+.custome-title .button-refresh:hover{
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: #EFF1F6;
+}
+
+.custome-title .title{
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.324px;
+    color: var(--text-primary-color);
+    white-space: nowrap;
+}
+
+.custome-title .button-refresh{
+    display: flex;
+    align-items: center;
+}
+
+.custome-title .button-refresh .icon-refresh{
+    -webkit-mask-image: url(../../assets/img/Icon.9254d79.svg);
+    -webkit-mask-repeat: no-repeat;
+    background-color: #707070!important;
+    -webkit-mask-position: -260px -60px;
+    color: #afb3c1;
+}
+
+/* CSS cho item draggable */
+.wrap-custome-column .draggable{
+    margin-top: 10px;
+}
+
+.wrap-custome-column .wrap-item-column{
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    justify-content: space-between;
+}
+
+.wrap-item-column:hover{
+    background-color: #EAFBF2;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.wrap-item-column .wrap-input-checkbox{
+    display: flex;   
+    justify-content: center;
+    align-items: center;
+}
+
+/* CSS cho check box ở trạng thái mặc định */
+.wrap-input-checkbox .input-checkbox-default{
+    width: 20px;
+    height: 20px;
+    background: url(../../assets/img/Icon.9254d79.svg) -240px 0 no-repeat;
+}
+
+/* CSS cho checkbox ở trạng thái đã được check */
+.wrap-input-checkbox .input-checkbox-checked{
+    width: 20px;
+    height: 20px;
+    background: url(../../assets/img/Icon.9254d79.svg) -260px 0 no-repeat;
+}
+
+.wrap-input-checkbox .title-item{
+    margin-left: 8px;
+}
+
+.wrap-button-move{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: all-scroll;
+}
+
+.wrap-button-move .icon-button-move{
+    -webkit-mask-image: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg);
+    -webkit-mask-repeat: no-repeat;
+    background-color: #707070!important;
+    -webkit-mask-position: 0 -100px;
+}
+
+.wrap-custome-column .draggable-wrap-button{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: #F2F2F2;
+    margin-top: 40px;
+    padding: 12px 16px 12px 0;
+}

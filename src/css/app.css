@@ -35,6 +35,7 @@ html, body{
     background-color: #F4F5F8;
 }
 
+/* CSS cho icon 16px */
 .icon-16{
   width: 16px;
   height: 16px;
@@ -42,6 +43,7 @@ html, body{
   min-height: 16px;
 }
 
+/* CSS cho icon 20px */
 .icon-20{
   width: 20px;
   height: 20px;
@@ -49,6 +51,7 @@ html, body{
   min-height: 20px;
 }
 
+/* CSS cho icon 24px */
 .icon-24{
   width: 24px;
   height: 24px;
@@ -56,6 +59,7 @@ html, body{
   min-height: 24px;
 }
 
+/* CSS cho icon 32px */
 .icon-32{
   width: 32px;
   height: 32px;
@@ -63,11 +67,25 @@ html, body{
   min-height: 32px;
 }
 
+/* CSS cho icon 36px */
+.icon-36{
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
+}
+
+/* CSS cho icon 48px */
 .icon-48{
   width: 48px;
   height: 48px;
   min-width: 48px;
   min-height: 48px;
+}
+
+/* CSS cho khoảng trắng space 10px*/
+.space{
+  width: 10px;
 }
 
 /* Biến CSS */
@@ -147,3 +165,4 @@ html, body{
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
+

@@ -1,14 +1,13 @@
 .footer-table{
     width: 100%;
-    position: absolute;
+    position: inherit;
     bottom: 0px;
 }
 
 .footer-paginate{
     display: flex;
     min-height: 40px;
-    padding: 0 16px;
-    margin: 10px 0;
+    padding: 10px 0;
     background-color: #F6F6F6;
     align-items: center;
     justify-content: space-between;
@@ -26,18 +25,42 @@
     box-sizing: border-box;
 }
 
+.icon-svg{
+    -webkit-mask-image: url(../../assets/img/Icon.9254d79.svg);
+    -moz-mask-image: url(../../assets/img/Icon.9254d79.svg);
+    -ms-mask-image: url(../../assets/img/Icon.9254d79.svg);
+    -o-mask-image: url(../../assets/img/Icon.9254d79.svg);
+    mask-image: url(../../assets/img/Icon.9254d79.svg);
+    -webkit-mask-repeat: no-repeat;
+}
+
 .number-page-wrap .prev-page{
     cursor: pointer;
-    margin-right: 13px;
+    margin-right: 8px;
+    -webkit-mask-position: -160px 0;
+    background-color: #707070!important;
+    color: #afb3c1;
 }
 
 .number-page-wrap .next-page{
     cursor: pointer;
-    margin-left: 13px;
+    margin-left: 8px;
+    -webkit-mask-position: -140px 0;
+    background-color: #707070!important;
+    color: #afb3c1;
 }
 
-.number-page-wrap .number-page{
-    display: flex;
+.text{
+    margin-right: 8px;
 }
 
+.range-paging{
+    height: 40px;
+    line-height: 40px;
+    padding-left: 8px;
+    padding-right: 24px;
+}
 
+.range-paging span{
+    font-weight: bold;
+}
