@@ -1,0 +1,49 @@
+.wrap-button-icon{
+    width: auto !important;
+    height: 36px !important;
+    border-radius: 4px;
+    padding: 0px 16px 0px 12px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: var(--button-primary-color);
+    background-color: var(--button-primary-normal-bg-color);
+    border: 1px solid var(--button-primary-normal-border-color);
+}
+
+.wrap-button-icon:hover{
+    background-color: var(--button-primary-hover-bg-color);
+    border: 1px solid var(--button-primary-hover-border-color);
+}
+
+.wrap-button-icon .icon-button{
+    -webkit-mask-position: -220px 0;
+    -webkit-mask-image: url(../../../assets/img/Icon.9254d79.svg);
+    -webkit-mask-repeat: no-repeat;
+    background-color: #fff;
+    margin-right: 4px;
+}
+
+.wrap-button-icon .text-button{
+    font-size: 0.95em;
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+/*Bắt đầu: CSS cho button background màu trắng */
+.button-icon-white {
+    color: var(--button-primary-normal-bg-color);
+    background-color: #ffffff;
+    border: 1px solid var(--button-primary-normal-border-color);
+}
+
+.button-icon-white:hover{
+    color: var(--button-primary-normal-bg-color);
+    background-color: #ffffff;
+    border: 1px solid var(--button-primary-normal-border-color);
+}
+
+.button-icon-white .icon-button{
+    background-color: var(--button-primary-normal-bg-color);
+}
+/*Kết thúc: CSS cho button background màu trắng */

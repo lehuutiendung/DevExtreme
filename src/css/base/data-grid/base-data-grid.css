@@ -41,6 +41,13 @@
     width: 58px !important;
 }
 
+.dx-datagrid-checkbox-size.dx-checkbox-checked .dx-checkbox-icon {
+    font-size: 12px;
+    border: 2px solid #34b057 !important;
+    color: transparent;
+    background: url(../../../assets/img/Icon.9254d79.svg) -264px -4px no-repeat;
+    font-size: 8px !important;
+}
 /*Ket thuc: CSS cho checkbox */
 
 /*CSS cho  chiều cao của hàng*/
@@ -123,6 +130,10 @@
 }
 
 /* Css cho paging */
-.dx-pager .dx-light-pages {
+.dx-datagrid-pager {
+    display: none;
+}
+
+.dx-row.dx-freespace-row {
     display: none;
 }

@@ -1,0 +1,107 @@
+.row-flex .dx-field{
+    min-width: 748px;
+    width: 748px;
+}
+
+.row-flex .dx-field-value:not(.dx-switch):not(.dx-checkbox):not(.dx-button) {
+    width: 100%;
+}
+
+.row-flex .wrap-combobox .dx-placeholder{
+    padding-left: 4px;
+    font-size: 14px;
+    color: #908C8A;
+}
+
+.wrap-icon-combobox{
+    position: absolute;
+    right: 0;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.wrap-icon-combobox .icon-combobox{
+    -webkit-mask-position: -100px -0px;
+    margin-right: 0px;
+    -webkit-mask-image: url(../../../assets/img/Icon.9254d79.svg) !important;
+    -webkit-mask-repeat: no-repeat;
+    background-color: #666666 !important;
+}
+
+/* Ẩn lựa chọn tất cả của combobox */
+.dx-tagbox-popup-wrapper .dx-list-select-all {
+    display: none;
+}
+
+/* Chiều cao của data combobox*/
+.dx-tagbox-popup-wrapper .dx-popup-content{
+    height: 200px !important;
+}
+
+/* Bắt đầu: CSS cho icon check các item của combobox */
+
+
+.dx-tagbox-popup-wrapper .dx-item.dx-list-item{
+    position: relative;
+} 
+
+.dx-tagbox-popup-wrapper .dx-list-item-before-bag {
+    position: absolute;
+    right: 12px;
+    margin-top: 9px;
+}
+
+.dx-tagbox-popup-wrapper .dx-checkbox-icon{
+    border: none !important;
+}
+
+.dx-tagbox-popup-wrapper .dx-checkbox-checked .dx-checkbox-icon {
+    color: #58BE75;
+    text-align: center;
+    background-color: #EAFBF2;
+}
+
+.dx-tagbox-popup-wrapper .dx-checkbox-checked .dx-checkbox-icon::before {
+    background-color: #EAFBF2;
+}
+
+.dx-tagbox-popup-wrapper .dx-checkbox-checked .dx-checkbox-icon::after{
+    border: 1px solid #EAFBF2;
+}
+
+
+
+/* Kết thúc: CSS cho icon check các item của combobox */
+
+/* Thay đổi màu của text tag */
+.content-add-screen-wrap span {
+    color: #212121 !important;
+}
+
+/* CSS lại các tag */
+.dx-tag-content {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    margin: 4px 0 0 4px;
+    padding: 3px 25px 4px 8px;
+    border-radius: 4px !important;
+    min-width: 40px;
+    background-color: #e8eaef;
+    color: #333;
+}
+
+.dx-tagbox:not(.dx-tagbox-single-line) .dx-texteditor-input-container {
+    padding-right: 36px;
+}
+
+/* CSS chọn các item */
+.dx-list-item-selected{
+    background-color: #EAFBF2;
+    color: #58BE75;
+    font-weight: 500;
+}

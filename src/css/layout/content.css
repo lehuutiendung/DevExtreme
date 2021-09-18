@@ -32,6 +32,36 @@
     color: #111;
     line-height: 36px;
 }
+
+.title-row .wrap-title{
+    display: flex;
+    align-items: center;
+}
+
+.wrap-title .icon-wrap{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px;
+}
+
+.wrap-title .icon-wrap:hover{
+    border-radius: 50%;
+    background-color: #dadce3!important;
+    cursor: pointer;
+}
+
+.title-row .icon-title{
+    -webkit-mask-position: 0 0;
+    -webkit-mask-image: url(../../assets/img/Icon.9254d79.svg);
+    -webkit-mask-repeat: no-repeat;
+    background-color: #707070 ;
+    -webkit-mask-position: -180px 0;
+}
+
+.title-row .wrap-button-group{
+    display: flex;
+}
 /*End content-title*/
 
 /*Start content-body*/
@@ -50,6 +80,8 @@
     padding: 12px 20px;
     align-items: center;
     justify-content: space-between;
+    height: 60px;
+
 }
 
 .content-body-tool .active-button-delete{
@@ -59,6 +91,62 @@
 .content-body-tool .content-body-tool-right{
     display: flex;
     align-items: center;
+}
+
+.content-body-tool-right .filter{
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px;
+    border-radius: 4px;
+    margin-left: 8px;
+    background-color: #fff;
+    color: #212121;
+    border: 1px solid #ebebeb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.content-body-tool-right .filter:hover{
+    background: var(--primary-bg);
+    border: 1px solid var(--primary);
+}
+
+.content-body-tool-right .filter .icon-filter{
+    -webkit-mask-position: 0 0;
+    -webkit-mask-image: url(../../assets/img/Icon.9254d79.svg);
+    -webkit-mask-repeat: no-repeat;
+    background-color: #707070 ;
+    -webkit-mask-position: -20px 0;
+}
+
+.content-body-tool-right .setting{
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px;
+    border-radius: 4px;
+    margin-left: 8px;
+    background-color: #fff;
+    color: #212121;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+}
+
+.content-body-tool-right .setting:hover{
+    background-color: #e0e0e0;
+}
+
+.content-body-tool-right .setting .icon-setting{
+    -webkit-mask-image: url(../../assets/img/Icon.9254d79.svg);
+    -webkit-mask-repeat: no-repeat;
+    background-color: #707070 ;
+    -webkit-mask-position: -48px -120px;
 }
 
 .content-body-tool .div-input-search{
@@ -109,8 +197,59 @@
 /* CSS cho vùng chứa grid */
 .content-grid{
     width: inherit;
-    height: calc(100vh - 250px);
-    /* overflow: scroll; */
-    /* overflow: hidden; */
+    height: calc(100vh - 260px);
     z-index: 1;
+    background-color: #ffffff;
 }
+
+/* Bắt đầu: CSS cho màn "Thêm chính sách lương" */
+.general-info-wrap{
+    font-size: 16px;
+    width: inherit;
+    height: inherit;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #e0e0e0;
+
+}
+
+.content-add-screen-wrap{
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    font-weight: bold;
+}
+
+.content-add-screen-wrap .label-name{
+    white-space: nowrap;
+    width: 250px;
+    min-width: 250px;
+    padding-right: 8px;
+}
+
+.row-flex{
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.content-add-screen-wrap .red-span{
+    color: red !important;
+}
+
+.salary-component{
+    font-weight: normal;
+    font-size: 16px;
+    margin-top: 35px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #e0e0e0;
+
+}
+
+.component-button-add{
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+}
+
+/* Kết thúc: CSS cho màn "Thêm chính sách lương" */

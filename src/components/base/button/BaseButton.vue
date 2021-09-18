@@ -1,12 +1,11 @@
 <template>
-    <div class="wrap-button-icon">
-        <div class="icon-20 icon-button"></div>
+    <div class="wrap-button">
         <div class="text-button">{{ buttonName }}</div>
     </div>
 </template>
 <script>
 export default {
-    name: "ButtonIcon",
+    name: "Button",
     props:{
         buttonName: {
             type: String,
@@ -18,5 +17,5 @@ export default {
 }
 </script>
 <style scoped>
-    @import "../../css/base/base-button-icon.css";
+    @import "../../../css/base/button/base-button.css";
 </style>
