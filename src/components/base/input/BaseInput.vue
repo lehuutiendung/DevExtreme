@@ -1,7 +1,5 @@
 <template>
-    <div class="wrap-base-input">
-        <input type="text">
-    </div>
+    <input type="text" class="wrap-base-input">
 </template>
 <script>
 export default {

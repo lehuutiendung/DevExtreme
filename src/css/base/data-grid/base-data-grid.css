@@ -68,6 +68,10 @@
     border-bottom: 1px solid #ddd !important;
 }
 
+.dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-focused):not(.dx-row-lines) > td {
+    border-top: none !important;
+}
+
 /* CSS cho border các td: Bỏ border cho các td */
 .dx-datagrid .dx-column-lines > td {
     border-left: none;
@@ -137,3 +141,51 @@
 .dx-row.dx-freespace-row {
     display: none;
 }
+
+/*Bắt đầu: CSS cho cột chức năng cuối cùng */
+.dx-state-hover .box-option{
+    display: flex;
+}
+
+.box-option{
+    height: 48px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.box-option .box-btn{
+    display: flex;
+    align-items: center;
+}
+
+.box-btn .url-background{
+    -webkit-mask-image: url(../../../assets/img/Icon.9254d79.svg);
+    -webkit-mask-repeat: no-repeat;
+    margin: 0 10px;
+}
+
+.box-btn .btn-stop-apply{
+    -webkit-mask-position: -220px -40px;
+    background-color: #f90!important;
+}
+
+.box-btn .btn-edit{
+    -webkit-mask-position: -60px 0;
+    background-color: #707070!important;
+}
+
+.box-btn .btn-delete{
+    -webkit-mask-position: -120px -20px;
+    background-color: #ff6161!important;
+}
+
+.dx-datagrid-content .dx-datagrid-table .dx-row:last-child {
+    border-left: none;
+}
+
+.dx-datagrid-content .dx-datagrid-table {
+    border-collapse: inherit;
+}
+
+/*Kết thúc: CSS cho cột chức năng cuối cùng */

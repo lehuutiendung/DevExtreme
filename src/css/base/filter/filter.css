@@ -1,0 +1,107 @@
+.wrap-filter{
+    width: 280px;
+    height: 100%;
+    background-color: #ffffff;
+    border-radius: 4px;
+    flex-direction: column;
+    margin-left: 15px;
+}
+
+/* Bắt đầu: CSS cho header filter */
+.wrap-filter .wrap-header-filter{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    padding: 14px 16px 0px 16px;
+}
+
+.wrap-header-filter .filter-text{
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.wrap-header-filter .wrap-exit-filter{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wrap-header-filter .wrap-exit-filter:hover{
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: #EFF1F6;
+}
+
+.wrap-header-filter .wrap-exit-filter .icon-filter{
+    -webkit-mask-image: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg);
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: -280px 0;
+    background-color: #707070!important;
+}
+/* Kết thúc: CSS cho header filter */
+
+/* Bắt đầu: CSS cho content filter */
+.wrap-content-filter{
+    padding: 0px 8px 0px 8px;
+}
+
+.wrap-filter .wrap-content-filter .div-input-search .input-search {
+    width: 100%;
+}
+
+.wrap-content-filter .wrap-policy-name{
+    display: flex;
+    flex-direction: column;
+    margin-top: 8px;
+    padding: 8px;
+}
+
+.wrap-content-filter .background-active{
+    background-color: #EAFBF2 !important;
+    border-radius: 4px;
+}
+
+.wrap-policy-name .box-flex{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.wrap-policy-name .box-flex .checkbox-default{
+    background: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg) -240px 0 no-repeat;
+    cursor: pointer;
+}
+
+.wrap-policy-name .box-flex .checkbox-checked{
+    background: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg) -260px 0 no-repeat;
+    cursor: pointer;
+}
+
+.checkbox-policy-name .name{
+    margin-left: 10px;
+}
+
+.wrap-filter .wrap-content-filter .dx-field-value:not(.dx-switch):not(.dx-checkbox):not(.dx-button) {
+    width: 100%;
+}
+
+.wrap-filter .wrap-content-filter .wrap-base-input{
+    width: inherit;
+    height: 34px;
+}
+/* Kết thúc: CSS cho content filter */
+
+/* Bắt đầu: CSS cho footer filter */
+.wrap-footer-filter{
+    display: flex;
+    height: 60px;
+    width: inherit;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    justify-content: center;
+    align-items: center;
+}
+/* Kết thúc: CSS cho footer filter */
+

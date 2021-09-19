@@ -1,0 +1,29 @@
+.dx-dropdowneditor-overlay .dx-treeview-item-with-checkbox .dx-checkbox {
+    top: 9px;
+    left: 35px;
+}
+
+.dx-dropdowneditor-overlay .dx-checkbox-icon {
+    border-radius: 3px !important;
+    border: 2px solid #737888 !important;
+    width: 16px;
+    height: 16px;
+}
+
+.dx-dropdowneditor-button .dx-button-content {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+
+.dx-dropdowneditor-icon {
+    width: 20px;
+    height: 20px;
+    -webkit-mask-position: -100px -0px;
+    margin-right: 0px;
+    -webkit-mask-image: url(../../../assets/img/Icon.9254d79.svg) !important;
+    -webkit-mask-repeat: no-repeat;
+    background-color: #666666 !important;
+}

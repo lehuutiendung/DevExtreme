@@ -8,9 +8,12 @@
 }
 
 .row-flex .wrap-combobox .dx-placeholder{
-    padding-left: 4px;
     font-size: 14px;
     color: #908C8A;
+}
+
+.dx-placeholder{
+    left: 4px;
 }
 
 .wrap-icon-combobox{

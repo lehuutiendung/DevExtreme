@@ -19,70 +19,77 @@
                     </div>
                 </div>
             </div>
-            <div class="content-body"> 
-                <div class="content-body-background">
-                    <div class="content-body-tool" >
-                        <div class="content-body-tool-left" v-if="mode == this.$resourceVn.MainScreen">
-                            <InputSearch/>
-                        </div>
-                        <div class="content-body-tool-right" v-if="mode == this.$resourceVn.MainScreen">
-                            <Dropdown width="230px" :listData="this.$resourceVn.Status" :typeDropdown="this.$resourceVn.DropdownStatus"/>
-                            <DropdownSingle/>
-                            <div class="filter">
-                                <div class="icon-20 icon-filter"></div>
+            <div class="responsive-content-wrap">
+                <div class="responsive-content-main">
+                    <div class="content-body"> 
+                    <div class="content-body-background">
+                        <div class="content-body-tool" >
+                            <div class="content-body-tool-left" v-if="mode == this.$resourceVn.MainScreen">
+                                <InputSearch/>
                             </div>
-                            <div v-click-outside="hidePopupEditColumn">
-                                <div class="setting" @click="showCustomeColumn()">
-                                <div class="icon-24 icon-setting"></div>
+                            <div class="content-body-tool-right" v-if="mode == this.$resourceVn.MainScreen">
+                                <Dropdown width="230px" :listData="this.$resourceVn.Status" :typeDropdown="this.$resourceVn.DropdownStatus"/>
+                                <DropdownSingle/>
+                                <div class="filter" @click="showFilterPopup()">
+                                    <div class="icon-20 icon-filter"></div>
                                 </div>
-                                <CustomeColumn :showPopupEditColumn="showPopupEditColumn"/>
+                                <div v-click-outside="hidePopupEditColumn">
+                                    <div class="setting" @click="showCustomeColumn()">
+                                    <div class="icon-24 icon-setting"></div>
+                                    </div>
+                                    <CustomeColumn :showPopupEditColumn="showPopupEditColumn"/>
+                                </div>
+                            </div>
+                            <div class="general-info-wrap" v-if="mode == this.$resourceVn.AddScreen">
+                                <div class="general-info-title">
+                                    {{ this.$resourceVn.GeneralInformation }}
+                                </div>
                             </div>
                         </div>
-                        <div class="general-info-wrap" v-if="mode == this.$resourceVn.AddScreen">
-                            <div class="general-info-title">
-                                {{ this.$resourceVn.GeneralInformation }}
+                    </div>   
+                    </div>
+                    <div class="content-grid">
+                        <DataGrid 
+                        :listHeader="listHeader" 
+                        :dataSource="dataSource"
+                        v-if="mode == this.$resourceVn.MainScreen">
+                            <template #Status="{ data }">
+                                <div>{{ data.Status }}</div>
+                            </template>
+                        </DataGrid>
+                        <div class="content-add-screen-wrap" v-if="mode == this.$resourceVn.AddScreen">
+                            <div class="row-flex">
+                                <div class="label-name">{{ this.$resourceVn.DepartmentApply }}<span class="red-span"> *</span></div>
+                                <DropdownMultiple/>
+                            </div>
+                            <div class="row-flex">
+                                <div class="label-name">{{ this.$resourceVn.PositionApply }}</div>
+                                <Combobox :placeholder="this.$resourceVn.AllPositionApply"/>
+                            </div>
+                            <div class="row-flex">
+                                <div class="label-name">{{ this.$resourceVn.EmployeeApply }}</div>
+                                <Combobox :placeholder="this.$resourceVn.AllEmployeeApply"/>
+                            </div>
+                            <div class="row-flex">
+                                <div class="label-name">{{ this.$resourceVn.PolicyName }}<span class="red-span"> *</span></div>
+                                <Input/>
+                            </div>
+                            <div class="salary-component">
+                                <div class="salary-component-text">{{ this.$resourceVn.SalaryComponent }}</div>
+                            </div>
+                            <div class="component-button-add">
+                                <ButtonIcon class="button-icon-white" :buttonName="this.$resourceVn.ButtonIconAddComponentText" @click.native="clickAddComponent()"/>
                             </div>
                         </div>
                     </div>
-                </div>   
-            </div>
-            <div class="content-grid">
-                <DataGrid 
-                :listHeader="listHeader" 
-                :dataSource="dataSource" 
-                v-if="mode == this.$resourceVn.MainScreen">
-                    <template #Status="{ data }">
-                        <div>{{ data.Status }}</div>
-                    </template>
-                </DataGrid>
-                <div class="content-add-screen-wrap" v-if="mode == this.$resourceVn.AddScreen">
-                    <div class="row-flex">
-                        <div class="label-name">{{ this.$resourceVn.DepartmentApply }}<span class="red-span"> *</span></div>
-                        <Combobox/>
-                    </div>
-                    <div class="row-flex">
-                        <div class="label-name">{{ this.$resourceVn.PositionApply }}</div>
-                        <Combobox :placeholder="this.$resourceVn.AllPositionApply"/>
-                    </div>
-                    <div class="row-flex">
-                        <div class="label-name">{{ this.$resourceVn.EmployeeApply }}</div>
-                        <Combobox :placeholder="this.$resourceVn.AllEmployeeApply"/>
-                    </div>
-                    <div class="row-flex">
-                        <div class="label-name">{{ this.$resourceVn.PolicyName }}<span class="red-span"> *</span></div>
-                        <Input/>
-                    </div>
-                    <div class="salary-component">
-                        <div class="salary-component-text">{{ this.$resourceVn.SalaryComponent }}</div>
-                    </div>
-                    <div class="component-button-add">
-                        <ButtonIcon class="button-icon-white" :buttonName="this.$resourceVn.ButtonIconAddComponentText" @click.native="clickAddComponent()"/>
-                    </div>
+                    <TheFooter v-if="mode == this.$resourceVn.MainScreen"/>
                 </div>
-            </div>
+                <div class="responsive-filter">
+                    <FilterBox :filterShow="filterShow" @hideFilterPopup="hideFilterPopup"/>
+                </div>
+            </div>    
             <ModalBoxSalary :modalBoxShow="modalBoxShow" 
             @exitModalBox="exitModalBox"/>
-            <TheFooter v-if="mode == this.$resourceVn.MainScreen"/>
         </div>
     </div>
 </template>
@@ -98,11 +105,13 @@ import Button from "../../components/base/button/BaseButton.vue"
 import DataGrid from "../base/data-grid/BaseDataGrid.vue"
 import DropdownSingle from "../base/dropdown-single/BaseDropdownSingle.vue"
 import Dropdown from '../base/dropdown/BaseDropdown.vue'
+import DropdownMultiple from "../base/dropdown-multiple/BaseDropdownMultiple.vue"
 import Combobox from '../../components/base/combobox/BaseCombobox.vue'
 import Input from "../../components/base/input/BaseInput.vue"
 import InputSearch from "../../components/base/input-search/BaseInputSearch.vue"
 import ModalBoxSalary from "../../components/layout/TheModalBoxSalary.vue"
 import CustomeColumn from "../../components/layout/CustomeColumn.vue"
+import FilterBox from "../base/filter/Filter.vue"
 export default {
     name: "TheContent",
     directives: {
@@ -115,16 +124,20 @@ export default {
         DataGrid,
         DropdownSingle,
         Dropdown,
+        DropdownMultiple,
         Combobox,
         Input,
         InputSearch,
         ModalBoxSalary,
-        CustomeColumn
+        CustomeColumn,
+        FilterBox
     },
     data(){
         return {
             modalBoxShow: false,                //Trạng thái ẩn/hiện của modalbox, mặc định ẩn
             showPopupEditColumn: false,         //Trạng thái ẩn/hiện của popup setting "Tùy chỉnh cột"
+            filterShow: false,                  //Trạng thái ẩn/hiện của popup "Bộ lọc"
+
             mode: this.$resourceVn.MainScreen, //Màn hình hiển thị (0: Màn chính, 1: Màn Thêm chính sách lương)
 
             listHeader: fakeData.listHeader,    //Dữ liệu các tiêu đề của grid
@@ -187,6 +200,24 @@ export default {
          */
         hidePopupEditColumn(){
             this.showPopupEditColumn = false;
+        },
+
+        /**
+         * @description Hiện popup "Bộ lọc" khi click button filter
+         * @date 19/9/2021
+         * @createdBy LHTDung
+         */
+        showFilterPopup(){
+            this.filterShow = !this.filterShow;
+        },
+
+        /**
+         * @description Đóng "Bộ lọc" khi click button exit
+         * @date 19/9/2021
+         * @createdBy LHTDung
+         */
+        hideFilterPopup(){
+            this.filterShow = false;
         }
     },
 }

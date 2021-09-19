@@ -5,13 +5,15 @@ module.exports = {
     ButtonCancelText: "Hủy bỏ",
     ButtonSaveText: "Lưu",
     ButtonApplyText: "Áp dụng",
+    ButtonFilterCancel: "Bỏ lọc",
     GeneralInformation: "THÔNG TIN CHUNG",
     SalaryComponent: "THÀNH PHẦN LƯƠNG",
     DepartmentApply: "Đơn vị áp dụng",
     PositionApply: "Vị trí áp dụng",
     EmployeeApply: "Nhân viên áp dụng",
     PolicyName: "Tên chính sách",
-    
+    FilterText: "Bộ lọc",
+
     AllDepartment: "Tất cả đơn vị",
     AllPositionApply: "Tất cả các vị trí trong đơn vị",
     AllEmployeeApply: "Tất cả các nhân viên trong đơn vị",

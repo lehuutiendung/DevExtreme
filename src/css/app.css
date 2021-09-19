@@ -67,6 +67,14 @@ html, body{
   min-height: 32px;
 }
 
+/* CSS cho icon 34px */
+.icon-34{
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  min-height: 34px;
+}
+
 /* CSS cho icon 36px */
 .icon-36{
   width: 36px;
@@ -166,3 +174,10 @@ html, body{
   background: #f1f1f1;
 }
 
+.dx-scrollbar-vertical .dx-scrollable-scroll {
+  width: 12px!important;
+}
+
+.dx-scrollable-scroll-content{
+  border-radius: 10px;
+}
