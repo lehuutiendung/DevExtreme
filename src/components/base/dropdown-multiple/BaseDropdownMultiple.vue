@@ -16,14 +16,16 @@
               :data-source="treeDataSource"
               :select-by-click="true"
               :searchEnabled="true"
+              placeholder="Tìm kiếm"
+              noDataText="Không có dữ liệu"
               data-structure="plain"
               key-expr="ID"
               parent-id-expr="categoryId"
-              selection-mode="single"
+              selection-mode="multiple"
+              show-check-boxes-mode="normal"
               display-expr="name"
               @content-ready="$event.component.selectItem(treeBoxValue)"
               @item-selection-changed="treeView_itemSelectionChanged($event)"
-              @item-click="onTreeItemClick($event)"
             />
           </template>
         </DxDropDownBox>
@@ -72,17 +74,10 @@ export default {
           this.treeBoxValue = e.component.getSelectedNodeKeys();
         },
 
-        /**
-         * @Description Sau khi click item => ẩn dropdown
-         * @Date 18/9/2021
-         * @CreatedBy LHTDung
-         */
-        onTreeItemClick() {
-          this.$refs.dropdownBox.instance.close();
-        },
+        
     },
 }
 </script>
 <style scoped>
-    @import "../../../css/base/dropdown-single/base-dropdown-single.css";
+    @import "../../../css/base/dropdown-multiple/base-dropdown-multiple.css";
 </style>

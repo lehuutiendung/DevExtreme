@@ -1,21 +1,22 @@
 <template>
-<div class="wrap-combobox">
-    <div class="dx-field">
-        <div class="dx-field-value">
-            <DxTagBox
-            :items="simpleProducts"
-            :show-selection-controls="true"
-            :search-enabled="true"
-            :placeholder="placeholder"
-            />
-        </div>
-        <div class="icon-36 wrap-icon-combobox">
-            <div class="icon-20 icon-combobox">
+<!------------------------------------------------ COMBOBOX TAG ----------------------------------------------------------->
+    <div class="wrap-combobox">
+        <div class="dx-field">
+            <div class="dx-field-value">
+                <DxTagBox
+                :items="simpleProducts"
+                :show-selection-controls="true"
+                :search-enabled="true"
+                :placeholder="placeholder"
+                />
+            </div>
+            <div class="icon-36 wrap-icon-combobox">
+                <div class="icon-20 icon-combobox">
 
+                </div>
             </div>
         </div>
     </div>
-</div>
     
 </template>
 

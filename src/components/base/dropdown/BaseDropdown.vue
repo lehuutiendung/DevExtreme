@@ -2,7 +2,7 @@
     <div class="wrap-dropdown" v-click-outside="hideDropdown">
         <div class="dropdown-content border-dropdown" @click="showDropdownData()">
             <div class="dropdown-text">
-                {{ listData[0].Text }}
+                {{ valueOfDropdown }}
             </div>
             <div class="icon-20 icon-svg dropdown-button"></div>
         </div>
@@ -16,7 +16,7 @@
                 :class="{'choose-item' : index == current?true:false}"
                 v-for="(item, index) in listData" 
                 :key="index"
-                @click="chooseItem(index)"
+                @click="chooseItem(item.Text ,index)"
                 >
                     <div class="item-text">{{ item.Text }}</div>
                     <div class="icon-20 icon-svg" 
@@ -62,9 +62,12 @@ export default {
         return {
             showData: false, //Mặc định ẩn,
             current: 0, //Item đã click
+            valueOfDropdown: "",
         }
     },
-   
+    created() {
+        this.valueOfDropdown = this.listData[0].Text;
+    },
     computed: {
         /**
          * @description Kiểm tra kiểu của dropdown để bind class tương ứng (Loại dropdown "tất cả trạng thái")
@@ -113,7 +116,8 @@ export default {
          * @date 17/09/2021
          * @createBy LHTDung
          */
-        chooseItem(index){
+        chooseItem(value, index){
+            this.valueOfDropdown = value;
             this.current = index;
             this.showData = false;
         }

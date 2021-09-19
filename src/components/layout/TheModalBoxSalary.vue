@@ -21,12 +21,12 @@
                     <DataGrid 
                         :listHeader="listHeader" 
                         :dataSource="dataSource" 
+                        :modalBoxShow="modalBoxShow"
                     >
                         <template #Status="{ data }">
                             <div>{{ data.Status }}</div>
                         </template>
                     </DataGrid>
-                    
                 </div>
                 <TheFooter class="footer-custome"/>
                 <div class="space-footer-button"></div>
