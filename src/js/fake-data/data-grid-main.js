@@ -10,34 +10,34 @@ const data = {
         },
         {
             ID: 1,
-            PolicyName: "Chính sách CCTC LTMinh; Nhà máy Hưng Yên",
+            PolicyName: "Chính sách Phòng Nhân sự - Tất cả các vị trí trong đơn vị",
             EmployeeApply: "Tất cả các nhân viên trong đơn vị",
             PositionApply: "Tất cả các vị trí trong đơn vị",
-            DepartmentApply: "CCTC LTMinh; Nhà máy Hưng Yên - Vĩnh Phúc",
+            DepartmentApply: "Phòng Nhân sự",
             Status: "Đang áp dụng"
         },
         {
             ID: 2,
-            PolicyName: "Chính sách CCTC LTMinh; Nhà máy Hưng Yên",
+            PolicyName: "Chính sách Văn phòng 10 - Tất cả các vị trí trong đơn vị",
             EmployeeApply: "Tất cả các nhân viên trong đơn vị",
             PositionApply: "Tất cả các vị trí trong đơn vị",
-            DepartmentApply: "CCTC LTMinh; Nhà máy Hưng Yên - Vĩnh Phúc",
-            Status: "Đang áp dụng"
+            DepartmentApply: "Văn phòng 10",
+            Status: "Ngừng áp dụng"
         },
         {
             ID: 3,
-            PolicyName: "Chính sách CCTC LTMinh; Nhà máy Hưng Yên",
+            PolicyName: "Chính sách Văn phòng trung tâm - Tất cả các vị trí trong đơn vị",
             EmployeeApply: "Tất cả các nhân viên trong đơn vị",
             PositionApply: "Tất cả các vị trí trong đơn vị",
-            DepartmentApply: "CCTC LTMinh; Nhà máy Hưng Yên - Vĩnh Phúc",
-            Status: "Đang áp dụng"
+            DepartmentApply: "Văn phòng trung tâm",
+            Status: "Ngừng áp dụng"
         },
         {
             ID: 4,
-            PolicyName: "Chính sách CCTC LTMinh; Nhà máy Hưng Yên",
+            PolicyName: "Chính sách các khoản mặc định của hệ thống (Ltminh test)",
             EmployeeApply: "Tất cả các nhân viên trong đơn vị",
             PositionApply: "Tất cả các vị trí trong đơn vị",
-            DepartmentApply: "CCTC LTMinh; Nhà máy Hưng Yên - Vĩnh Phúc",
+            DepartmentApply: "Công ty TNHH Kim Đồng (dự án C&B)",
             Status: "Đang áp dụng"
         }
     ],
@@ -51,19 +51,19 @@ const data = {
         {
             DataField: "EmployeeApply",
             Caption: "Nhân viên áp dụng",
-            Width: 200,
+            Width: 250,
             Fixed: false,
         },
         {
             DataField: "PositionApply",
             Caption: "Vị trí áp dụng",
-            Width: 200,
+            Width: 220,
             Fixed: false,
         },
         {
             DataField: "DepartmentApply",
             Caption: "Đơn vị áp dụng",
-            Width: 200,
+            Width: 300,
             Fixed: false,
         },
         {

@@ -81,9 +81,36 @@
     display: flex;
     padding: 12px 20px;
     align-items: center;
-    justify-content: space-between;
     height: 60px;
+}
 
+.content-body .content-body-tool .content-tool-without-check{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+}
+
+.content-body .content-body-tool .content-tool-has-check{
+    display: flex;
+    align-items: center;
+    height: 60px;
+}
+
+.content-tool-has-check .number-choosed span{
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+.content-tool-has-check .number-choosed{
+    margin-right: 15px;
+}
+
+.content-tool-has-check .stop-apply{
+    font-weight: bold;
+    color:rgb(52, 176, 87);
+    margin-right: 25px;
 }
 
 .content-body-tool .active-button-delete{

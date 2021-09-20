@@ -1,3 +1,7 @@
+.dx-datagrid{
+    font-family: Roboto,Helvetica,Arial,sans-serif !important;
+}
+
 .dx-datagrid-group-panel .dx-group-panel-message {
     display: none;
 }

@@ -27,3 +27,7 @@
     -webkit-mask-repeat: no-repeat;
     background-color: #666666 !important;
 }
+
+.content-add-screen-wrap .border-error-validate{
+    border: 1px solid rgb(255, 97, 97) !important;
+}

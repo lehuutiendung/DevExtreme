@@ -1,17 +1,39 @@
 module.exports = {
+    DuplicateText: "Nhân bản",
+    DeleteText: "Xóa",
+
     ButtonIconAddText: "Thêm mới",
     ButtonIconAddComponentText: "Thêm thành phần",
+    ButtonIconApplyText: "Ngưng áp dụng",
+    ButtonIconDeleteText: "Xóa",
+
     ChooseComponent: "Chọn thành phần",
     ButtonCancelText: "Hủy bỏ",
     ButtonSaveText: "Lưu",
+    ButtonEditText: "Sửa",
     ButtonApplyText: "Áp dụng",
     ButtonFilterCancel: "Bỏ lọc",
+    Choosed: "Đã chọn",
+    UnChecked: "Bỏ chọn",
+    ValidateEmpty: "Không được để trống.",
+    BorderValidate: "1px solid #ff6161",
+    BorderNormal: "1px solid #e0e0e0",
+    BorderActive: "1px solid #34b057",
+
+    // Class của thư viện DevExtreme
+    ClassFocus: "dx-state-focused",
+    ClassEmpty: "dx-texteditor-empty",
+    // Class custome
+    BorderErrorValidate: 'border-error-validate',
+
+
     GeneralInformation: "THÔNG TIN CHUNG",
     SalaryComponent: "THÀNH PHẦN LƯƠNG",
     DepartmentApply: "Đơn vị áp dụng",
     PositionApply: "Vị trí áp dụng",
     EmployeeApply: "Nhân viên áp dụng",
     PolicyName: "Tên chính sách",
+    StatusTextForm: "Trạng thái",
     FilterText: "Bộ lọc",
 
     AllDepartment: "Tất cả đơn vị",
@@ -30,12 +52,16 @@ module.exports = {
         {Text: "100", Value: 100},
     ],
     // Loại dropdown:
-    DropdownStatus: 0,  //0: Dropdown cho trạng thái
-    DropdownPaging: 1,  //1: Dropdown cho phân trang
+    DropdownStatus: 0,          //0: Dropdown cho trạng thái
+    DropdownPaging: 1,          //1: Dropdown cho phân trang
     
     // Chế độ màn hình
-    MainScreen: 0, //Màn hình chính hiển thị danh sách
-    AddScreen: 1, //Màn hình "Thêm chính sách lương" (sau khi click vào "thêm mới").
-    
+    MainScreen: 0,              //Màn hình chính hiển thị danh sách
+    AddScreen: 1,               //Màn hình "Thêm chính sách lương" (sau khi click vào "thêm mới").
+    EditScreen: 2,              //Màn hình "Xem chi tiết/Sửa"
 
+    //Loại button icon
+    ButtonIconAdd: 0,           //Button Icon Thêm mới
+    ButtonIconApply: 1,         //Button Icon Ngưng áp dụng
+    ButtonIconDelete: 2,        //Button Icon Xóa
 }

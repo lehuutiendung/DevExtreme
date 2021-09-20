@@ -1,0 +1,145 @@
+.responsive-content-wrap .fix-width-content-main{
+    width: 81% !important;
+}
+
+.content-add-screen-wrap .view-object{
+    font-weight: normal;
+    width: 746px;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 10px 8px;
+}
+
+/* Bắt đầu: CSS cho radio button trong form xem chi tiết */
+.wrap-status{
+    display: flex;
+    font-weight: normal;
+}
+
+.wrap-status .wrap-radio-text{
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.wrap-status .wrap-radio-text .radio-button{
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 2px;
+}
+
+.wrap-status .wrap-radio-text .radio-button:hover{
+    background-color: #EBEBEB;
+}
+
+.radio-button .radio-button-uncheck{
+    -webkit-mask-image: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg);
+    -webkit-mask-position: -80px -20px;
+    -webkit-mask-repeat: no-repeat;
+    background-color: #666!important;
+}
+
+.radio-button .radio-button-check{
+    -webkit-mask-image: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg);
+    -webkit-mask-position: -100px -20px;
+    -webkit-mask-repeat: no-repeat;
+    background-color: #34b057!important;
+}
+/* Kết thúc: CSS cho radio button trong form xem chi tiết */
+
+/* Bắt đầu: CSS custome cho cột "Trạng thái" */
+.wrap-template-status{
+    display: flex;
+    align-items: center;
+}
+
+.wrap-template-status .dot-status{
+    height: 8px;
+    width: 8px;
+    min-height: 8px;
+    min-width: 8px;
+    border-radius: 8px;
+    background: #25B973;
+    margin-right: 8px;
+}
+
+.wrap-template-status .status-text{
+    color: #25B973;
+}
+
+.wrap-template-status .dot-stop-apply{
+    background: #FF9900;
+}
+
+.wrap-template-status .stop-apply-text{
+    color: #FF9900;
+}
+/* Kết thúc: CSS custome cho cột "Trạng thái" */
+
+/* Bắt đầu: CSS cho button 3 chấm: Nhân bản | Xóa */
+.button-3-dots{  
+    background-color: #ffffff;
+    border-radius: 4px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.button-3-dots:hover{
+    color: var(--primary) !important;
+    background: var(--primary-bg) !important;
+}
+
+.button-3-dots .icon-button-3-dots{
+    -webkit-mask-image: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg);
+    -webkit-mask-repeat: no-repeat;
+    background-color: #707070!important;
+    -webkit-mask-position: -160px -40px;
+}
+
+.wrap-button-group .wrap-duplicate-delete-popup{
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    box-shadow: 0px 0px 10px 0 rgb(0 0 0 / 10%);
+    padding: 8px 6px;
+    border-radius: 5px;
+    position: absolute;
+    right: 0;
+    top: 40px;
+    z-index: 10;
+}
+
+.wrap-duplicate-delete-popup .item-popup-3-dots{
+    display: flex;
+    width: 140px;
+    cursor: pointer;
+    align-items: center;
+    height: 35px;
+    border-radius: 4px;
+}
+
+.wrap-duplicate-delete-popup .item-popup-3-dots:hover{
+    background-color: #EAFBF2;
+}
+
+.icon-duplicate{
+    -webkit-mask-image: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg);
+    -webkit-mask-repeat: no-repeat;
+    background-color: rgb(112, 112, 112) !important;
+    -webkit-mask-position: -80px 0px;
+    margin: 0 8px;
+}
+
+.icon-delete{
+    -webkit-mask-position: -120px -20px;
+    background-color: rgb(255, 97, 97) !important;
+    -webkit-mask-image: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg);
+    -webkit-mask-repeat: no-repeat;
+    margin: 0 8px;
+}
+/* Kết thúc: CSS cho button 3 chấm: Nhân bản | Xóa */
