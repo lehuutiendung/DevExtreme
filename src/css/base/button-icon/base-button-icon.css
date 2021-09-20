@@ -17,12 +17,27 @@
 }
 
 .wrap-button-icon .icon-button{
-    -webkit-mask-position: -220px 0;
     -webkit-mask-image: url(../../../assets/img/Icon.9254d79.svg);
     -webkit-mask-repeat: no-repeat;
     background-color: #fff;
     margin-right: 4px;
 }
+
+/* Bắt đầu: CSS cho các icon của button */
+.ic-add{
+    -webkit-mask-position: -220px 0;
+}
+
+.ic-apply{
+    -webkit-mask-position: -220px -40px;
+    background-color: #f90!important;
+}
+
+.ic-delete{
+    -webkit-mask-position: -120px -20px;
+    background-color: #ff6161!important;
+}
+/* Kết thúc: CSS cho các icon của button */
 
 .wrap-button-icon .text-button{
     font-size: 0.95em;
@@ -47,3 +62,31 @@
     background-color: var(--button-primary-normal-bg-color);
 }
 /*Kết thúc: CSS cho button background màu trắng */
+
+/*Bắt đầu: CSS cho button background màu cam */
+.button-icon-orange {
+    color: rgb(255, 153, 0);
+    background-color: #ffffff;
+    border: 1px solid #f0f0f0;
+}
+
+.button-icon-orange:hover{
+    color: rgb(255, 153, 0);
+    background-color: #ffffff;
+    border: 1px solid rgb(255, 153, 0);
+}
+/*Kết thúc: CSS cho button background màu cam */
+
+/*Bắt đầu: CSS cho button background màu đỏ */
+.button-icon-red {
+    background-color: #ffffff;
+    color: #ef292f;
+    border: 1px solid #ef292f;
+}
+
+.button-icon-red:hover{
+    background-color: #fee8e7;
+    color: #ef292f;
+    border: 1px solid #ef292f;
+}
+/*Kết thúc: CSS cho button background màu đỏ */

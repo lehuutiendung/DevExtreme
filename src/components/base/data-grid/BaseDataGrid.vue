@@ -130,7 +130,8 @@ export default {
        * @createdBy LHTDung
        */
       onSelectionChanged({ selectedRowsData }) {
-        console.log(selectedRowsData.length);
+          // Emit danh sách các dòng được checked lên SalaryPolicyList
+          this.$emit('numberOfCheckedGrid', selectedRowsData);
       },
 
       /**
@@ -139,7 +140,8 @@ export default {
        * @createdBy LHTDung
        */
       showDetailForm(e){
-        console.log(e.key);
+        // Emit object chứa dữ liệu của dòng được click 
+        this.$emit('moveToViewScreen', e.key);
       }
   },
 };
