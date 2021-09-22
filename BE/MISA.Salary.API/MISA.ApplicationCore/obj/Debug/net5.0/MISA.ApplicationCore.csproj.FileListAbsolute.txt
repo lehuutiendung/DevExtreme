@@ -1,0 +1,15 @@
+G:\MISA\DevExtreme\BE\MISA.Salary.API\MISA.ApplicationCore\bin\Debug\net5.0\MISA.ApplicationCore.deps.json
+G:\MISA\DevExtreme\BE\MISA.Salary.API\MISA.ApplicationCore\bin\Debug\net5.0\MISA.ApplicationCore.dll
+G:\MISA\DevExtreme\BE\MISA.Salary.API\MISA.ApplicationCore\bin\Debug\net5.0\ref\MISA.ApplicationCore.dll
+G:\MISA\DevExtreme\BE\MISA.Salary.API\MISA.ApplicationCore\bin\Debug\net5.0\MISA.ApplicationCore.pdb
+G:\MISA\DevExtreme\BE\MISA.Salary.API\MISA.ApplicationCore\obj\Debug\net5.0\MISA.ApplicationCore.csproj.AssemblyReference.cache
+G:\MISA\DevExtreme\BE\MISA.Salary.API\MISA.ApplicationCore\obj\Debug\net5.0\MISA.ApplicationCore.Resources.ResourcesCommon.resources
+G:\MISA\DevExtreme\BE\MISA.Salary.API\MISA.ApplicationCore\obj\Debug\net5.0\MISA.ApplicationCore.Resources.ResourcesPolicy.resources
+G:\MISA\DevExtreme\BE\MISA.Salary.API\MISA.ApplicationCore\obj\Debug\net5.0\MISA.ApplicationCore.csproj.GenerateResource.cache
+G:\MISA\DevExtreme\BE\MISA.Salary.API\MISA.ApplicationCore\obj\Debug\net5.0\MISA.ApplicationCore.GeneratedMSBuildEditorConfig.editorconfig
+G:\MISA\DevExtreme\BE\MISA.Salary.API\MISA.ApplicationCore\obj\Debug\net5.0\MISA.ApplicationCore.AssemblyInfoInputs.cache
+G:\MISA\DevExtreme\BE\MISA.Salary.API\MISA.ApplicationCore\obj\Debug\net5.0\MISA.ApplicationCore.AssemblyInfo.cs
+G:\MISA\DevExtreme\BE\MISA.Salary.API\MISA.ApplicationCore\obj\Debug\net5.0\MISA.ApplicationCore.csproj.CoreCompileInputs.cache
+G:\MISA\DevExtreme\BE\MISA.Salary.API\MISA.ApplicationCore\obj\Debug\net5.0\MISA.ApplicationCore.dll
+G:\MISA\DevExtreme\BE\MISA.Salary.API\MISA.ApplicationCore\obj\Debug\net5.0\ref\MISA.ApplicationCore.dll
+G:\MISA\DevExtreme\BE\MISA.Salary.API\MISA.ApplicationCore\obj\Debug\net5.0\MISA.ApplicationCore.pdb

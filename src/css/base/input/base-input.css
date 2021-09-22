@@ -15,3 +15,11 @@
 .wrap-base-input:focus{
     border: 1px solid var(--input-hover-border-color);
 }
+
+.wrap-base-input:hover{
+    border: 1px solid var(--input-hover-border-color);
+}
+
+.noHover{
+    pointer-events: none;
+}

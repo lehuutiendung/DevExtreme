@@ -2,27 +2,41 @@
     <div class="dx-field-value">
         <DxDropDownBox
           ref="dropdownBox"
-          :value="treeBoxValue"
-          :show-clear-button="true"
+          :value="value"
+          :show-clear-button="false"
           :data-source="treeDataSource"
-          value-expr="ID"
-          display-expr="name"
+          value-expr="DepartmentId"
+          display-expr="DepartmentName"
           @value-changed="syncTreeViewSelection($event)"
         >
+  
+          <!-- <div slot="fieldTemplate" slot-scope="{ data }">
+                <div class="custom-item">
+                    <div class="product-name">
+                        <DxTextBox
+                            :value="data"
+                            :read-only="true">
+                            {{ data }}
+                        </DxTextBox>
+                    </div>
+                </div>
+            </div> -->
           <template #content="{  }">
             <DxTreeView
               :ref="treeViewRefName"
+              :value="value"
               :data-source="treeDataSource"
               :select-by-click="true"
               :searchEnabled="true"
               placeholder="Tìm kiếm"
               noDataText="Không có dữ liệu"
               data-structure="plain"
-              key-expr="ID"
-              parent-id-expr="categoryId"
+              key-expr="DepartmentId"
+              parent-id-expr="ParentId"
+              root-value="00000000-0000-0000-0000-000000000000"
               selection-mode="multiple"
               show-check-boxes-mode="normal"
-              display-expr="name"
+              display-expr="DepartmentName"
               @content-ready="$event.component.selectItem(treeBoxValue)"
               @item-selection-changed="treeView_itemSelectionChanged($event)"
             />
@@ -31,22 +45,37 @@
     </div>
 </template>
 <script>
-import treeData from "../../../js/fake-data/data-dropdown-single"
-
+// import treeData from "../../../js/fake-data/data-dropdown-single"
+// import DxTextBox from "devextreme-vue/text-box";
 import DxDropDownBox from 'devextreme-vue/drop-down-box';
 import DxTreeView from 'devextreme-vue/tree-view';
 export default {
-    name: "BaseDropdownMultiple",
+    name: "DropdownMultiple",
     components: {
         DxDropDownBox,
         DxTreeView,
+        // DxTextBox
     },
+    props:{
+        treeDataSource:{
+          type: Array,
+          default(){
+            return [];
+          }
+        },
 
+        //Dữ liệu Đơn vị áp dụng của bản ghi (xem chi tiết/sửa)
+        value:{
+          type: String,
+          default(){
+            return '';
+          }
+        }
+    },
     data() {
         return {
-            treeBoxValue: null,
+            treeBoxValue: this.value,
             treeViewRefName: 'tree-view',
-            treeDataSource: treeData,
         };
     },
     

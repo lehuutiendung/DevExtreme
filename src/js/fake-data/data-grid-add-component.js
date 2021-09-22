@@ -3,131 +3,67 @@ const data = {
     dataSource: [
         {
             ID: 0,
-            ComponentCode: "NHA_MAY_HUNG_YEN_VINH_PHUC",
-            ComponentName: "Nhà máy Hưng Yên Vĩnh Phúc",
-            ComponentType: "Thông tin nhân viên",
+            ComponentCode: "PHU_CAP_DI_LAI",
+            ComponentName: "Phụ cấp đi lại",
+            ComponentType: "Khác",
             Nature: "Thu nhập",
-            Value: "TONG_CONG_HUONG_LUONG_CONG_CHUAN_CO_DINH*10000",
+            Value: "",
             Description: "Mô tả"
         },
         {
             ID: 1,
-            ComponentCode: "NHA_MAY_HUNG_YEN_VINH_PHUC",
-            ComponentName: "Nhà máy Hưng Yên Vĩnh Phúc",
-            ComponentType: "Thông tin nhân viên",
+            ComponentCode: "PHAT_DI_SOM_VE_MUON",
+            ComponentName: "Phạt đi sớm về muộn",
+            ComponentType: "Khác",
             Nature: "Thu nhập",
-            Value: "TONG_CONG_HUONG_LUONG_CONG_CHUAN_CO_DINH*10000",
+            Value: "",
             Description: "Mô tả"
         },
         {
             ID: 2,
-            ComponentCode: "NHA_MAY_HUNG_YEN_VINH_PHUC",
-            ComponentName: "Nhà máy Hưng Yên Vĩnh Phúc",
+            ComponentCode: "THANH_TIEN",
+            ComponentName: "Thành tiền",
             ComponentType: "Thông tin nhân viên",
             Nature: "Thu nhập",
-            Value: "TONG_CONG_HUONG_LUONG_CONG_CHUAN_CO_DINH*10000",
+            Value: "NGAY_CONG*SO_SAN_PHAM_THUC_TE*HE_SO*DON_GIA",
             Description: "Mô tả"
         },
         {
             ID: 3,
-            ComponentCode: "NHA_MAY_HUNG_YEN_VINH_PHUC",
-            ComponentName: "Nhà máy Hưng Yên Vĩnh Phúc",
+            ComponentCode: "LUONG_SAN_PHAM",
+            ComponentName: "Lương sản phẩm",
             ComponentType: "Thông tin nhân viên",
             Nature: "Thu nhập",
-            Value: "TONG_CONG_HUONG_LUONG_CONG_CHUAN_CO_DINH*10000",
+            Value: "HE_SO*DON_GIA*SO_SAN_PHAM_THUC_TE",
             Description: "Mô tả"
         },
         {
             ID: 4,
-            ComponentCode: "NHA_MAY_HUNG_YEN_VINH_PHUC",
-            ComponentName: "Nhà máy Hưng Yên Vĩnh Phúc",
+            ComponentCode: "GIAM_TRU_GIA_CANH",
+            ComponentName: "Giảm trừ gia cảnh",
             ComponentType: "Thông tin nhân viên",
             Nature: "Thu nhập",
-            Value: "TONG_CONG_HUONG_LUONG_CONG_CHUAN_CO_DINH*10000",
+            Value: "11000000+4400000*SO_NGUOI_PHU_THUOC",
             Description: "Mô tả"
         },
         {
             ID: 5,
-            ComponentCode: "NHA_MAY_HUNG_YEN_VINH_PHUC",
-            ComponentName: "Nhà máy Hưng Yên Vĩnh Phúc",
+            ComponentCode: "TY_LE_HUONG_LUONG",
+            ComponentName: "Tỷ lệ hưởng lương",
             ComponentType: "Thông tin nhân viên",
             Nature: "Thu nhập",
-            Value: "TONG_CONG_HUONG_LUONG_CONG_CHUAN_CO_DINH*10000",
+            Value: "",
             Description: "Mô tả"
         },
         {
             ID: 6,
-            ComponentCode: "NHA_MAY_HUNG_YEN_VINH_PHUC",
-            ComponentName: "Nhà máy Hưng Yên Vĩnh Phúc",
+            ComponentCode: "THUE_TNCN",
+            ComponentName: "Thuế TNCN",
             ComponentType: "Thông tin nhân viên",
             Nature: "Thu nhập",
-            Value: "TONG_CONG_HUONG_LUONG_CONG_CHUAN_CO_DINH*10000",
+            Value: "",
             Description: "Mô tả"
-        },
-        {
-            ID: 7,
-            ComponentCode: "NHA_MAY_HUNG_YEN_VINH_PHUC",
-            ComponentName: "Nhà máy Hưng Yên Vĩnh Phúc",
-            ComponentType: "Thông tin nhân viên",
-            Nature: "Thu nhập",
-            Value: "TONG_CONG_HUONG_LUONG_CONG_CHUAN_CO_DINH*10000",
-            Description: "Mô tả"
-        },
-        {
-            ID: 8,
-            ComponentCode: "NHA_MAY_HUNG_YEN_VINH_PHUC",
-            ComponentName: "Nhà máy Hưng Yên Vĩnh Phúc",
-            ComponentType: "Thông tin nhân viên",
-            Nature: "Thu nhập",
-            Value: "TONG_CONG_HUONG_LUONG_CONG_CHUAN_CO_DINH*10000",
-            Description: "Mô tả"
-        },
-        {
-            ID: 9,
-            ComponentCode: "NHA_MAY_HUNG_YEN_VINH_PHUC",
-            ComponentName: "Nhà máy Hưng Yên Vĩnh Phúc",
-            ComponentType: "Thông tin nhân viên",
-            Nature: "Thu nhập",
-            Value: "TONG_CONG_HUONG_LUONG_CONG_CHUAN_CO_DINH*10000",
-            Description: "Mô tả"
-        },
-        {
-            ID: 10,
-            ComponentCode: "NHA_MAY_HUNG_YEN_VINH_PHUC",
-            ComponentName: "Nhà máy Hưng Yên Vĩnh Phúc",
-            ComponentType: "Thông tin nhân viên",
-            Nature: "Thu nhập",
-            Value: "TONG_CONG_HUONG_LUONG_CONG_CHUAN_CO_DINH*10000",
-            Description: "Mô tả"
-        },
-        {
-            ID: 11,
-            ComponentCode: "NHA_MAY_HUNG_YEN_VINH_PHUC",
-            ComponentName: "Nhà máy Hưng Yên Vĩnh Phúc",
-            ComponentType: "Thông tin nhân viên",
-            Nature: "Thu nhập",
-            Value: "TONG_CONG_HUONG_LUONG_CONG_CHUAN_CO_DINH*10000",
-            Description: "Mô tả"
-        },
-        {
-            ID: 12,
-            ComponentCode: "NHA_MAY_HUNG_YEN_VINH_PHUC",
-            ComponentName: "Nhà máy Hưng Yên Vĩnh Phúc",
-            ComponentType: "Thông tin nhân viên",
-            Nature: "Thu nhập",
-            Value: "TONG_CONG_HUONG_LUONG_CONG_CHUAN_CO_DINH*10000",
-            Description: "Mô tả"
-        },
-        {
-            ID: 13,
-            ComponentCode: "NHA_MAY_HUNG_YEN_VINH_PHUC",
-            ComponentName: "Nhà máy Hưng Yên Vĩnh Phúc",
-            ComponentType: "Thông tin nhân viên",
-            Nature: "Thu nhập",
-            Value: "TONG_CONG_HUONG_LUONG_CONG_CHUAN_CO_DINH*10000",
-            Description: "Mô tả"
-        },
-        
+        },  
     ],
     listHeader: [
         {
@@ -149,23 +85,11 @@ const data = {
             Fixed: false,
         },
         {
-            DataField: "Nature",
-            Caption: "Tính chất",
-            Width: 200,
-            Fixed: false,
-        },
-        {
-            DataField: "Value",
+            DataField: "ComponentValue",
             Caption: "Giá trị",
-            Width: 200,
+            Width: 400,
             Fixed: false,
         },
-        {
-            DataField: "Description",
-            Caption: "Mô tả",
-            Width: 200,
-            Fixed: false,
-        }
     ],
 }
 

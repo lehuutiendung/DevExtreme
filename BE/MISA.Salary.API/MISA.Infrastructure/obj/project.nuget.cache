@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "xAgVIWLua97YcQsqwvtoM4FLKcmDfx6dOBq0G/2/r22aBH1BmkQLfHX0WWasARDV+tQ0KJZGRcvEVxYmOY7kew==",
+  "success": true,
+  "projectFilePath": "G:\\MISA\\DevExtreme\\BE\\MISA.Salary.API\\MISA.Infrastructure\\MISA.Infrastructure.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\admins\\.nuget\\packages\\dapper\\2.0.90\\dapper.2.0.90.nupkg.sha512",
+    "C:\\Users\\admins\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\5.0.0\\microsoft.extensions.configuration.abstractions.5.0.0.nupkg.sha512",
+    "C:\\Users\\admins\\.nuget\\packages\\microsoft.extensions.primitives\\5.0.0\\microsoft.extensions.primitives.5.0.0.nupkg.sha512",
+    "C:\\Users\\admins\\.nuget\\packages\\mysqlconnector\\1.3.12\\mysqlconnector.1.3.12.nupkg.sha512"
+  ],
+  "logs": []
+}

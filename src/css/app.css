@@ -181,3 +181,7 @@ html, body{
 .dx-scrollable-scroll-content{
   border-radius: 10px;
 }
+
+.dx-widget{
+  font-family: Roboto,Helvetica,Arial,sans-serif !important;
+}

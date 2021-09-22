@@ -9,6 +9,8 @@ module.exports = {
 
     ChooseComponent: "Chọn thành phần",
     ButtonCancelText: "Hủy bỏ",
+    ButtonCancelText_2: "Hủy",
+    ButtonDontSaveText: "Không lưu",
     ButtonSaveText: "Lưu",
     ButtonEditText: "Sửa",
     ButtonApplyText: "Áp dụng",
@@ -19,6 +21,10 @@ module.exports = {
     BorderValidate: "1px solid #ff6161",
     BorderNormal: "1px solid #e0e0e0",
     BorderActive: "1px solid #34b057",
+
+    //Popup
+    Notificate: "Thông báo",
+    PopupExitEdit: "Bạn có muốn lưu lại các thông tin vừa nhập không?",
 
     // Class của thư viện DevExtreme
     ClassFocus: "dx-state-focused",
@@ -36,9 +42,24 @@ module.exports = {
     StatusTextForm: "Trạng thái",
     FilterText: "Bộ lọc",
 
+    // Thành phần lương
+    ComponentNameTitle: "Tên thành phần",
+    ComponentCodeTitle: "Mã thành phần",
+    FormulaTitle: "Công thức",
+
     AllDepartment: "Tất cả đơn vị",
     AllPositionApply: "Tất cả các vị trí trong đơn vị",
     AllEmployeeApply: "Tất cả các nhân viên trong đơn vị",
+
+    // URL API
+    URL_DEPARTMENT_GETALL: "https://localhost:44330/api/Departments",
+    URL_POSITION_GETALL: "https://localhost:44330/api/Positions",
+    URL_EMPLOYEE_GETALL: "https://localhost:44330/api/Employees",
+    URL_COMPONENT_GETALL: "https://localhost:44330/api/Components",
+    URL_POLICY_GETALL: "https://localhost:44330/api/Policies",
+
+    POSITION: "Position",
+    EMPLOYEE: "Employee",
 
     Status: [
         {Text: "Tất cả trạng thái", Value: 0},
@@ -58,8 +79,9 @@ module.exports = {
     // Chế độ màn hình
     MainScreen: 0,              //Màn hình chính hiển thị danh sách
     AddScreen: 1,               //Màn hình "Thêm chính sách lương" (sau khi click vào "thêm mới").
-    EditScreen: 2,              //Màn hình "Xem chi tiết/Sửa"
-
+    ViewScreen: 2,              //Màn hình "Xem chi tiết"
+    EditScreen: 3,              //Màn hình "Sửa"
+    
     //Loại button icon
     ButtonIconAdd: 0,           //Button Icon Thêm mới
     ButtonIconApply: 1,         //Button Icon Ngưng áp dụng

@@ -5,8 +5,8 @@
           :value="treeBoxValue"
           :show-clear-button="true"
           :data-source="treeDataSource"
-          value-expr="ID"
-          display-expr="name"
+          value-expr="DepartmentId"
+          display-expr="DepartmentName"
           :placeholder="this.$resourceVn.AllDepartment"
           @value-changed="syncTreeViewSelection($event)"
         >
@@ -17,10 +17,11 @@
               :select-by-click="true"
               :searchEnabled="true"
               data-structure="plain"
-              key-expr="ID"
-              parent-id-expr="categoryId"
+              key-expr="DepartmentId"
+              parent-id-expr="ParentId"
+              root-value="00000000-0000-0000-0000-000000000000"
               selection-mode="single"
-              display-expr="name"
+              display-expr="DepartmentName"
               @content-ready="$event.component.selectItem(treeBoxValue)"
               @item-selection-changed="treeView_itemSelectionChanged($event)"
               @item-click="onTreeItemClick($event)"
@@ -30,7 +31,7 @@
     </div>
 </template>
 <script>
-import treeData from "../../../js/fake-data/data-dropdown-single"
+// import treeData from "../../../js/fake-data/data-dropdown-single"
 
 import DxDropDownBox from 'devextreme-vue/drop-down-box';
 import DxTreeView from 'devextreme-vue/tree-view';
@@ -40,11 +41,18 @@ export default {
         DxDropDownBox,
         DxTreeView,
     },
+    props:{
+        treeDataSource:{
+          type:Array,
+          default(){
+            return [];
+          }
+        }
+    },
     data() {
         return {
             treeBoxValue: null,
             treeViewRefName: 'tree-view',
-            treeDataSource: treeData,
         };
     },
     

@@ -1,3 +1,15 @@
+.dx-tagbox-popup-wrapper .dx-item-content{
+    font-size: 13.33px;
+}
+
+.dx-tagbox-popup-wrapper .dx-item.dx-state-hover{
+    background-color: #EAFBF2;
+}
+
+.dx-tagbox-popup-wrapper .dx-item.dx-state-hover .dx-checkbox-icon{
+    background-color: #EAFBF2;
+}
+
 .row-flex .dx-field{
     min-width: 748px;
     width: 748px;
@@ -39,9 +51,9 @@
     display: none;
 }
 
-/* Chiều cao của data combobox*/
+/* Chiều cao của data combobox */
 .dx-tagbox-popup-wrapper .dx-popup-content{
-    height: 200px !important;
+    height: 192px !important;
 }
 
 /* Bắt đầu: CSS cho icon check các item của combobox */

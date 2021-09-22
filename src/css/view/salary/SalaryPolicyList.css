@@ -1,3 +1,8 @@
+.responsive-content-wrap{
+    background-color: #ffffff;
+    overflow-y: scroll;
+}
+
 .responsive-content-wrap .fix-width-content-main{
     width: 81% !important;
 }
@@ -102,7 +107,7 @@
 }
 
 .wrap-button-group .wrap-duplicate-delete-popup{
-    display: flex;
+    display: none;
     flex-direction: column;
     background-color: #ffffff;
     box-shadow: 0px 0px 10px 0 rgb(0 0 0 / 10%);
@@ -112,6 +117,10 @@
     right: 0;
     top: 40px;
     z-index: 10;
+}
+
+.wrap-button-group .show-popup{
+    display: flex;
 }
 
 .wrap-duplicate-delete-popup .item-popup-3-dots{
@@ -143,3 +152,73 @@
     margin: 0 8px;
 }
 /* Kết thúc: CSS cho button 3 chấm: Nhân bản | Xóa */
+
+
+/* Bắt đầu: CSS cho THÀNH PHẦN LƯƠNG */
+.group-grid-salary-component{
+    display: flex;
+    flex-direction: column;
+    padding-top: 16px;
+}
+
+.group-grid-salary-component .grid-salary-component-title{
+    display: flex;
+    padding-left: 46px;
+    line-height: 35px;
+    text-indent: 0px;
+    width: 100%;
+    white-space: nowrap;
+}
+
+.grid-salary-component-title .col-1{
+    width: 29%;
+}
+
+.grid-salary-component-title .col-2{
+    width: 19%;
+}
+
+.group-grid-salary-component .draggable .group-input-component{
+    display: flex;
+    padding: 8px;
+    margin-left: 8px;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.group-grid-salary-component .draggable .group-input-component:hover{
+    background-color: #ffffff;
+    box-shadow: rgb(0 0 0 / 10%) 0px 0px 5px 0px, rgb(0 0 0 / 10%) 0px 0px 1px 0px;
+}
+
+.group-input-component .icon-move{
+    -webkit-mask-image: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg);
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: 0 -100px;
+    margin-right: 8px;
+}
+
+.group-input-component .create-group{
+    -webkit-mask-image: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg);
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: -220px -20px;
+    margin-left: 10px;
+}
+
+.group-input-component .icon-delete-component{
+    -webkit-mask-image: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg);
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: -120px -20px;
+    margin-left: 6px;
+}
+
+.group-input-component:hover .icon-move, .group-input-component:hover .create-group{
+    background-color: #707070!important;
+}
+
+.group-input-component:hover .icon-delete-component{
+    background-color: #ff6161!important;
+}
+
+/* Kết thúc: CSS cho THÀNH PHẦN LƯƠNG */

@@ -1,5 +1,5 @@
 <template>
-    <div class="wrap-button">
+    <div class="wrap-button" :style="{width : width + '!important'}">
         <div class="text-button">{{ buttonName }}</div>
     </div>
 </template>
@@ -12,6 +12,12 @@ export default {
             default(){ 
                 return '';
             }
+        },
+        width:{
+           type: String,
+           default(){
+               return '';
+           } 
         }
     }
 }
