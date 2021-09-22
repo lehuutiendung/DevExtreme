@@ -1,0 +1,15 @@
+G:\MISA\DevExtreme\BE\MISA.Salary.API\MISA.Infrastructure\bin\Debug\net5.0\MISA.Infrastructure.deps.json
+G:\MISA\DevExtreme\BE\MISA.Salary.API\MISA.Infrastructure\bin\Debug\net5.0\MISA.Infrastructure.dll
+G:\MISA\DevExtreme\BE\MISA.Salary.API\MISA.Infrastructure\bin\Debug\net5.0\ref\MISA.Infrastructure.dll
+G:\MISA\DevExtreme\BE\MISA.Salary.API\MISA.Infrastructure\bin\Debug\net5.0\MISA.Infrastructure.pdb
+G:\MISA\DevExtreme\BE\MISA.Salary.API\MISA.Infrastructure\bin\Debug\net5.0\MISA.ApplicationCore.dll
+G:\MISA\DevExtreme\BE\MISA.Salary.API\MISA.Infrastructure\bin\Debug\net5.0\MISA.ApplicationCore.pdb
+G:\MISA\DevExtreme\BE\MISA.Salary.API\MISA.Infrastructure\obj\Debug\net5.0\MISA.Infrastructure.csproj.AssemblyReference.cache
+G:\MISA\DevExtreme\BE\MISA.Salary.API\MISA.Infrastructure\obj\Debug\net5.0\MISA.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+G:\MISA\DevExtreme\BE\MISA.Salary.API\MISA.Infrastructure\obj\Debug\net5.0\MISA.Infrastructure.AssemblyInfoInputs.cache
+G:\MISA\DevExtreme\BE\MISA.Salary.API\MISA.Infrastructure\obj\Debug\net5.0\MISA.Infrastructure.AssemblyInfo.cs
+G:\MISA\DevExtreme\BE\MISA.Salary.API\MISA.Infrastructure\obj\Debug\net5.0\MISA.Infrastructure.csproj.CoreCompileInputs.cache
+G:\MISA\DevExtreme\BE\MISA.Salary.API\MISA.Infrastructure\obj\Debug\net5.0\MISA.Infrastructure.csproj.CopyComplete
+G:\MISA\DevExtreme\BE\MISA.Salary.API\MISA.Infrastructure\obj\Debug\net5.0\MISA.Infrastructure.dll
+G:\MISA\DevExtreme\BE\MISA.Salary.API\MISA.Infrastructure\obj\Debug\net5.0\ref\MISA.Infrastructure.dll
+G:\MISA\DevExtreme\BE\MISA.Salary.API\MISA.Infrastructure\obj\Debug\net5.0\MISA.Infrastructure.pdb

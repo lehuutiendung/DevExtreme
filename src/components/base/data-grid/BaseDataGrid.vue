@@ -1,5 +1,4 @@
 <template>
-  <div>
     <DxDataGrid
       :data-source="dataSource"
       :remote-operations="false"
@@ -9,7 +8,9 @@
       :show-borders="true"
       @content-ready="onContentReady"
       :hover-state-enabled="true"
+      :paging="paging"
       column-resizing-mode="widget"
+      no-data-text="Không có dữ liệu"
       height="100%"
       width="100%"
       @selection-changed="onSelectionChanged"
@@ -60,7 +61,6 @@
       <DxScrolling column-rendering-mode="virtual"/>
     
     </DxDataGrid>
-  </div>
 </template>
 <script>
 import {
@@ -112,6 +112,10 @@ export default {
           collapsed = true;
         }
       },
+      // Tắt paging default của DxDataGrid
+      paging: {
+          enabled:false,
+      },
       allMode: 'page',
       checkBoxesMode: 'always',
     };
@@ -131,6 +135,7 @@ export default {
        */
       onSelectionChanged({ selectedRowsData }) {
           // Emit danh sách các dòng được checked lên SalaryPolicyList
+          this.$emit('clickItemDataGrid', selectedRowsData);
           this.$emit('numberOfCheckedGrid', selectedRowsData);
       },
 

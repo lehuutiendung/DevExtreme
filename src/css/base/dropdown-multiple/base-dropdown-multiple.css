@@ -2,13 +2,38 @@
     top: 9px;
     left: 35px;
 }
-
-.dx-dropdowneditor-overlay .dx-checkbox-icon {
+/* Bắt đầu: CSS cho box check */
+.dx-dropdowneditor-overlay .dx-popup-flex-height .dx-checkbox-icon {
     border-radius: 3px !important;
     border: 2px solid #737888 !important;
     width: 16px;
     height: 16px;
 }
+
+.dx-dropdowneditor-overlay .dx-popup-flex-height .dx-checkbox-checked .dx-checkbox-icon{
+    width: 20px;
+    height: 20px;
+    border: none !important;
+    background: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg) -260px 0 no-repeat;
+    margin-left: -2px;
+    margin-top: -2px;
+}
+
+.dx-dropdowneditor-overlay .dx-popup-flex-height .dx-checkbox-container{
+    margin-top: -2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dx-dropdowneditor-overlay .dx-popup-flex-height .dx-checkbox-indeterminate .dx-checkbox-icon::before{
+    background-color: #ffffff;
+}
+
+.dx-dropdowneditor-overlay .dx-popup-flex-height .dx-checkbox-checked .dx-checkbox-icon::before{
+    display: none;
+} 
+/* Kết thúc: CSS cho box check */
 
 .dx-dropdowneditor-button .dx-button-content {
     display: flex;
@@ -30,4 +55,24 @@
 
 .content-add-screen-wrap .border-error-validate{
     border: 1px solid rgb(255, 97, 97) !important;
+}
+/* Custome tag */
+.custom-item {
+    position: relative;
+    min-height: 30px;
+}
+.custom-item > img {
+    left: 1px;
+    margin-top: 3px;
+    max-height: 30px;
+    width: auto;
+    position: absolute;
+}
+.product-name  {
+    display: inline-block;
+    padding-left: 45px;
+    text-indent: 0;
+    line-height: 30px;
+    font-size: 15px;
+    width: 100%;
 }

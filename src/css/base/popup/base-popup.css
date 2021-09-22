@@ -1,0 +1,73 @@
+/* Popup hủy form thông tin */
+.background-popup{
+    background-color: rgba(0,0,0, 0.5);
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    display: none;
+    position: fixed;
+    /* align-items: center; */
+    justify-content: center;
+    z-index: 20;
+}
+
+.popup-active{
+    display: flex;
+}
+
+.popup{
+    display: block;
+    width: 460px;
+    background-color: #ffffff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -230px;
+    margin-top: -256px;
+    border-radius: 4px;
+    z-index: 999;
+}
+
+.popup .popup-title{
+    padding: 24px 14px 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.popup .popup-title .title{
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.popup .popup-title .wrap-icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.popup .popup-title .wrap-icon:hover{
+    background-color: #EFF1F6;
+}
+
+.popup .popup-title .wrap-icon .icon-exit{
+    -webkit-mask-image: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg);
+    -webkit-mask-repeat: no-repeat;
+    color: #afb3c1;
+    -webkit-mask-position: -280px 0;
+    background-color: #707070!important;
+}
+
+.popup .popup-content{
+    padding: 24px;
+}
+
+.popup .popup-button{
+    display: flex;
+    padding: 16px 24px;
+    background-color: #F2F2F2;
+    justify-content: flex-end;
+}

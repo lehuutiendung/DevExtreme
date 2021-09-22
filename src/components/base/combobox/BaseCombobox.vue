@@ -4,7 +4,7 @@
         <div class="dx-field">
             <div class="dx-field-value">
                 <DxTagBox
-                :items="simpleProducts"
+                :items="dataSource"
                 :show-selection-controls="true"
                 :search-enabled="true"
                 :placeholder="placeholder"
@@ -32,28 +32,48 @@ export default {
             default(){
                 return "";
             }
+        },
+
+        //Danh sách chứa tất cả bản ghi ( Vị trí || Nhân viên )
+        listObjectData:{
+            type: Array,
+            deafult(){
+                return [];
+            }
+        },
+
+        //Loại combobox để phân biệt Combobox tag của Vị trí và Nhân viên
+        nameCombobox:{
+            type: String,
+            default(){
+                return '';
+            }
         }
     },
     data(){
         return {
-            simpleProducts: [
-                'HD Video Player',
-                'SuperHD Video Player',
-                'SuperPlasma 50',
-                'SuperLED 50',
-                'SuperLED 42',
-                'SuperLCD 55',
-                'SuperLCD 42',
-                'SuperPlasma 65',
-                'SuperLCD 70',
-                'Projector Plus',
-                'Projector PlusHT',
-                'ExcelRemote IR',
-                'ExcelRemote Bluetooth',
-                'ExcelRemote IP'
-            ],
+            dataSource: [],   //Danh sách chứa tên của các vị trí
         }
-    }
+    },
+    created() {
+        /**
+         * @description Lưu data vào danh sách dataSource
+         * @created LHTDung
+         * @date 22/09/2021
+         */
+        if(this.listObjectData){
+            if(this.nameCombobox == this.$resourceVn.POSITION){
+                this.listObjectData.forEach(item => {
+                    this.dataSource.push(item.PositionName);
+                });
+            }
+            if(this.nameCombobox == this.$resourceVn.EMPLOYEE){
+                this.listObjectData.forEach(item => {
+                    this.dataSource.push(item.FullName);
+                });
+            }
+        }
+    },
 }
 </script>
 <style scoped>
