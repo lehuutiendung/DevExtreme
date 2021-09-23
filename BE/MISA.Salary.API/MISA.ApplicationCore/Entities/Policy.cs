@@ -27,34 +27,34 @@ namespace MISA.ApplicationCore.Entities
         public string PolicyName { get; set; }
 
         /// <summary>
-        /// Id của vị trí áp dụng
+        /// Vị trí áp dụng
         /// Created: LHTDung
         /// Date: 21/9/2021
         /// </summary>
-        public Guid? PositionId { get; set; }
+        public string PositionName { get; set; }
 
         /// <summary>
-        /// Id đơn vị áp dụng
+        /// Đơn vị áp dụng
         /// Created: LHTDung
         /// Date: 21/9/2021
         /// </summary>
         [MISARequired("Mã đơn vị")]
-        public Guid DepartmentId { get; set; }
+        public string DepartmentName { get; set; }
 
         /// <summary>
-        /// Id nhân viên áp dụng
+        /// Nhân viên áp dụng
         /// Created: LHTDung
         /// Date: 21/9/2021
         /// </summary>
 
-        public Guid? EmployeeId { get; set; }
+        public string FullName { get; set; }
 
         /// <summary>
         /// Id thành phần
         /// Created: LHTDung
         /// Date: 21/9/2021
         /// </summary>
-        public Guid? ComponentId { get; set; }
+        public string ComponentName { get; set; }
 
         /// <summary>
         /// Trạng thái

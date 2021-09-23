@@ -12,7 +12,7 @@ namespace MISA.ApplicationCore.Interfaces.Repository
 
         Object GetById(Guid entityId);
 
-        Object Filter(int pageSize, int pageNumber, String filter, string departmentId);
+        Object Filter(int pageSize, int pageNumber, String filter, int? status, string departmentId);
 
         int Add(Entity entity);
 

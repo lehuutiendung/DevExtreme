@@ -5,9 +5,11 @@
             <div class="dx-field-value">
                 <DxTagBox
                 :items="dataSource"
+                :value="arrayValue"
                 :show-selection-controls="true"
                 :search-enabled="true"
                 :placeholder="placeholder"
+                @value-changed="onValueChanged"
                 />
             </div>
             <div class="icon-36 wrap-icon-combobox">
@@ -21,6 +23,8 @@
 </template>
 
 <script>
+import { EventBus } from "../../../main"
+
 import DxTagBox from 'devextreme-vue/tag-box';
 export default {
     components: {
@@ -48,14 +52,28 @@ export default {
             default(){
                 return '';
             }
+        },
+        
+        //Dữ liệu Vị trí áp dụng/Nhân viên áp dụng của bản ghi (xem chi tiết | sửa) 
+        value:{
+          type: String,
+          default(){
+            return '';
+          }
         }
     },
     data(){
         return {
             dataSource: [],   //Danh sách chứa tên của các vị trí
+            arrayValue: [],   //Danh sách chứa dữ liệu bind lên DxTagBox
+            itemChecked: [],  //Danh sách chứa các item được chọn
         }
     },
     created() {
+        // Tách chuỗi thành các phần tử và đẩy vào arrayValue để tạo thành các tag
+        if(this.value != ''){
+            this.arrayValue = this.value.split('; ');
+        }
         /**
          * @description Lưu data vào danh sách dataSource
          * @created LHTDung
@@ -72,6 +90,19 @@ export default {
                     this.dataSource.push(item.FullName);
                 });
             }
+        }
+    },
+    methods: {
+        /**
+         * @description Xử lý sự kiện thay đổi giá trị của DxTagBox
+         * @created LHTDung
+         * @date 22/09/2021
+         */
+        onValueChanged(e) {
+            // Event handling commands go here
+            this.itemChecked = e.value;
+            console.log(this.itemChecked);
+            EventBus.$emit('updateValueCombobox', this.nameCombobox, this.itemChecked);
         }
     },
 }

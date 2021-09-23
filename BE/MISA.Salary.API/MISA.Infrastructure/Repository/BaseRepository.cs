@@ -28,6 +28,7 @@ namespace MISA.Infrastructure.Repository
         /// Tương tác database lấy tất cả bản ghi
         /// </summary>
         /// <typeparam name="Entity"></typeparam>
+        /// LHTDung - 23/09/2021
         /// <returns></returns>
         public List<object> GetAll<Entity>()
         {
@@ -49,6 +50,7 @@ namespace MISA.Infrastructure.Repository
         /// Tương tác database lấy bản ghi theo id
         /// </summary>
         /// <param name="entityId"></param>
+        /// LHTDung - 23/09/2021
         /// <returns></returns>
         public object GetById(Guid entityId)
         {
@@ -70,9 +72,10 @@ namespace MISA.Infrastructure.Repository
 
         #region Tương tác với database thực hiện thêm mới
         /// <summary>
-        /// Tương tác với database thực hiện thêm mới
+        /// Tương tác thực hiện thêm mới bản ghi
         /// </summary>
         /// <param name="entity"></param>
+        /// Created: LHTDung - 23/9/2021
         /// <returns></returns>
         public int Add(Entity entity)
         {
@@ -110,11 +113,6 @@ namespace MISA.Infrastructure.Repository
                             itemValue = Guid.NewGuid();
                         }
 
-                        if (itemName == $"{className}Code")
-                        {
-                            dynamicParameters.Add($"@{className}Code", itemValue);
-                        }
-
                         //Thêm param tương ứng với mỗi property
                         dynamicParam.Add($"@{itemName}", itemValue);
 
@@ -123,26 +121,13 @@ namespace MISA.Infrastructure.Repository
                     }
 
                 }
-                #region Check trùng mã
-                // Mã khách hàng không được trùng
-                var sqlCode = $"SELECT * FROM {className} WHERE {$"{className}Code"} = @{className}Code";
-                //var sqlCode = $"SELECT * FROM Customer c WHERE c.CustomerCode = 'KH123' ";
-
-                //Truy vấn mã khách hàng trong database (kiểm tra trùng lặp)
-                var check = _dbConnection.Query<object>(sqlCode, param: dynamicParameters);
-                if (check.Count() > 0)
-                {
-                    return (int)400;
-                }
-                #endregion
 
                 //Xóa dấu phẩy cuối cùng trong các dãy string columnName, columnValue
                 columnName = columnName.Remove(columnName.Length - 1, 1);
                 columnValue = columnValue.Remove(columnValue.Length - 1, 1);
 
-
-                var sqlCommand = $"INSERT INTO {className}({columnName}) VALUES({columnValue})";
-                var rowEffects = _dbConnection.Execute(sqlCommand, param: dynamicParam);
+                var sqlCommand = $"Proc_Insert{className}";
+                var rowEffects = _dbConnection.Execute(sqlCommand, param: dynamicParam, commandType: CommandType.StoredProcedure);
                 return rowEffects;
             }
         }
@@ -154,6 +139,7 @@ namespace MISA.Infrastructure.Repository
         /// </summary>
         /// <param name="entityId"></param>
         /// <param name="entity"></param>
+        /// LHTDung - 23/09/2021
         /// <returns></returns>
         public int Update(Guid entityId, Entity entity)
         {
@@ -186,48 +172,29 @@ namespace MISA.Infrastructure.Repository
                         //Lấy value của prop
                         var itemValue = item.GetValue(entity);
 
-                        if (itemName == $"{className}Code")
-                        {
-                            dynamicParam.Add($"@{className}Code", itemValue);
-                        }
-
                         //Thêm param tương ứng với mỗi property
                         dynamicParam.Add($"@{itemName}", itemValue);
                         queryValue.Add($"{itemName} = @{itemName}");
                     }
                 }
 
-                #region Check trùng mã
-                // Mã khách hàng không được trùng
-                // Truy vấn code mới nhập trong hệ thống
-                var sqlCode = $"SELECT {className}Code FROM {className} WHERE {className}Code = @{className}Code";
-                var check = _dbConnection.QueryFirstOrDefault<string>(sqlCode, param: dynamicParam);
-                // Truy vấn code cũ của nhân viên đang sửa
-                var oldCode = $"SELECT {className}Code FROM {className} WHERE {className}Id = @{className}Id";
-                var checkOldCode = _dbConnection.QueryFirstOrDefault<string>(oldCode, param: dynamicParam);
-                // Kiểm tra nếu code đã tồn tại
-                if (check != null && check.Count() > 0)
-                {
-                    //code: Mã mới nhập , check: code trong database
-                    if (!Equals(check, checkOldCode))
-                    {
-                        return (int)400;
-                    }
-                }
-                #endregion
-
                 dynamicParam.Add($"@{className}Id", entityId);
                 // Thực hiện truy vấn, thêm mới bản ghi
-                var sqlCommand = $"UPDATE {className} SET {String.Join(", ", queryValue.ToArray())} " +
-                                    $"WHERE {className}Id = @{className}Id";
+                var sqlCommand = $"Proc_Update{className}";
 
-                var rowEffects = _dbConnection.Execute(sqlCommand, param: dynamicParam);
+                var rowEffects = _dbConnection.Execute(sqlCommand, param: dynamicParam, commandType: CommandType.StoredProcedure);
                 return rowEffects;
             }
         }
         #endregion
 
         #region Tương tác với database thực hiện xóa nhiều bản ghi
+        /// <summary>
+        /// Tương tác thực hiện xóa nhiều bản ghi
+        /// </summary>
+        /// <param name="listId"></param>
+        /// LHTDung - 23/09/2021
+        /// <returns></returns>
         public int DeleteMultiple(List<Guid> listId)
         {
 
@@ -243,7 +210,6 @@ namespace MISA.Infrastructure.Repository
                 foreach (var item in listId)
                 {
                     var formatItem = "\'" + item + "\'";
-                    //arrayValue += $"{item},";
                     arrayValue.Add(formatItem);
                 };
 
@@ -253,20 +219,21 @@ namespace MISA.Infrastructure.Repository
                 transaction.Commit();
                 return entityEffect;
             }
-
-
         }
         #endregion
 
         #region Tương tác với database thực hiện filter, phân trang
         /// <summary>
-        /// Tương tác với database thực hiện filter, phân trang
+        /// Phân trang, filter tìm kiếm theo Tên, Trạng thái, CCTC
         /// </summary>
         /// <param name="pageSize"></param>
         /// <param name="pageNumber"></param>
         /// <param name="filter"></param>
+        /// <param name="status"></param>
+        /// <param name="department"></param>
+        /// Created: LHTDung - 23/09/2021
         /// <returns></returns>
-        public object Filter(int pageSize, int pageNumber, string filter, string department)
+        public object Filter(int pageSize, int pageNumber, string filter, int? status, string department)
         {
             //Khởi tạo đối tượng kết nối với database
             using (_dbConnection = new MySqlConnection(_connectionString))
@@ -278,30 +245,19 @@ namespace MISA.Infrastructure.Repository
 
                 //Câu lệnh truy vấn phân trang và filter theo các tiêu chí
                 var className = typeof(Entity).Name;
-                var sqlCommand = "";
-                var sqltotalRecord = "";
-                if (className == "Employee")
-                {
-                    sqlCommand = $"SELECT * FROM " +
-                                        $"(SELECT e.*, d.DepartmentName, " +
-                                        $"(CASE e.Gender WHEN 0 THEN 'Nữ' WHEN 1 THEN 'Nam' ELSE 'Không xác định' END) AS GenderName " +
-                                        $"FROM Employee e " +
-                                        $"LEFT JOIN Department d ON d.DepartmentId = e.DepartmentId " +
-                                        $"WHERE ( FullName LIKE @FullName OR EmployeeCode LIKE @EmployeeCode OR PhoneNumber LIKE @PhoneNumber OR LandlinePhoneNumber LIKE @LandlinePhoneNumber AND ISNULL(NULL))" +
-                                        $") paginate ORDER BY CreatedDate DESC LIMIT {pageSize} OFFSET {offSet};";
-                    sqltotalRecord = $"SELECT COUNT(*) FROM Employee e LEFT JOIN Department d ON d.DepartmentId = e.DepartmentId WHERE ( FullName LIKE @FullName OR EmployeeCode LIKE @EmployeeCode OR PhoneNumber LIKE @PhoneNumber OR LandlinePhoneNumber LIKE @LandlinePhoneNumber AND ISNULL(NULL))";
+                var sqlCommand = $"Proc_Get{className}FilterPaging";
 
-                }
+                dynamicParameters.Add($"@PageSize", pageSize);
+                dynamicParameters.Add($"@PageNumber", pageNumber);
+                dynamicParameters.Add($"@Filter", $"%{filter}%");
+                dynamicParameters.Add($"@Status", status);
+                dynamicParameters.Add($"@DepartmentId", $"%{department}%");
+                dynamicParameters.Add($"@TotalPage", dbType: DbType.Int32, direction: ParameterDirection.Output);
+                dynamicParameters.Add($"@TotalRecord", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
-                dynamicParameters.Add($"@FullName", $"%{filter}%");
-                dynamicParameters.Add($"@{className}Code", $"%{filter}%");
-                dynamicParameters.Add($"@PhoneNumber", $"%{filter}%");
-                dynamicParameters.Add($"@LandlinePhoneNumber", $"%{filter}%");
-                //dynamicParameters.Add($"@DepartmentId", $"{department}");
-
-                var entity = _dbConnection.Query<object>(sqlCommand, dynamicParameters);
-                var totalRecord = _dbConnection.QueryFirstOrDefault<int>(sqltotalRecord, dynamicParameters);
-                var totalPage = Math.Ceiling(((double)totalRecord / (double)pageSize));
+                var entity = _dbConnection.Query<object>(sqlCommand,param: dynamicParameters, commandType: CommandType.StoredProcedure);
+                var totalPage = dynamicParameters.Get<int>("@TotalPage");
+                var totalRecord = dynamicParameters.Get<int>("@TotalRecord");
                 return new { TotalPage = totalPage, TotalRecord = totalRecord, Data = entity };
             }
         }

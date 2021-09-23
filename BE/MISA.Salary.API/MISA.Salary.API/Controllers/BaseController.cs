@@ -101,11 +101,11 @@ namespace MISA.Salary.API.Controllers
         /// <returns>Danh sách bản ghi chứa trong trang / theo bộ lọc</returns>
         /// Created by: LHTDung - 27/08/2021
         [HttpGet("Filter")]
-        public virtual IActionResult Filter(int pageSize, int pageNumber, String filter, String departmentId)
+        public virtual IActionResult Filter(int pageSize, int pageNumber, String filter, int status, String departmentId)
         {
             try
             {
-                var _serviceResult = _baseService.Filter(pageSize, pageNumber, filter, departmentId);
+                var _serviceResult = _baseService.Filter(pageSize, pageNumber, filter, status, departmentId);
                 var response = StatusCode(200, _serviceResult.Data);
                 return response;
             }
