@@ -28,7 +28,6 @@ export default {
     data() {
         return {
             showPopup: false, //Mặc định ẩn popup
-            
         }
     },
     methods: {
