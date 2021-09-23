@@ -128,6 +128,7 @@
                             <DropdownMultiple 
                             ref="dropdownMultipleRequired" 
                             v-model="objectEdit.DepartmentName"
+                            @updateValueDropdownMulti="updateValueDropdownMulti($event)"
                             :treeDataSource="treeDataDepartment"
                             v-if="mode == this.$resourceVn.AddScreen || mode == this.$resourceVn.EditScreen"
                             />
@@ -144,6 +145,7 @@
                             :placeholder="this.$resourceVn.AllPositionApply" 
                             :listObjectData="dataPosition"
                             :nameCombobox="this.$resourceVn.POSITION"
+                            v-model="objectEdit.PositionName"
                             v-if="mode == this.$resourceVn.AddScreen || mode == this.$resourceVn.EditScreen"
                             />
                             <!-- Hiển thị với màn xem chi tiết -->
@@ -158,6 +160,7 @@
                             :placeholder="this.$resourceVn.AllEmployeeApply"
                             :listObjectData="dataEmployee" 
                             :nameCombobox="this.$resourceVn.EMPLOYEE"
+                            v-model="objectEdit.FullName"
                             v-if="mode == this.$resourceVn.AddScreen || mode == this.$resourceVn.EditScreen"
                             />
                             <!-- Hiển thị với màn xem chi tiết -->
@@ -229,7 +232,7 @@
                                 </transition-group>
                             </draggable>
                         </div>
-                        <div class="component-button-add" v-if="mode == this.$resourceVn.AddScreen">
+                        <div class="component-button-add" v-if="mode == this.$resourceVn.AddScreen || mode == this.$resourceVn.EditScreen">
                             <ButtonIcon class="button-icon-white" 
                             :buttonName="this.$resourceVn.ButtonIconAddComponentText" 
                             @click.native="clickAddComponent()"/>
@@ -310,7 +313,6 @@ export default {
 
             listHeader: fakeData.listHeader,    //Dữ liệu các tiêu đề của grid
             dataSource: [],                     //Dữ liệu của grid
-            dataJSONParse: [],                  //Dữ liệu JSON Parse của grid
             treeDataDepartment: [],                 //Data cho Dropdown Single (Đơn vị)
             dataPosition: [],               //Data cho Combobox Tag (Vị trí)
             dataEmployee: [],               //Data cho Combobox Tag (Nhân viên)
@@ -319,7 +321,31 @@ export default {
         }
     },
     mounted() {
-      /************************************************ Gọi API ************************************************/
+        /**
+         * @description Nhận emit từ Combobox Tag, thay đổi giá trị của object chỉnh sửa
+         * @created LHTDung
+         * @date 22/09/2021
+         */
+        EventBus.$on('updateValueCombobox', (nameCombobox, value) => {
+            if(nameCombobox == this.$resourceVn.POSITION){
+                let stringPosition = '';
+                value.forEach(item => {
+                    stringPosition += item;
+                    stringPosition += "; ";
+                });
+                this.objectEdit.PositionName = stringPosition;
+            }
+            if(nameCombobox == this.$resourceVn.EMPLOYEE){
+                let stringEmployee = '';
+                value.forEach(item => {
+                    stringEmployee += item;
+                    stringEmployee += "; ";
+                });
+                this.objectEdit.FullName = stringEmployee;
+            }
+        })
+
+        /************************************************ Gọi API ************************************************/
         /**
          * @description Gọi API lấy tất cả dữ liệu của Đơn vị
          * @created LHTDung
@@ -522,7 +548,6 @@ export default {
          * @createdBy LHTDung
          */
         moveToViewScreen(e){
-            console.log(e);
             this.objectEdit = e;
             this.mode = this.$resourceVn.ViewScreen;
         },
@@ -562,7 +587,7 @@ export default {
         moveToMainScreen(){
             this.mode = this.$resourceVn.MainScreen;
         },
-        /***************************** THÀNH PHẦN LƯƠNG ************************/
+        /*************************************** THÀNH PHẦN LƯƠNG **************************************/
         /**
          * @description Nhận danh sách "Thành phần lương" được chọn từ Datagrid
          * @date 21/9/2021
@@ -586,7 +611,80 @@ export default {
                 this.listChoosedComponent.splice(index, 1);
             }
             console.log(value);
-        }
+        },
+
+        /**
+         * @description Nhận emit thay đổi value từ Dropdown Multiple (v-model Dropdown Multiple)
+         * @date 22/9/2021
+         * @createdBy LHTDung
+         */
+        updateValueDropdownMulti(e){
+            let stringListDepartment = "";
+            e.forEach(nodeDropdown => {
+                stringListDepartment += nodeDropdown.text;
+                stringListDepartment += ';' ;
+            });
+            this.objectEdit.DepartmentName = stringListDepartment;
+            console.log(this.objectEdit);
+            console.log(stringListDepartment);
+        },
+
+        /**
+         * @description Xử lý phân trang
+         * @created LHTDung
+         * @date 23/9/2021
+         */
+        paginate(totalRecord, pageNumber, pageSize, maxPages, totalPage){
+            // đảm bảo trang hiện tại không nằm ngoài phạm vi
+            if (pageNumber < 1) {
+                pageNumber = 1;
+            } else if (pageNumber > totalPage) {
+                pageNumber = totalPage;
+            }
+
+            let startPage, endPage;
+            // Trường hợp tổng số trang bé hơn số trang hiển thị tối đa
+            if (totalPage <= maxPages) {
+                startPage = 1;
+                endPage = totalPage;
+            } else {
+                // tổng số trang nhiều hơn tối đa => tính trang bắt đầu và trang kết thúc
+                let maxPagesBeforeCurrentPage = Math.floor(maxPages / 2);
+                let maxPagesAfterCurrentPage = Math.ceil(maxPages / 2) - 1;
+                if (pageNumber <= maxPagesBeforeCurrentPage) {
+                    // trang hiện tại gần đầu
+                    startPage = 1;
+                    endPage = maxPages;
+                } else if (pageNumber + maxPagesAfterCurrentPage >= totalPage) {
+                    // trang hiện tại gần cuối
+                    startPage = totalPage - maxPages + 1;
+                    endPage = totalPage;
+                } else {
+                    // trang hiện tại nằm ở vùng giữa
+                    startPage = pageNumber - maxPagesBeforeCurrentPage;
+                    endPage = pageNumber + maxPagesAfterCurrentPage;
+                }
+            }
+
+            // tính chỉ số của bản ghi bắt đầu và kết thúc
+            let startIndex = (pageNumber - 1) * pageSize;
+            let endIndex = Math.min(startIndex + pageSize - 1, totalRecord - 1);
+
+            // tạo một mảng các trang
+            let pages = Array.from(Array((endPage + 1) - startPage).keys()).map(i => startPage + i);
+            var obj = {
+                totalRecord: totalRecord,
+                pageNumber: pageNumber,
+                pageSize: pageSize,
+                totalPage: totalPage,
+                startPage: startPage,
+                endPage: endPage,
+                startIndex: startIndex,
+                endIndex: endIndex,
+                pages: pages
+            }
+            return obj;
+        },
     },
 
     watch:{
@@ -601,6 +699,9 @@ export default {
                 this.$nextTick(() =>  {
                     this.focusFirstField();
                 })
+            }
+            if(this.mode == this.$resourceVn.MainScreen){
+                this.objectEdit = {};
             }
 
         }

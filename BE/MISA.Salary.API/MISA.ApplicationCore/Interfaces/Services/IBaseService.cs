@@ -23,7 +23,7 @@ namespace MISA.ApplicationCore.Interfaces.Services
         ServiceResult GetById(Guid entityId);
 
         /// <summary>
-        /// Bộ lọc theo Tên, Mã entity, Số điện thoại
+        /// Bộ lọc theo Tên, trạng thái, CCTC
         /// </summary>
         /// <param name="fullName"></param>
         /// <param name="entityCode"></param>
@@ -32,7 +32,7 @@ namespace MISA.ApplicationCore.Interfaces.Services
         ///     totalRecord
         ///     {entity}
         /// </returns>
-        ServiceResult Filter(int pageSize, int pageNumber, String filter, String departmentId);
+        ServiceResult Filter(int pageSize, int pageNumber, String filter, int? status, String departmentId);
 
         /// <summary>
         /// Xóa nhiều

@@ -9,5 +9,6 @@ namespace MISA.ApplicationCore.Interfaces.Repository
 {
     public interface IComponentRepository : IBaseFacilityRepository<Component>
     {
+        Object Filter(int pageSize, int pageNumber, String filter, string componentType);
     }
 }

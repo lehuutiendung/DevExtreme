@@ -2,10 +2,10 @@
     <div class="dx-field-value">
         <DxDropDownBox
           ref="dropdownBox"
-          :value="value"
+          :value="treeBoxValue"
           :show-clear-button="false"
           :data-source="treeDataSource"
-          value-expr="DepartmentId"
+          value-expr="DepartmentName"
           display-expr="DepartmentName"
           @value-changed="syncTreeViewSelection($event)"
         >
@@ -24,7 +24,7 @@
           <template #content="{  }">
             <DxTreeView
               :ref="treeViewRefName"
-              :value="value"
+              :value="treeBoxValue"
               :data-source="treeDataSource"
               :select-by-click="true"
               :searchEnabled="true"
@@ -100,7 +100,16 @@ export default {
          * @CreatedBy LHTDung
          */
         treeView_itemSelectionChanged(e) {
-          this.treeBoxValue = e.component.getSelectedNodeKeys();
+          this.$emit('updateValueDropdownMulti', e.component.getSelectedNodes());
+          let nodes = e.component.getSelectedNodes();
+          let arrayName = [];
+          // Mảng arrayName chứa các tên đơn vị áp dụng được chọn
+          nodes.forEach(node => {
+            arrayName.push(node.text);
+          });
+          console.log(arrayName);
+          // Gán lại mảng cho treeBoxValue (phụ thuộc vào selectItem)
+          this.treeBoxValue = arrayName;
         },
     },
 }

@@ -13,9 +13,33 @@ namespace MISA.Salary.API.Controllers
     [ApiController]
     public class ComponentsController : BaseFacilityController<Component>
     {
-        public ComponentsController(IBaseFacilityService<Component> baseFacilityService) : base(baseFacilityService)
+        IComponentService _componentService;
+        public ComponentsController(IComponentService componentService, IBaseFacilityService<Component> baseFacilityService) : base(baseFacilityService)
         {
+            _componentService = componentService;
+        }
 
+        [HttpGet("FilterComponent")]
+        public IActionResult Filter(int pageSize, int pageNumber, String filter, String componentType)
+        {
+            try
+            {
+                var _serviceResult = _componentService.Filter(pageSize, pageNumber, filter, componentType);
+                var response = StatusCode(200, _serviceResult.Data);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                var errorObj = new
+                {
+                    devMsg = ex.Message,
+                    userMsg = MISA.ApplicationCore.Resources.ResourcesCommon.Exception_ErrorMsg,
+                    errorCode = "",
+                    moreInfo = "",
+                    traceId = ""
+                };
+                return StatusCode(500, errorObj);
+            }
         }
     }
 }
