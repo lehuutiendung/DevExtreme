@@ -57,14 +57,15 @@ module.exports = {
     URL_EMPLOYEE_GETALL: "https://localhost:44330/api/Employees",
     URL_COMPONENT_GETALL: "https://localhost:44330/api/Components",
     URL_POLICY_GETALL: "https://localhost:44330/api/Policies",
+    URL_POLICY_COMMON: "https://localhost:44330/api/Policies",
 
     POSITION: "Position",
     EMPLOYEE: "Employee",
 
     Status: [
-        {Text: "Tất cả trạng thái", Value: 0},
-        {Text: "Đang áp dụng", Value: 1},
-        {Text: "Ngừng áp dụng", Value: 2}, 
+        {Text: "Tất cả trạng thái", Value: ""},
+        {Text: "Đang áp dụng", Value: 0},
+        {Text: "Ngừng áp dụng", Value: 1}, 
     ],
     PagingNumber: [
         {Text: "15", Value: 15},

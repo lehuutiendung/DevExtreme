@@ -65,7 +65,7 @@
                     <div class="content-body-tool">
                         <div class="content-tool-without-check" v-if="totalChecked == 0 || mode == this.$resourceVn.AddScreen ">
                             <div class="content-body-tool-left" v-if="mode == this.$resourceVn.MainScreen">
-                                <InputSearch/>
+                                <InputSearch @keyup.enter.native="handleInputSearch($event)"/>
                             </div>
                             <div class="content-body-tool-right" v-if="mode == this.$resourceVn.MainScreen">
                                 <Dropdown width="230px" 
@@ -207,7 +207,7 @@
                         <div class="salary-component">
                             <div class="salary-component-text">{{ this.$resourceVn.SalaryComponent }}</div>
                         </div>
-                        <div class="group-grid-salary-component" v-if="listChoosedComponent.length > 0">
+                        <div class="group-grid-salary-component">
                             <div class="grid-salary-component-title">
                                 <div class="col-1">{{ this.$resourceVn.ComponentNameTitle }}</div>
                                 <div class="col-2">{{ this.$resourceVn.ComponentCodeTitle }}</div>
@@ -239,7 +239,12 @@
                         </div>
                     </div>
                 </div>
-                <TheFooter v-if="mode == this.$resourceVn.MainScreen"/>
+                <TheFooter v-if="mode == this.$resourceVn.MainScreen" 
+                :totalRecord="totalRecord" 
+                :startIndex="startIndex" 
+                :endIndex="endIndex" 
+                @updatePrevPageNumber="updatePrevPageNumber" 
+                @updateNextPageNumber="updateNextPageNumber"/>
             </div>
             <div class="responsive-filter">
                 <FilterBox :filterShow="filterShow" @hideFilterPopup="hideFilterPopup"/>
@@ -247,6 +252,7 @@
         </div>    
         <SalaryPolicyDetail :modalBoxShow="modalBoxShow" 
         :updateItemSource="updateItemSource"
+        :mode="mode"
         @getListComponent="getListComponent($event)"
         @exitModalBox="exitModalBox"/>
         <Popup @moveToMainScreen="moveToMainScreen"/>
@@ -318,6 +324,16 @@ export default {
             dataEmployee: [],               //Data cho Combobox Tag (Nhân viên)
             updateItemSource: {},           //Object chứa item "Thành phần lương" sau khi xóa (Cập nhật vào Data Grid vào bảng Thành phần)
             listChoosedComponent: [],       //Danh sách chứa các item "Thành phần Lương" sẵn sàng cho thêm mới
+
+            totalPage: 0,   //Tổng số trang
+            totalRecord: 0, //Tổng số bản ghi
+            pageSize: 15,   //Kích thước trang
+            pageNumber: 1,  //Trang lấy dữ liệu
+            maxPages: 5,    //Số trang hiển thị
+            startIndex: 0,  //Bản ghi bắt đầu trong trang
+            endIndex: 0,    //Bản ghi kết thúc trong trang
+            inputSearch: "",     //Filter theo tên chính sách
+            statusSearch: "",   //Filter theo trạng thái
         }
     },
     mounted() {
@@ -343,6 +359,15 @@ export default {
                 });
                 this.objectEdit.FullName = stringEmployee;
             }
+        })
+
+        /**
+         * @description Cập nhật lại số bản ghi/trang (Nhận $emit từ Dropdown)
+         * @created LHTDung
+         * @date 23/09/2021
+         */
+        EventBus.$on('getValueFromDropdownCustomize', (value) => {
+            this.pageSize = parseInt(value, 10);
         })
 
         /************************************************ Gọi API ************************************************/
@@ -386,18 +411,12 @@ export default {
         })
         
         /**
-         * @description Gọi API lấy tất cả dữ liệu của Chính sách
+         * @description Gọi API lấy dữ liệu trang đầu tiên của Chính sách
          * @created LHTDung
-         * @date 22/09/2021
+         * @date 23/09/2021
          */
-        axios.get(this.$resourceVn.URL_POLICY_GETALL)
-        .then(res => {
-            this.dataSource = res.data;
-        })
-        .catch(err => {
-            console.error(err); 
-        })
-
+        this.calAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch);
+        
     },
     methods: {
         /**
@@ -518,13 +537,12 @@ export default {
             this.$refs.dropdownMultipleRequired.$el.children[0].classList.add(this.$resourceVn.ClassFocus);
         },
 
-        /*********************************** LƯU - THÊM MỚI *********************************/
         /**
-         * @description Xử lý sự kiện click button "Lưu"
-         * @date 20/9/2021
-         * @createdBy LHTDung
+         * @description Validate trước khi gọi api thêm mới
+         * @created LHTDung
+         * @date 23/09/2021
          */
-        clickSave(){
+        validateForm(){
             //Hiển thị validate và border cho trường dropdown multiple "Đơn vị áp dụng"
             if(this.$refs.dropdownMultipleRequired.$el.children[0].classList.contains(this.$resourceVn.ClassEmpty)){
                 this.errorValidateDropdown = true;
@@ -539,9 +557,44 @@ export default {
                 this.errorValidateInput = true;
                 this.$refs.inputRequired.$el.style.border = this.$resourceVn.BorderValidate;
             }
-
         },
 
+        /*********************************** GỌI API THÊM MỚI *********************************/
+        /**
+         * @description Xử lý sự kiện click button "Lưu"
+         * @date 20/9/2021
+         * @createdBy LHTDung
+         */
+        clickSave(){
+            this.validateForm();
+            if(this.errorValidateDropdown == false && this.errorValidateInput == false){
+                // Đặt trạng thái cho chính sách "Đang hoạt động"
+                this.objectEdit.Status = 0;
+                this.objectEdit.ComponentName = JSON.stringify(this.listChoosedComponent);
+                // Bỏ trống trường vị trí áp dụng -> Vị trí áp dụng chính sách: Tất cả 
+                if(this.objectEdit.PositionName == null || this.objectEdit.PositionName == ""){
+                    this.objectEdit.PositionName = this.$resourceVn.AllPositionApply;
+                }
+                // Bỏ trống trường nhân viên áp dụng -> Nhân viên áp dụng chính sách: Tất cả 
+                if(this.objectEdit.FullName == null || this.objectEdit.FullName == ""){
+                    this.objectEdit.FullName = this.$resourceVn.AllEmployeeApply;
+                }
+                // Gọi API thực hiện thêm mới
+                axios.post(this.$resourceVn.URL_POLICY_COMMON, this.objectEdit)
+                .then(res => {
+                    console.log(res);
+                    this.objectEdit = {};
+                })
+                .then(() => {
+                    this.mode = this.$resourceVn.MainScreen;
+                    this.calAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch);
+                })
+                .catch(err => {
+                    console.error(err); 
+                })
+            }
+        },
+        
         /**
          * @description Xử lý sự kiện click vào từng dòng của data grid -> Xem chi tiết
          * @date 20/9/2021
@@ -550,6 +603,7 @@ export default {
         moveToViewScreen(e){
             this.objectEdit = e;
             this.mode = this.$resourceVn.ViewScreen;
+            this.listChoosedComponent = JSON.parse(this.objectEdit.ComponentName);
         },
 
         /**
@@ -685,6 +739,62 @@ export default {
             }
             return obj;
         },
+
+        /**
+         * @description Gọi API thực hiện phân trang, tìm kiếm (Chính sách)
+         */
+        calAPIFilterPolicy(pageSize, pageNumber, filter, status){
+            axios.get(`https://localhost:44330/api/Policies/Filter?pageSize=${pageSize}&pageNumber=${pageNumber}&filter=${filter}&status=${status}`)
+            .then(res => {
+                this.totalPage = res.data.TotalPage;
+                this.totalRecord = res.data.TotalRecord;
+                this.dataSource = res.data.Data;
+                let objPage = this.paginate(this.totalRecord, this.pageNumber, this.pageSize, this.maxPages, this.totalPage);
+                this.startIndex = objPage.startIndex;
+                this.endIndex = objPage.endIndex;
+            })
+            .catch(err => {
+                console.error(err); 
+            })
+        },
+        
+        /**
+         * @description Cập nhật trang khi click trở về trước 1 trang
+         * @created LHTDung
+         * @date 23/09/2021
+         */
+        updatePrevPageNumber(){
+            if(this.pageNumber > 1){
+                this.pageNumber--;
+            }else{
+                this.pageNumber = 1;
+            }
+        },
+
+        /**
+         * @description Cập nhật trang khi click next 1 trang
+         * @created LHTDung
+         * @date 23/09/2021
+         */
+        updateNextPageNumber(){
+            if(this.pageNumber < this.totalPage){
+                this.pageNumber++;
+            }else{
+                this.pageNumber = this.totalPage;
+            }
+        },
+        
+        /**
+         * @description Xử lý sự kiện tìm kiếm Chính sách (Input)
+         * @created LHTDung
+         * @date 23/09/2021
+         */
+        handleInputSearch(e){
+            this.inputSearch = e.target.value;
+            this.pageNumber = 1;
+            this.calAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch);
+        }
+
     },
 
     watch:{
@@ -692,10 +802,10 @@ export default {
             //Thay đổi mode, khởi tạo lại các biển (validate)
             this.errorValidateInput = false;
             this.errorValidateDropdown = false;
-            this.listChoosedComponent = [];
 
             //Focus vào trường đầu tiên trong form 
             if(this.mode == this.$resourceVn.AddScreen){
+                this.listChoosedComponent = [];
                 this.$nextTick(() =>  {
                     this.focusFirstField();
                 })
@@ -703,8 +813,26 @@ export default {
             if(this.mode == this.$resourceVn.MainScreen){
                 this.objectEdit = {};
             }
+        },
 
-        }
+        /**
+         * @description Khi có sự thay đổi về số bản ghi/trang -> Gọi API phân trang, trở về trang đầu tiên
+         * @created LHTDung
+         * @date 23/09/2021
+         */
+        pageSize: function(){
+            this.pageNumber = 1;
+            this.calAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch);
+        },
+
+        /**
+         * @description Khi có sự thay đổi về trang -> Gọi API phân trang
+         * @created LHTDung
+         * @date 23/09/2021
+         */
+        pageNumber: function(){
+            this.calAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch);
+        },
     }
 }
 </script>

@@ -29,7 +29,7 @@
 </template>
 <script>
 
-// import {EventBus} from "../../../main"
+import {EventBus} from "../../../main"
 import ClickOutSide from "../../../js/detectoutside"
 export default {
     name: "Dropdown",
@@ -120,6 +120,7 @@ export default {
             this.valueOfDropdown = value;
             this.current = index;
             this.showData = false;
+            EventBus.$emit('getValueFromDropdownCustomize', this.valueOfDropdown);
         }
 
     },

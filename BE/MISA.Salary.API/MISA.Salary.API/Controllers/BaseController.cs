@@ -101,7 +101,7 @@ namespace MISA.Salary.API.Controllers
         /// <returns>Danh sách bản ghi chứa trong trang / theo bộ lọc</returns>
         /// Created by: LHTDung - 27/08/2021
         [HttpGet("Filter")]
-        public virtual IActionResult Filter(int pageSize, int pageNumber, String filter, int status, String departmentId)
+        public virtual IActionResult Filter(int pageSize, int pageNumber, String filter, int? status, String departmentId)
         {
             try
             {
@@ -141,18 +141,6 @@ namespace MISA.Salary.API.Controllers
                 var serviceResult = _baseService.Add(entity);
                 if (serviceResult.IsValid == true)
                 {
-                    //if ((int)serviceResult.Data == 400)
-                    //{
-                    //    var errorObj = new
-                    //    {
-                    //        devMsg = MISA.ApplicationCore.Resources.ResourcesCommon.Duplicate_ErrorMsg.Replace("{}", ""),
-                    //        userMsg = MISA.ApplicationCore.Resources.ResourcesCommon.Duplicate_ErrorMsg.Replace("{}", ""),
-                    //        errorCode = "",
-                    //        moreInfo = "",
-                    //        traceId = ""
-                    //    };
-                    //    return StatusCode(400, errorObj);
-                    //}
                     return StatusCode(201, serviceResult.Data); ;
                 }
                 else
