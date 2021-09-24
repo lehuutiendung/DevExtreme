@@ -72,7 +72,8 @@ export default {
     created() {
         // Tách chuỗi thành các phần tử và đẩy vào arrayValue để tạo thành các tag
         if(this.value != ''){
-            this.arrayValue = this.value.split('; ');
+            this.arrayValue = this.value;
+            this.arrayValue = this.arrayValue.split('; ');
         }
         /**
          * @description Lưu data vào danh sách dataSource
@@ -101,7 +102,6 @@ export default {
         onValueChanged(e) {
             // Event handling commands go here
             this.itemChecked = e.value;
-            console.log(this.itemChecked);
             EventBus.$emit('updateValueCombobox', this.nameCombobox, this.itemChecked);
         }
     },

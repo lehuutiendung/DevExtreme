@@ -15,7 +15,7 @@
     white-space: nowrap;
     font-weight: 500;
 }
-
+/* Button nền trắng */
 .button-white{
     background-color: #fff;
     color: #212121;
@@ -28,6 +28,7 @@
     border: 1px solid #02b936;
 }
 
+/* Button nền xanh */
 .button-green{
     color: var(--button-primary-color);
     background-color: var(--button-primary-normal-bg-color);
@@ -37,5 +38,18 @@
 .button-green:hover{
     background-color: var(--button-primary-hover-bg-color);
     border: 1px solid var(--button-primary-hover-border-color);
+}
+
+/* Button nền đỏ */
+.button-red{
+    background-color: #e61d1d;
+    color: #fff;
+    border: 1px solid #e61d1d;
+}
+
+.button-red:hover{
+    background-color: #d81010;
+    color: #fff;
+    border: 1px solid #d81010;
 }
 

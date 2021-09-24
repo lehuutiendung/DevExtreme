@@ -54,7 +54,7 @@
                 </div>
                 <div class="wrap-button-group">
                     <Button class="button-white" :buttonName="this.$resourceVn.ButtonCancelText" @click.native="showPopup()"/>
-                    <Button class="button-green" :buttonName="this.$resourceVn.ButtonSaveText"/>
+                    <Button class="button-green" :buttonName="this.$resourceVn.ButtonSaveText" @click.native="saveEdit()"/>
                 </div>
             </div>
         </div>
@@ -70,7 +70,8 @@
                             <div class="content-body-tool-right" v-if="mode == this.$resourceVn.MainScreen">
                                 <Dropdown width="230px" 
                                 :listData="this.$resourceVn.Status" 
-                                :typeDropdown="this.$resourceVn.DropdownStatus"/>
+                                :typeDropdown="this.$resourceVn.DropdownStatus" 
+                                @getValueStatusSearch="getValueStatusSearch($event)"/>
                                 <DropdownSingle :treeDataSource="treeDataDepartment"/>
                                 <div class="filter" @click="showFilterPopup()">
                                     <div class="icon-20 icon-filter"></div>
@@ -97,11 +98,13 @@
                             <ButtonIcon class="button-icon-orange" 
                                 :typeButton="this.$resourceVn.ButtonIconApply" 
                                 :buttonName="this.$resourceVn.ButtonIconApplyText" 
+                                @click.native="clickStopApplyMultiple()"
                             />
                             <div class="space"></div>
                             <ButtonIcon class="button-icon-red" 
                                 :typeButton="this.$resourceVn.ButtonIconDelete" 
                                 :buttonName="this.$resourceVn.ButtonIconDeleteText" 
+                                @click.native="clickDeleteMultiple()"
                             />
                         </div>
                     </div>
@@ -113,6 +116,7 @@
                     :dataSource="dataSource"
                     @moveToViewScreen="moveToViewScreen($event)"
                     @numberOfCheckedGrid="numberOfCheckedGrid($event)"
+                    @deleteSingleRow="deleteSingleRow($event)"
                     v-if="mode == this.$resourceVn.MainScreen">
                         <template #Status="{ data }">
                             <div class="wrap-template-status">
@@ -186,16 +190,16 @@
                             <div class="label-name">{{ this.$resourceVn.StatusTextForm }}</div>
                             <div class="wrap-status">
                                 <div class="wrap-radio-text">
-                                    <div class="icon-32 radio-button">
+                                    <div class="icon-32 radio-button" @click="checkRadioAppling()">
                                         <div class="icon-20 radio-button-uncheck" 
-                                        :class="{'radio-button-check' : objectEdit.StatusName == this.$resourceVn.Status[1].Text ? true: false}"></div>
+                                        :class="{'radio-button-check' : objectEdit.Status == this.$resourceVn.Status[1].Value ? true: false}"></div>
                                     </div>
                                     <div>{{ this.$resourceVn.Status[1].Text }}</div>
                                 </div>
                                 <div class="wrap-radio-text">
-                                    <div class="icon-32 radio-button">
+                                    <div class="icon-32 radio-button" @click="checkRadioStopApply()">
                                         <div class="icon-20 radio-button-uncheck"
-                                        :class="{'radio-button-check' : objectEdit.StatusName == this.$resourceVn.Status[2].Text ? true: false}"></div>
+                                        :class="{'radio-button-check' : objectEdit.Status == this.$resourceVn.Status[2].Value ? true: false}"></div>
                                     </div>
                                     <div>{{ this.$resourceVn.Status[2].Text }}</div>
                                 </div>
@@ -207,7 +211,7 @@
                         <div class="salary-component">
                             <div class="salary-component-text">{{ this.$resourceVn.SalaryComponent }}</div>
                         </div>
-                        <div class="group-grid-salary-component">
+                        <div class="group-grid-salary-component" v-if="this.listChoosedComponent.length > 0">
                             <div class="grid-salary-component-title">
                                 <div class="col-1">{{ this.$resourceVn.ComponentNameTitle }}</div>
                                 <div class="col-2">{{ this.$resourceVn.ComponentCodeTitle }}</div>
@@ -255,7 +259,7 @@
         :mode="mode"
         @getListComponent="getListComponent($event)"
         @exitModalBox="exitModalBox"/>
-        <Popup @moveToMainScreen="moveToMainScreen"/>
+        <Popup @moveToMainScreen="moveToMainScreen" @acceptDelete="acceptDelete" @changeStatusSingle="changeStatusSingle($event)" @changeStatusMulti="changeStatusMulti"/>
     </div>
 </template>
 <script>
@@ -309,31 +313,31 @@ export default {
             modalBoxShow: false,                //Trạng thái ẩn/hiện của modalbox, mặc định ẩn
             showPopupEditColumn: false,         //Trạng thái ẩn/hiện của popup setting "Tùy chỉnh cột"
             filterShow: false,                  //Trạng thái ẩn/hiện của popup "Bộ lọc"
-            errorValidateInput: false,               //Validate input
-            errorValidateDropdown: false,            //Validate dropdown
+            errorValidateInput: false,          //Validate input
+            errorValidateDropdown: false,       //Validate dropdown
             clickedThreeDots: false,            //Click button 3 dots trong màn xem chi tiết để thực hiện "Nhân bản, Xóa"
-
-            mode: this.$resourceVn.MainScreen, //Màn hình hiển thị (0: Màn chính, 1: Màn Thêm chính sách lương)
+            mode: this.$resourceVn.MainScreen,  //Màn hình hiển thị (0: Màn chính, 1: Màn Thêm chính sách lương)
             totalChecked: 0,                    //Tổng số dòng được checked trong Data Grid
             objectEdit: {},                     //Object chứa dữ liệu được click xem chi tiết 
-
             listHeader: fakeData.listHeader,    //Dữ liệu các tiêu đề của grid
             dataSource: [],                     //Dữ liệu của grid
-            treeDataDepartment: [],                 //Data cho Dropdown Single (Đơn vị)
-            dataPosition: [],               //Data cho Combobox Tag (Vị trí)
-            dataEmployee: [],               //Data cho Combobox Tag (Nhân viên)
-            updateItemSource: {},           //Object chứa item "Thành phần lương" sau khi xóa (Cập nhật vào Data Grid vào bảng Thành phần)
-            listChoosedComponent: [],       //Danh sách chứa các item "Thành phần Lương" sẵn sàng cho thêm mới
-
-            totalPage: 0,   //Tổng số trang
-            totalRecord: 0, //Tổng số bản ghi
-            pageSize: 15,   //Kích thước trang
-            pageNumber: 1,  //Trang lấy dữ liệu
-            maxPages: 5,    //Số trang hiển thị
-            startIndex: 0,  //Bản ghi bắt đầu trong trang
-            endIndex: 0,    //Bản ghi kết thúc trong trang
-            inputSearch: "",     //Filter theo tên chính sách
-            statusSearch: "",   //Filter theo trạng thái
+            treeDataDepartment: [],             //Data cho Dropdown Single (Đơn vị)
+            dataPosition: [],                   //Data cho Combobox Tag (Vị trí)
+            dataEmployee: [],                   //Data cho Combobox Tag (Nhân viên)
+            updateItemSource: {},               //Object chứa item "Thành phần lương" sau khi xóa (Cập nhật vào Data Grid vào bảng Thành phần)
+            listChoosedComponent: [],           //Danh sách chứa các item "Thành phần Lương" sẵn sàng cho thêm mới
+            queueDelete: [],                    //Danh sách chứa các Id chính sách cần xóa
+            queueChecked: [],                   //Danh sách chứa các item được check trong datagrid chính sách
+            totalPage: 0,                       //Tổng số trang
+            totalRecord: 0,                     //Tổng số bản ghi
+            pageSize: 15,                       //Kích thước trang
+            pageNumber: 1,                      //Trang lấy dữ liệu
+            maxPages: 5,                        //Số trang hiển thị
+            startIndex: 0,                      //Bản ghi bắt đầu trong trang
+            endIndex: 0,                        //Bản ghi kết thúc trong trang
+            inputSearch: "",                    //Filter theo tên chính sách
+            statusSearch: "",                   //Filter theo trạng thái
+            checkForm: false,                   //Check trước khi thêm mới, nếu checkForm == true -> Thỏa mãn các điều kiện có thể gọi API
         }
     },
     mounted() {
@@ -349,7 +353,8 @@ export default {
                     stringPosition += item;
                     stringPosition += "; ";
                 });
-                this.objectEdit.PositionName = stringPosition;
+                // Xóa cặp kí tự "; " cuối cùng của chuỗi
+                this.objectEdit.PositionName = stringPosition.slice(0, -2);
             }
             if(nameCombobox == this.$resourceVn.EMPLOYEE){
                 let stringEmployee = '';
@@ -357,7 +362,8 @@ export default {
                     stringEmployee += item;
                     stringEmployee += "; ";
                 });
-                this.objectEdit.FullName = stringEmployee;
+                // Xóa cặp kí tự "; " cuối cùng của chuỗi
+                this.objectEdit.FullName = stringEmployee.slice(0, -2);
             }
         })
 
@@ -367,7 +373,10 @@ export default {
          * @date 23/09/2021
          */
         EventBus.$on('getValueFromDropdownCustomize', (value) => {
-            this.pageSize = parseInt(value, 10);
+            //Nếu nhận emit được là số thì gán giá trị cho pageSize
+            if(isNaN(parseInt(value,10)) == false){
+                this.pageSize = parseInt(value, 10);
+            }
         })
 
         /************************************************ Gọi API ************************************************/
@@ -415,7 +424,7 @@ export default {
          * @created LHTDung
          * @date 23/09/2021
          */
-        this.calAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch);
+        this.callAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch);
         
     },
     methods: {
@@ -499,7 +508,8 @@ export default {
          */
         numberOfCheckedGrid(listChecked){
             this.totalChecked = listChecked.length;
-            console.log(this.totalChecked);
+            this.queueChecked = listChecked;
+            console.log(this.queueChecked);
         },
 
         /**
@@ -557,6 +567,25 @@ export default {
                 this.errorValidateInput = true;
                 this.$refs.inputRequired.$el.style.border = this.$resourceVn.BorderValidate;
             }
+
+            //Validate bắt buộc phải có ít nhất 1 thành phần lương trong danh sách khi thêm mới
+            if(this.errorValidateDropdown == false && this.errorValidateInput == false){
+                if(this.listChoosedComponent.length == 0){
+                    EventBus.$emit('showPopupAddForm', this.$resourceVn.POPUP_ADD_TYPE);
+                }else{
+                    this.checkForm = true;
+                    // Chuyển Array component thành JSON (Lưu ở database)
+                    this.objectEdit.ComponentName = JSON.stringify(this.listChoosedComponent);
+                    // Bỏ trống trường vị trí áp dụng -> Vị trí áp dụng chính sách: Tất cả 
+                    if(this.objectEdit.PositionName == null || this.objectEdit.PositionName == ""){
+                        this.objectEdit.PositionName = this.$resourceVn.AllPositionApply;
+                    }
+                    // Bỏ trống trường nhân viên áp dụng -> Nhân viên áp dụng chính sách: Tất cả 
+                    if(this.objectEdit.FullName == null || this.objectEdit.FullName == ""){
+                        this.objectEdit.FullName = this.$resourceVn.AllEmployeeApply;
+                    }
+                }
+            }
         },
 
         /*********************************** GỌI API THÊM MỚI *********************************/
@@ -567,18 +596,10 @@ export default {
          */
         clickSave(){
             this.validateForm();
-            if(this.errorValidateDropdown == false && this.errorValidateInput == false){
+            if(this.checkForm == true){
                 // Đặt trạng thái cho chính sách "Đang hoạt động"
-                this.objectEdit.Status = 0;
-                this.objectEdit.ComponentName = JSON.stringify(this.listChoosedComponent);
-                // Bỏ trống trường vị trí áp dụng -> Vị trí áp dụng chính sách: Tất cả 
-                if(this.objectEdit.PositionName == null || this.objectEdit.PositionName == ""){
-                    this.objectEdit.PositionName = this.$resourceVn.AllPositionApply;
-                }
-                // Bỏ trống trường nhân viên áp dụng -> Nhân viên áp dụng chính sách: Tất cả 
-                if(this.objectEdit.FullName == null || this.objectEdit.FullName == ""){
-                    this.objectEdit.FullName = this.$resourceVn.AllEmployeeApply;
-                }
+                this.objectEdit.Status = 1;
+                
                 // Gọi API thực hiện thêm mới
                 axios.post(this.$resourceVn.URL_POLICY_COMMON, this.objectEdit)
                 .then(res => {
@@ -587,25 +608,76 @@ export default {
                 })
                 .then(() => {
                     this.mode = this.$resourceVn.MainScreen;
-                    this.calAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch);
+                    this.callAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch);
+                    this.checkForm = false;
                 })
                 .catch(err => {
                     console.error(err); 
                 })
             }
         },
-        
+
         /**
          * @description Xử lý sự kiện click vào từng dòng của data grid -> Xem chi tiết
          * @date 20/9/2021
          * @createdBy LHTDung
          */
         moveToViewScreen(e){
-            this.objectEdit = e;
             this.mode = this.$resourceVn.ViewScreen;
-            this.listChoosedComponent = JSON.parse(this.objectEdit.ComponentName);
+
+            //Gọi API lấy chi tiết bản ghi chính sách
+            axios.get(`https://localhost:44330/api/Policies/${e.PolicyId}`)
+            .then(res => {
+                this.objectEdit = res.data;
+            })
+            .then(() => {
+                this.listChoosedComponent = JSON.parse(this.objectEdit.ComponentName);
+            })
+            .catch(err => {
+                console.error(err); 
+            })
         },
 
+        /*********************************** GỌI API SỬA/CẬP NHẬT *********************************/
+        /**
+         * @description API cập nhật chính sách
+         * @created LHTDung
+         * @date 24/09/2021
+         */
+        callAPIPutPolicy(object){
+            axios.put(`https://localhost:44330/api/Policies/${object.PolicyId}`, object)
+            .then(res => {
+                console.log(res);
+                this.mode = this.$resourceVn.MainScreen;
+                this.callAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch);
+                this.checkForm = false;
+            })
+            .catch(err => {
+                console.error(err); 
+            })
+        },
+
+        /**
+         * @description Xử lý sự kiện Click button Lưu (Sửa form)
+         * @created LHTDung
+         * @date 24/09/2021
+         */
+        saveEdit(){
+            this.validateForm();
+            if(this.checkForm == true){
+                let arrayListDepartment = this.objectEdit.DepartmentName;
+                if(Array.isArray(arrayListDepartment)){
+                    let stringListDepartment = "";
+                    arrayListDepartment.forEach(item => {
+                    stringListDepartment += item;
+                    stringListDepartment += ';' ;
+                    });
+                    this.objectEdit.DepartmentName = stringListDepartment;
+                }
+                this.callAPIPutPolicy(this.objectEdit);
+            }
+        },
+        
         /**
          * @description Xử lý sự kiện click vào button 3 chấm -> Hiển thị Nhân bản/Xóa
          * @date 20/9/2021
@@ -622,6 +694,71 @@ export default {
          */
         clickButtonEdit(){
             this.mode = this.$resourceVn.EditScreen;
+            //Vị trí áp dụng của chính sách là tất cả -> Gán bằng rỗng để không hiện TagBox trong Combobox
+            if(this.objectEdit.PositionName == this.$resourceVn.AllPositionApply){
+                this.objectEdit.PositionName = "";
+            }
+            //Nhân viên áp dụng của chính sách là tất cả -> Gán bằng rỗng để không hiện TagBox trong Combobox
+            if(this.objectEdit.FullName == this.$resourceVn.AllEmployeeApply){
+                this.objectEdit.FullName = "";
+            }
+            // Tách chuỗi DepartmentName thành mảng các Đơn vị để có thể bind dữ liệu với DxDropdownMultiple
+            this.objectEdit.DepartmentName = this.objectEdit.DepartmentName.split("; ");
+            // this.objectEdit.DepartmentName.pop();
+        },
+
+        /**
+         * @description Nhận $emit thay đổi trạng thái (thay đổi đơn ) của chính sách từ Popup
+         * @created LHTDung
+         * @date 24/09/2021
+         */
+        changeStatusSingle(data){
+            let policyUpdate = data;
+            // Nếu trạng thái là "Đang áp dụng" -> Chuyển thành "Ngừng áp dụng"
+            if(data.Status == this.$resourceVn.Status[1].Value){
+                policyUpdate.Status = this.$resourceVn.Status[2].Value;
+            }else{
+                // Nếu trạng thái là "Ngừng áp dụng" -> Chuyển thành "Đang áp dụng"
+                policyUpdate.Status = this.$resourceVn.Status[1].Value;
+            }
+            // Gọi API cập nhật lại dữ liệu
+            this.callAPIPutPolicy(policyUpdate);
+        },
+
+        /**
+         * @description Xử lý sự kiện click button "Ngưng áp dụng" nhiều chính sách
+         * @created LHTDung
+         * @date 24/09/2021
+         */
+        clickStopApplyMultiple(){
+            EventBus.$emit('showPopupStopApplyMultiple', this.$resourceVn.POPUP_STOPAPPLY_MULTI_TYPE);
+        },
+
+        /**
+         * @description Nhận $emit "Đồng ý" ngừng áp dụng nhiều chính sách từ Popup
+         * @created LHTDung
+         * @date 24/09/2021
+         */
+        changeStatusMulti(){
+            // Biến đếm kiểm tra cập nhật xong tất cả các đối tượng
+            let countItemChanged = 0;
+            for(let i = 0 ; i < this.queueChecked.length; i++){
+                let item = this.queueChecked[i];
+                item.Status = this.$resourceVn.Status[2].Value;
+                axios.put(`https://localhost:44330/api/Policies/${item.PolicyId}`, item)
+                .then(res => {
+                    console.log(res);
+                    countItemChanged++;
+                }).then( () => {
+                    // Khi cập nhật xong các đối tượng => Gọi lại API phân trang làm mới dữ liệu
+                    if(countItemChanged == this.queueChecked.length){
+                        this.callAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch);
+                    }
+                })
+                .catch(err => {
+                    console.error(err); 
+                })
+            }
         },
 
         /**
@@ -630,7 +767,7 @@ export default {
          * @createdBy LHTDung
          */
         showPopup(){
-            EventBus.$emit('showPopupCancelEditForm');
+            EventBus.$emit('showPopupCancelEditForm', this.$resourceVn.POPUP_EXIT_EDIT_TYPE);
         },
 
         /**
@@ -641,6 +778,7 @@ export default {
         moveToMainScreen(){
             this.mode = this.$resourceVn.MainScreen;
         },
+
         /*************************************** THÀNH PHẦN LƯƠNG **************************************/
         /**
          * @description Nhận danh sách "Thành phần lương" được chọn từ Datagrid
@@ -676,9 +814,10 @@ export default {
             let stringListDepartment = "";
             e.forEach(nodeDropdown => {
                 stringListDepartment += nodeDropdown.text;
-                stringListDepartment += ';' ;
+                stringListDepartment += '; ' ;
             });
-            this.objectEdit.DepartmentName = stringListDepartment;
+            // Xóa cặp kí tự "; " cuối cùng của chuỗi
+            this.objectEdit.DepartmentName = stringListDepartment.slice(0, -2);
             console.log(this.objectEdit);
             console.log(stringListDepartment);
         },
@@ -743,7 +882,7 @@ export default {
         /**
          * @description Gọi API thực hiện phân trang, tìm kiếm (Chính sách)
          */
-        calAPIFilterPolicy(pageSize, pageNumber, filter, status){
+        callAPIFilterPolicy(pageSize, pageNumber, filter, status){
             axios.get(`https://localhost:44330/api/Policies/Filter?pageSize=${pageSize}&pageNumber=${pageNumber}&filter=${filter}&status=${status}`)
             .then(res => {
                 this.totalPage = res.data.TotalPage;
@@ -792,8 +931,98 @@ export default {
         handleInputSearch(e){
             this.inputSearch = e.target.value;
             this.pageNumber = 1;
-            this.calAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch);
-        }
+            this.callAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch);
+        },
+
+        /**
+         * @description Nhận giá trị từ dropdown Trạng thái -> Truyền giá trị vào statusSearch
+         * @created LHTDung
+         * @date 23/09/2021
+         */
+        getValueStatusSearch(e){
+            if(e == 0){
+                this.statusSearch = "";
+            }else{
+                this.statusSearch = e;
+            }
+        },
+
+        /**
+         * @description Click vào radio "Đang áp dụng"
+         * @created LHTDung
+         * @date 23/09/2021
+         */
+        checkRadioAppling(){
+            if(this.mode == this.$resourceVn.EditScreen){
+                this.objectEdit.Status = this.$resourceVn.Status[1].Value;
+            }
+        },
+
+        /**
+         * @description Click vào radio "Ngừng áp dụng"
+         * @created LHTDung
+         * @date 23/09/2021
+         */
+        checkRadioStopApply(){
+            if(this.mode == this.$resourceVn.EditScreen){
+                this.objectEdit.Status = this.$resourceVn.Status[2].Value;
+            }
+        },
+
+        /*********************************** GỌI API XÓA *********************************/
+        /***
+         * @description Gọi API thực hiện xóa chính sách
+         * @created LHTDung
+         * @date 24/09/2021
+         */
+        callAPIDelete(listId){
+            axios.delete(this.$resourceVn.URL_POLICY_COMMON, { data: listId })
+            .then(res => {
+                console.log(res);
+                this.callAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch);
+            }).then( () => {
+                this.queueDelete = [];
+                this.queueChecked = [];
+            })
+            .catch(err => {
+                console.error(err); 
+            })
+        },
+
+        /**
+         * @description Xử lý sự kiện Click button Xóa nhiều chính sách
+         * @created LHTDung
+         * @date 24/09/2021
+         */
+        clickDeleteMultiple(){
+            //Đưa các Id của chính sách vào 1 mảng
+            this.queueChecked.forEach(item => {
+                this.queueDelete.push(item.PolicyId);
+            });
+            EventBus.$emit('showPopupDeleteMultiple', this.$resourceVn.POPUP_DELETE_MULTI_TYPE);
+        },
+        
+        /**
+         * @description Nhận $emit từ sự kiện click button xóa trên từng dòng của datagrid -> Lấy IdPolicy (Xóa đơn)
+         * @created LHTDung
+         * @date 24/09/2021
+         */
+        deleteSingleRow(data){
+            //Đưa IdPolicy của dòng được click vào queueDelete 
+            this.queueDelete.push(data.PolicyId);
+        },
+
+        /**
+         * @description Nhận $emit từ sự kiện click button đồng ý "Xóa"
+         * @created LHTDung
+         * @date 24/09/2021
+         */
+        acceptDelete(){
+            //Gọi API thực hiện xóa
+            this.callAPIDelete(this.queueDelete);
+        },
+
+        
 
     },
 
@@ -822,7 +1051,7 @@ export default {
          */
         pageSize: function(){
             this.pageNumber = 1;
-            this.calAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch);
+            this.callAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch);
         },
 
         /**
@@ -831,8 +1060,18 @@ export default {
          * @date 23/09/2021
          */
         pageNumber: function(){
-            this.calAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch);
+            this.callAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch);
         },
+        
+        /**
+         * @description Khi có sự thay đổi về statusSearch(tìm theo trạng thái)
+         * @created LHTDung
+         * @date 23/09/2021
+         */
+        statusSearch: function(){
+            this.pageNumber = 1;
+            this.callAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch);
+        }
     }
 }
 </script>
