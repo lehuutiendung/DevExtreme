@@ -50,9 +50,10 @@
       <template #option="{ data }">
           <div class="box-option">
               <div class="box-btn">
-                  <div class="icon-20 url-background btn-stop-apply" title="Ngừng áp dụng" @click="stopApply(data)"></div>
+                  <div class="icon-20 url-background btn-stop-apply" title="Ngừng áp dụng" v-if="data.data.Status == 1" @click.stop="stopApply(data)"></div>
+                  <div class="icon-20 url-background btn-active-apply" title="Đang áp dụng" v-if="data.data.Status == 2" @click.stop="activeApply(data)"></div>
                   <div class="icon-20 url-background btn-edit" title="Chỉnh sửa"></div>
-                  <div class="icon-20 url-background btn-delete" title="Xóa"></div>
+                  <div class="icon-20 url-background btn-delete" title="Xóa" @click.stop="deletePolicy(data)"></div>
               </div>
           </div>
       </template>
@@ -71,7 +72,7 @@ import {
   DxSelection,
 } from 'devextreme-vue/data-grid';
 import 'devextreme/data/odata/store';
-
+import { EventBus } from "../../../main";
 let collapsed = false;
 export default {
   name: "DataGrid",
@@ -124,10 +125,6 @@ export default {
         
   },
   methods: {
-      stopApply(data){
-        console.log(data.data);
-      },
-
       /**
        * @description Xử lý sự kiện thay đổi select trong data grid
        * @date 19/9/2021
@@ -147,6 +144,34 @@ export default {
       showDetailForm(e){
         // Emit object chứa dữ liệu của dòng được click 
         this.$emit('moveToViewScreen', e.key);
+      },
+
+      /**
+       * @description Xử lý sự kiện click xóa từng dòng
+       * @date 24/09/2021
+       * @created LHTDung
+       */
+      deletePolicy(data){
+        this.$emit('deleteSingleRow', data.data);
+        EventBus.$emit('showPopupDeleteSingle', data.data.PolicyName, this.$resourceVn.POPUP_DELETE_TYPE);
+      },
+
+      /**
+       * @description Xử lý sự kiện click Ngừng áp dụng
+       * @date 24/09/2021
+       * @created LHTDung
+       */
+      stopApply(data){
+        EventBus.$emit('showPopupStopApply', data.data, this.$resourceVn.POPUP_STOPAPPLY_TYPE);
+      },
+
+      /**
+       * @description Xử lý sự kiện click Đang áp dụng
+       * @date 24/09/2021
+       * @created LHTDung
+       */
+      activeApply(data){
+        EventBus.$emit('showPopupActiveApply', data.data, this.$resourceVn.POPUP_ACTIVEAPPLY_TYPE);
       }
   },
 };

@@ -65,6 +65,10 @@
     padding: 24px;
 }
 
+.popup .popup-content .content{
+    font-weight: bold;
+}
+
 .popup .popup-button{
     display: flex;
     padding: 16px 24px;

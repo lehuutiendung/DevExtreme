@@ -10,6 +10,7 @@ module.exports = {
     ChooseComponent: "Chọn thành phần",
     ButtonCancelText: "Hủy bỏ",
     ButtonCancelText_2: "Hủy",
+    ButtonAgreeText: "Đồng ý",
     ButtonDontSaveText: "Không lưu",
     ButtonSaveText: "Lưu",
     ButtonEditText: "Sửa",
@@ -24,7 +25,19 @@ module.exports = {
 
     //Popup
     Notificate: "Thông báo",
-    PopupExitEdit: "Bạn có muốn lưu lại các thông tin vừa nhập không?",
+    POPUP_EXIT_EDIT: "Bạn có muốn lưu lại các thông tin vừa nhập không?",
+    POPUP_ADD: "Bạn phải khai báo ít nhất một thành phần lương trong chính sách này. Vui lòng kiểm tra lại",
+    POPUP_DELETE: "Bạn có chắc muốn xóa chính sách lương ",
+    POPUP_DELETE_MULTIPLE: "Bạn có chắc chắn muốn xóa chính sách lương đã chọn không?",
+    POPUP_STOPAPPLY_MULTIPLE: "Bạn có chắc chắn muốn chuyển trạng thái các chính sách lương đã chọn sang ngừng áp dụng không?",
+    POPUP_EXIT_EDIT_TYPE: 0,            //Popup cảnh báo với chỉnh sửa
+    POPUP_ADD_TYPE: 1,                  //Popup cảnh báo với thêm mới
+    POPUP_DELETE_TYPE: 2,               //Popup cảnh báo với xóa đơn
+    POPUP_DELETE_MULTI_TYPE: 3,         //Popup cảnh báo với xóa nhiều 
+    POPUP_STOPAPPLY_TYPE: 4,            //Popup cảnh báo với ngừng áp dụng
+    POPUP_ACTIVEAPPLY_TYPE: 5,          //Popup cảnh báo với ngừng áp dụng 1 chính sách
+    POPUP_STOPAPPLY_MULTI_TYPE: 6,      //Popup cảnh báo với ngừng áp dụng nhiều chính sách
+    CLOSE: "Đóng",
 
     // Class của thư viện DevExtreme
     ClassFocus: "dx-state-focused",
@@ -64,8 +77,8 @@ module.exports = {
 
     Status: [
         {Text: "Tất cả trạng thái", Value: ""},
-        {Text: "Đang áp dụng", Value: 0},
-        {Text: "Ngừng áp dụng", Value: 1}, 
+        {Text: "Đang áp dụng", Value: 1},
+        {Text: "Ngừng áp dụng", Value: 2}, 
     ],
     PagingNumber: [
         {Text: "15", Value: 15},

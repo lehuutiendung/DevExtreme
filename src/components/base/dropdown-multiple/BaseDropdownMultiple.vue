@@ -65,12 +65,7 @@ export default {
         },
 
         //Dữ liệu Đơn vị áp dụng của bản ghi (xem chi tiết/sửa)
-        value:{
-          type: String,
-          default(){
-            return '';
-          }
-        }
+        value:[String, Array],
     },
     data() {
         return {

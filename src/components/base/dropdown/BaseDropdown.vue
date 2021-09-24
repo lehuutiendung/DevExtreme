@@ -120,6 +120,8 @@ export default {
             this.valueOfDropdown = value;
             this.current = index;
             this.showData = false;
+            console.log(this.valueOfDropdown);
+            this.$emit('getValueStatusSearch', this.current);
             EventBus.$emit('getValueFromDropdownCustomize', this.valueOfDropdown);
         }
 
