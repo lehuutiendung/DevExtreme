@@ -15,7 +15,10 @@
                 <div class="wrap-tool-grid">
                     <InputSearch @keyup.enter.native="handleInputSearch($event)"/>
                     <div class="space"></div>
-                    <Dropdown width="230px" :listData="this.$resourceVn.Status" :typeDropdown="this.$resourceVn.DropdownStatus"/>
+                    <Dropdown width="230px" 
+                    :listData="this.$resourceVn.ComponentTypeDropdown" 
+                    :typeDropdown="this.$resourceVn.DropdownStatus"
+                    @getValueComponent="getValueComponent"/>
                 </div>
                 <div class="wrap-content-grid">
                     <DataGrid 
@@ -67,6 +70,14 @@ export default {
             type: Boolean,
             default(){
                 return false;
+            }
+        },
+
+        //Danh sách chứa các thành phần lương từ SalaryPolicyList
+        listChoosedComponent: {
+            type: Array,
+            default(){
+                return []; 
             }
         },
 
@@ -251,6 +262,7 @@ export default {
                 this.totalRecord = res.data.TotalRecord;
                 this.dataSource = res.data.Data;
                 this.dataSourceWithoutCheck = res.data.Data;
+                console.log(this.dataSourceWithoutCheck);
                 let objPage = this.paginate(this.totalRecord, this.pageNumber, this.pageSize, this.maxPages, this.totalPage);
                 this.startIndex = objPage.startIndex;
                 this.endIndex = objPage.endIndex;
@@ -295,6 +307,20 @@ export default {
             this.filterSearch = e.target.value;
             this.pageNumber = 1;
             this.calAPIFilterComponent(this.pageSize, this.pageNumber, this.filterSearch, this.componentType)
+        },
+
+        /**
+         * @description Nhận giá trị từ dropdown filter thành phần
+         * @date 25/09/2021
+         * @created LHTDung
+         */
+        getValueComponent(value){
+            if(value == this.$resourceVn.ComponentTypeDropdown[0].Text){
+                this.componentType = "";
+            }else{
+                this.componentType = value;
+            }
+            console.log(value);
         }
     },
 
@@ -327,6 +353,10 @@ export default {
             this.calAPIFilterComponent(this.pageSize, this.pageNumber, this.filterSearch, this.componentType)
         },
 
+        componentType: function(){
+            this.calAPIFilterComponent(this.pageSize, this.pageNumber, this.filterSearch, this.componentType)
+        },
+
         /**
          * @description Khi thay đổi màn làm việc, cập nhật lại dữ liệu đổ lên Datagrid
          * @created LHTDung
@@ -335,6 +365,30 @@ export default {
         mode: function(){
             this.pageNumber = 1;
             this.calAPIFilterComponent(this.pageSize, this.pageNumber, this.filterSearch, this.componentType)
+            if(this.mode == this.$resourceVn.MainScreen){
+                this.listItem = [];
+            }
+        },
+
+        /**
+         * @description Khi sửa dữ liệu, đồng bộ listChoosedComponent từ SalaryPolicyList với listItem 
+         * @created LHTDung
+         * @date 23/09/2021
+         */
+        listChoosedComponent: function(){
+            // this.listItem = this.listChoosedComponent;
+            // let checkedComponent = [];
+            // this.listChoosedComponent.forEach(item => {
+            //     item.ComponentValue = "";
+            //     checkedComponent.push(item);
+            // });
+            // console.log(checkedComponent);
+
+            // checkedComponent.forEach(element => {
+            //     let index = this.dataSourceWithoutCheck.indexOf(element);
+            //     this.dataSourceWithoutCheck.splice(index, 1);
+            // });
+            // console.log(this.dataSourceWithoutCheck);
         }
     }
 }

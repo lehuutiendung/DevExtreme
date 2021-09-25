@@ -52,7 +52,7 @@ export default {
     data() {
         return {
             treeBoxValue: null,
-            treeViewRefName: 'tree-view',
+            treeViewRefName: 'treeView',
         };
     },
     
@@ -62,13 +62,15 @@ export default {
          * @Date 18/9/2021
          * @CreatedBy LHTDung
          */
-        syncTreeViewSelection() {
-          if (!this.$refs[this.textBoxRefName]) return;
-          if (!this.treeBoxValue) {
-            this.$refs[this.textBoxRefName].instance.unselectAll();
+        syncTreeViewSelection(e) {
+          if (!e.value) {
+            this.$refs.treeView.instance.unselectAll();
+            // Nếu giá trị là null thì DropdownSingle nhận giá trị rỗng
+            this.$emit('getValueDropdownSingle', "");
           } else {
-            this.$refs[this.textBoxRefName].instance.selectItem(this.treeBoxValue);
+            this.$refs.treeView.instance.selectItem(this.treeBoxValue);
           }
+          
         },
 
         /**
@@ -78,6 +80,8 @@ export default {
          */
         treeView_itemSelectionChanged(e) {
           this.treeBoxValue = e.component.getSelectedNodeKeys();
+          console.log(e.component.getSelectedNodes());
+          this.$emit('getValueDropdownSingle', e.component.getSelectedNodes());
         },
 
         /**

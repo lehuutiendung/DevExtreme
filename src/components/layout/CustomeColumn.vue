@@ -3,16 +3,18 @@
         <div class="wrap-custome-column-content">
             <div class="custome-row-flex custome-title">
                 <div class="title">Tùy chỉnh cột</div>
-                <div class="icon-36 button-refresh">
+                <div class="icon-36 button-refresh" @click="refreshHeader()">
                     <div class="icon-20 icon-refresh"></div>
                 </div>
             </div>
             <InputSearch/>
-            <draggable class="draggable" v-model="listHeader">
+            <draggable class="draggable" v-model="headersCustome">
                 <transition-group>
-                    <div class="wrap-item-column" v-for="(item, index) in listHeader" :key="index">
+                    <div class="wrap-item-column" v-for="(item, index) in headersCustome" :key="index">
                         <div class="wrap-input-checkbox">
-                            <div class="input-checkbox-default">
+                            <div :class="{'input-checkbox-default' : item.Checked == false, 
+                            'input-checkbox-checked' : item.Checked == true}" 
+                            @click="clickCheckBox(item)">
                             </div>
                             <div class="title-item">{{ item.Caption }}</div>
                         </div>
@@ -24,13 +26,11 @@
             </draggable>
         </div>
         <div class="draggable-wrap-button">
-            <Button class="button-green" :buttonName="this.$resourceVn.ButtonSaveText"/>
+            <Button class="button-green" :buttonName="this.$resourceVn.ButtonSaveText" @click.native="clickSave()"/>
         </div>
     </div>
 </template>
 <script>
-import fakeData from "../../js/fake-data/data-grid-main"
-
 import draggable from 'vuedraggable'
 import InputSearch from '../../components/base/input-search/BaseInputSearch.vue'
 import Button from "../base/button/BaseButton.vue"
@@ -48,14 +48,22 @@ export default {
             default(){
                 return false;
             }
+        },
+        headers:{
+            type: Array,
+            default(){
+                return [];
+            }
         }
     },
     data() {
         return {
-            listHeader: fakeData.listHeader,
+            headersCustome: [],
         }
     },
-
+    created() {
+        this.headersCustome = [...this.headers];
+    },
     computed: {
         /**
          * @description Thay đổi trạng thái của popup setting "Tùy chỉnh cột"
@@ -71,8 +79,38 @@ export default {
         },
     },
     methods: {
-        
+        /**
+         * @description Xử lý sự kiện click checkbox
+         * @created LHTDung
+         * @date 24/09/2021
+         */
+        clickCheckBox(item){
+            item.Checked = !item.Checked;
+        },
+
+        /**
+         * @description Xử lý sự kiện khi click button Lưu
+         * @created LHTDung
+         * @date 24/09/2021
+         */
+        clickSave(){
+            this.$emit('updateListHeaderGrid', this.headersCustome);
+        },
+
+        /**
+         * @description Xử lý sự kiện click button refresh
+         * @created LHTDung
+         * @date 24/09/2021
+         */
+        refreshHeader(){
+            this.$emit('updateListHeaderDefault');
+        }
     },
+    watch: {
+        headers: function(){
+            this.headersCustome = [...this.headers];
+        }
+    }
 }
 </script>
 <style>

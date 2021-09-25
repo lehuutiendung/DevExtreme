@@ -1,5 +1,6 @@
 <template>
     <DxDataGrid
+      ref="dataGrid"
       :data-source="dataSource"
       :remote-operations="false"
       :allow-column-reordering="true"
@@ -121,8 +122,16 @@ export default {
       checkBoxesMode: 'always',
     };
   },
-  computed: {
-        
+  mounted() {
+    /**
+     * @description Bắt sự kiện Click "Bỏ chọn", bỏ tích tất cả các dòng trong DataGrid
+     * @date 25/09/2021
+     * @created LHTDung
+     */
+    EventBus.$on('clearSelectionDataGrid', () => {
+        const dataGrid = this.$refs.dataGrid.instance;
+        dataGrid.clearSelection();
+    })
   },
   methods: {
       /**

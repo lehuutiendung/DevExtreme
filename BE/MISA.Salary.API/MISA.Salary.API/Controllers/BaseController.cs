@@ -96,16 +96,15 @@ namespace MISA.Salary.API.Controllers
         /// <param name="pageSize">Số bản ghi trong 1 trang</param>
         /// <param name="pageNumber">Trang hiện tại</param>
         /// <param name="filter">Họ tên/ Mã/ Số điện thoại</param>
-        /// <param name="departmentId">Id phòng ban</param>
-        /// <param name="positionId">Id vị trí</param>
+        /// <param name="departmentName">Id phòng ban</param>
         /// <returns>Danh sách bản ghi chứa trong trang / theo bộ lọc</returns>
         /// Created by: LHTDung - 27/08/2021
         [HttpGet("Filter")]
-        public virtual IActionResult Filter(int pageSize, int pageNumber, String filter, int? status, String departmentId)
+        public virtual IActionResult Filter(int pageSize, int pageNumber, String filter, int? status, String departmentName)
         {
             try
             {
-                var _serviceResult = _baseService.Filter(pageSize, pageNumber, filter, status, departmentId);
+                var _serviceResult = _baseService.Filter(pageSize, pageNumber, filter, status, departmentName);
                 var response = StatusCode(200, _serviceResult.Data);
                 return response;
             }

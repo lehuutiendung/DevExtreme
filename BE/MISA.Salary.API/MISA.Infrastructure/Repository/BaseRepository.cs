@@ -251,7 +251,7 @@ namespace MISA.Infrastructure.Repository
                 dynamicParameters.Add($"@PageNumber", pageNumber);
                 dynamicParameters.Add($"@Filter", $"%{filter}%");
                 dynamicParameters.Add($"@Status", status);
-                dynamicParameters.Add($"@DepartmentId", $"%{department}%");
+                dynamicParameters.Add($"@DepartmentName", $"%{department}%");
                 dynamicParameters.Add($"@TotalPage", dbType: DbType.Int32, direction: ParameterDirection.Output);
                 dynamicParameters.Add($"@TotalRecord", dbType: DbType.Int32, direction: ParameterDirection.Output);
 

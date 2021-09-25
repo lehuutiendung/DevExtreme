@@ -86,6 +86,13 @@ module.exports = {
         {Text: "50", Value: 50},
         {Text: "100", Value: 100},
     ],
+    ComponentTypeDropdown: [
+        {Text: "Tất cả thành phần", Value: ""},
+        {Text: "Sản phẩm", Value: 1},
+        {Text: "Thông tin nhân viên", Value: 2}, 
+        {Text: "Khác", Value: 3}, 
+    ],  
+
     // Loại dropdown:
     DropdownStatus: 0,          //0: Dropdown cho trạng thái
     DropdownPaging: 1,          //1: Dropdown cho phân trang
