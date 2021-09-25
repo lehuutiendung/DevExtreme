@@ -112,6 +112,7 @@
     font-weight: bold;
     color:rgb(52, 176, 87);
     margin-right: 25px;
+    cursor: pointer;
 }
 
 .content-body-tool .active-button-delete{

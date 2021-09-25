@@ -72,7 +72,8 @@
                                 :listData="this.$resourceVn.Status" 
                                 :typeDropdown="this.$resourceVn.DropdownStatus" 
                                 @getValueStatusSearch="getValueStatusSearch($event)"/>
-                                <DropdownSingle :treeDataSource="treeDataDepartment"/>
+                                <DropdownSingle :treeDataSource="treeDataDepartment" 
+                                @getValueDropdownSingle="getValueDropdownSingle($event)"/>
                                 <div class="filter" @click="showFilterPopup()">
                                     <div class="icon-20 icon-filter"></div>
                                 </div>
@@ -80,7 +81,11 @@
                                     <div class="setting" @click="showCustomeColumn()">
                                     <div class="icon-24 icon-setting"></div>
                                     </div>
-                                    <CustomeColumn :showPopupEditColumn="showPopupEditColumn"/>
+                                    <CustomeColumn 
+                                    :showPopupEditColumn="showPopupEditColumn" 
+                                    :headers="headers"
+                                    @updateListHeaderGrid="updateListHeaderGrid"
+                                    @updateListHeaderDefault="updateListHeaderDefault"/>
                                 </div>
                             </div>
                             <!-- THÔNG TIN CHUNG -->
@@ -94,7 +99,7 @@
                             <div class="number-choosed">
                                 <div>{{ this.$resourceVn.Choosed}} <span>{{totalChecked}}</span></div>
                             </div>
-                            <div class="stop-apply">{{ this.$resourceVn.UnChecked }}</div>
+                            <div class="stop-apply" @click="clearSelectionDataGrid()">{{ this.$resourceVn.UnChecked }}</div>
                             <ButtonIcon class="button-icon-orange" 
                                 :typeButton="this.$resourceVn.ButtonIconApply" 
                                 :buttonName="this.$resourceVn.ButtonIconApplyText" 
@@ -256,6 +261,7 @@
         </div>    
         <SalaryPolicyDetail :modalBoxShow="modalBoxShow" 
         :updateItemSource="updateItemSource"
+        :listChoosedComponent="listChoosedComponent"
         :mode="mode"
         @getListComponent="getListComponent($event)"
         @exitModalBox="exitModalBox"/>
@@ -320,8 +326,10 @@ export default {
             totalChecked: 0,                    //Tổng số dòng được checked trong Data Grid
             objectEdit: {},                     //Object chứa dữ liệu được click xem chi tiết 
             listHeader: fakeData.listHeader,    //Dữ liệu các tiêu đề của grid
+            headers: fakeData.listHeader,
+            headersDefault: fakeData.headerDefault,
             dataSource: [],                     //Dữ liệu của grid
-            treeDataDepartment: [],             //Data cho Dropdown Single (Đơn vị)
+            treeDataDepartment: [],             //Data cho Dropdown (Đơn vị)
             dataPosition: [],                   //Data cho Combobox Tag (Vị trí)
             dataEmployee: [],                   //Data cho Combobox Tag (Nhân viên)
             updateItemSource: {},               //Object chứa item "Thành phần lương" sau khi xóa (Cập nhật vào Data Grid vào bảng Thành phần)
@@ -337,6 +345,7 @@ export default {
             endIndex: 0,                        //Bản ghi kết thúc trong trang
             inputSearch: "",                    //Filter theo tên chính sách
             statusSearch: "",                   //Filter theo trạng thái
+            departmentSearch: "",               //Filter theo cơ cấu tổ chức (đơn vị)
             checkForm: false,                   //Check trước khi thêm mới, nếu checkForm == true -> Thỏa mãn các điều kiện có thể gọi API
         }
     },
@@ -424,7 +433,7 @@ export default {
          * @created LHTDung
          * @date 23/09/2021
          */
-        this.callAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch);
+        this.callAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch, this.departmentSearch);
         
     },
     methods: {
@@ -608,7 +617,7 @@ export default {
                 })
                 .then(() => {
                     this.mode = this.$resourceVn.MainScreen;
-                    this.callAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch);
+                    this.callAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch, this.departmentSearch);
                     this.checkForm = false;
                 })
                 .catch(err => {
@@ -649,7 +658,7 @@ export default {
             .then(res => {
                 console.log(res);
                 this.mode = this.$resourceVn.MainScreen;
-                this.callAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch);
+                this.callAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch, this.departmentSearch);
                 this.checkForm = false;
             })
             .catch(err => {
@@ -752,7 +761,7 @@ export default {
                 }).then( () => {
                     // Khi cập nhật xong các đối tượng => Gọi lại API phân trang làm mới dữ liệu
                     if(countItemChanged == this.queueChecked.length){
-                        this.callAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch);
+                        this.callAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch, this.departmentSearch);
                     }
                 })
                 .catch(err => {
@@ -882,8 +891,8 @@ export default {
         /**
          * @description Gọi API thực hiện phân trang, tìm kiếm (Chính sách)
          */
-        callAPIFilterPolicy(pageSize, pageNumber, filter, status){
-            axios.get(`https://localhost:44330/api/Policies/Filter?pageSize=${pageSize}&pageNumber=${pageNumber}&filter=${filter}&status=${status}`)
+        callAPIFilterPolicy(pageSize, pageNumber, filter, status, department){
+            axios.get(`https://localhost:44330/api/Policies/Filter?pageSize=${pageSize}&pageNumber=${pageNumber}&filter=${filter}&status=${status}&departmentName=${department}`)
             .then(res => {
                 this.totalPage = res.data.TotalPage;
                 this.totalRecord = res.data.TotalRecord;
@@ -931,7 +940,7 @@ export default {
         handleInputSearch(e){
             this.inputSearch = e.target.value;
             this.pageNumber = 1;
-            this.callAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch);
+            this.callAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch, this.departmentSearch);
         },
 
         /**
@@ -944,6 +953,21 @@ export default {
                 this.statusSearch = "";
             }else{
                 this.statusSearch = e;
+            }
+        },
+
+        /**
+         * @description Nhận giá trị từ dropdown đơn vị -> Truyền giá trị vào departmentSearch
+         * @created LHTDung
+         * @date 24/09/2021
+         */
+        getValueDropdownSingle(e){
+            console.log(e);
+            if(e.length > 0){
+                this.departmentSearch = e[0].text;
+            }
+            if(e == ""){
+                this.departmentSearch = "";
             }
         },
 
@@ -979,7 +1003,7 @@ export default {
             axios.delete(this.$resourceVn.URL_POLICY_COMMON, { data: listId })
             .then(res => {
                 console.log(res);
-                this.callAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch);
+                this.callAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch, this.departmentSearch);
             }).then( () => {
                 this.queueDelete = [];
                 this.queueChecked = [];
@@ -1022,8 +1046,47 @@ export default {
             this.callAPIDelete(this.queueDelete);
         },
 
-        
+        /**
+         * @description Cập nhật lại listHeader của DataGrid, nhận $emit từ CustomeColumn
+         * @created LHTDung
+         * @date 24/09/2021
+         */
+        updateListHeaderGrid(newListHeader){
+            let tempHeaders = [];
+            newListHeader.forEach(item => {
+                if(item.Checked == true){
+                    tempHeaders.push(item);
+                }
+            });
+            // Cập nhật listHeader
+            this.headers = newListHeader;
+            this.listHeader = tempHeaders;
+            this.showPopupEditColumn = false;
+        },
 
+        /**
+         * @description Cập nhật lại listHeader mặc định của DataGrid
+         * @created LHTDung
+         * @date 24/09/2021
+         */
+        updateListHeaderDefault(){
+            this.headers = [...this.headersDefault]; 
+            this.headers.forEach(item => {
+                item.Checked = true;
+            });
+            this.listHeader = [...this.headersDefault];
+            this.showPopupEditColumn = false;
+        },
+
+        /**
+         * @description Clear check trong datagrid
+         * @created LHTDung
+         * @date 25/09/2021
+         */
+        clearSelectionDataGrid(){
+            EventBus.$emit('clearSelectionDataGrid');
+        }
+        
     },
 
     watch:{
@@ -1051,7 +1114,7 @@ export default {
          */
         pageSize: function(){
             this.pageNumber = 1;
-            this.callAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch);
+            this.callAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch, this.departmentSearch);
         },
 
         /**
@@ -1060,7 +1123,7 @@ export default {
          * @date 23/09/2021
          */
         pageNumber: function(){
-            this.callAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch);
+            this.callAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch, this.departmentSearch);
         },
         
         /**
@@ -1070,7 +1133,16 @@ export default {
          */
         statusSearch: function(){
             this.pageNumber = 1;
-            this.callAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch);
+            this.callAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch, this.departmentSearch);
+        },
+
+        /**
+         * @description Khi có sự thay đổi về departmentSearch(tìm theo đơn vị)
+         * @created LHTDung
+         * @date 24/09/2021
+         */
+        departmentSearch: function(){
+            this.callAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch, this.departmentSearch);
         }
     }
 }

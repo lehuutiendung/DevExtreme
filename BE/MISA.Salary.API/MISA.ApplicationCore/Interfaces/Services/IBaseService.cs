@@ -32,7 +32,7 @@ namespace MISA.ApplicationCore.Interfaces.Services
         ///     totalRecord
         ///     {entity}
         /// </returns>
-        ServiceResult Filter(int pageSize, int pageNumber, String filter, int? status, String departmentId);
+        ServiceResult Filter(int pageSize, int pageNumber, String filter, int? status, String departmentName);
 
         /// <summary>
         /// Xóa nhiều
