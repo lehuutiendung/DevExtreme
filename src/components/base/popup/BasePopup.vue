@@ -19,7 +19,7 @@
         <div class="popup-button" v-if="typePopup == this.$resourceVn.POPUP_EXIT_EDIT_TYPE">
             <Button class="button-white" :buttonName="this.$resourceVn.ButtonCancelText_2" width="80px" @click.native="clickCancel()"/>
             <Button class="button-white" :buttonName="this.$resourceVn.ButtonDontSaveText" @click.native="clickDontSave()"/>
-            <Button class="button-green" :buttonName="this.$resourceVn.ButtonSaveText" width="80px"/>
+            <Button class="button-green" :buttonName="this.$resourceVn.ButtonSaveText" width="80px" @click.native="clickSave()"/>
         </div>
         <div class="popup-button" v-if="typePopup == this.$resourceVn.POPUP_ADD_TYPE">
             <Button class="button-green" :buttonName="this.$resourceVn.CLOSE" width="80px" @click.native="clickCancel()"/>
@@ -42,6 +42,14 @@ export default {
     name: 'Popup',
     components:{
         Button,
+    },
+    props:{
+        mode: {
+            type: Number,
+            default(){
+                return 0;
+            }
+        }
     },
     data() {
         return {
@@ -122,6 +130,15 @@ export default {
         EventBus.$on('showPopupStopApplyMultiple', (value) => {
             this.showPopup = true;
             this.typePopup = value;
+        }),
+        
+        /**
+         * Ẩn popup
+         * @created LHTDung
+         * @date 28/09/2021
+         */
+        EventBus.$on('hidePopup', () => {
+            this.showPopup = false;
         })
     },
     methods: {
@@ -166,6 +183,21 @@ export default {
             }
             if(this.typePopup == this.$resourceVn.POPUP_STOPAPPLY_MULTI_TYPE){
                 this.$emit('changeStatusMulti');
+            }
+        },
+
+        /**
+         * @description Xử lý sự kiện click button Lưu trong Popup
+         * @date 28/09/2021
+         * @created LHTDung
+         */
+        clickSave(){
+            if(this.mode == this.$resourceVn.EditScreen){
+                this.$emit('clickSaveEditPopup');
+                this.showPopup = false;
+            }
+            if(this.mode == this.$resourceVn.AddScreen){
+                this.$emit('clickSaveAddPopup');
             }
         }
     },

@@ -45,7 +45,7 @@
       />
 
       <template #cell-template="{ data }">
-        <slot :name="data.column.dataField" :data="data.data">{{ data.data[data.column.dataField] }}</slot>
+        <slot :name="data.column.dataField" :data="data.data"><div :title="data.data[data.column.dataField]">{{ data.data[data.column.dataField] }}</div></slot>
       </template>
 
       <template #option="{ data }">

@@ -1,6 +1,7 @@
 module.exports = {
     DuplicateText: "Nhân bản",
     DeleteText: "Xóa",
+    UPDATE_TEXT: "Cập nhật",
 
     ButtonIconAddText: "Thêm mới",
     ButtonIconAddComponentText: "Thêm thành phần",
@@ -39,6 +40,9 @@ module.exports = {
     POPUP_STOPAPPLY_MULTI_TYPE: 6,      //Popup cảnh báo với ngừng áp dụng nhiều chính sách
     CLOSE: "Đóng",
 
+    //Popover
+    BACK_TEXT: "Quay lại",
+
     // Class của thư viện DevExtreme
     ClassFocus: "dx-state-focused",
     ClassEmpty: "dx-texteditor-empty",
@@ -54,6 +58,7 @@ module.exports = {
     PolicyName: "Tên chính sách",
     StatusTextForm: "Trạng thái",
     FilterText: "Bộ lọc",
+    SETTING_COLUMN: "Tùy chỉnh cột",
 
     // Thành phần lương
     ComponentNameTitle: "Tên thành phần",
@@ -107,4 +112,8 @@ module.exports = {
     ButtonIconAdd: 0,           //Button Icon Thêm mới
     ButtonIconApply: 1,         //Button Icon Ngưng áp dụng
     ButtonIconDelete: 2,        //Button Icon Xóa
+
+    //Loại toast messenger
+    TOAST_SUCCESS: 0,               //Toast thực hiện thành công
+
 }

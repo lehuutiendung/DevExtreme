@@ -104,6 +104,6 @@
 }
 /* Kết thúc: CSS cho footer filter */
 
-.wrap-filter .wrap-content-filter .wrap-policy-name .box-combobox-text .wrap-base-input{
-    width: 248px !important;
+.wrap-base-input{
+    width: inherit!important;
 }

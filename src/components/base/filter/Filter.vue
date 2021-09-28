@@ -22,7 +22,10 @@
                      <div class="name policy-name">{{ this.$resourceVn.PositionApply }}</div>
                  </div>
                  <ComboboxText v-if="clickedPosition" :dataCombobox="dataCombobox.DataComboboxApply"/>
-                 <ComboboxTag v-if="clickedPosition" :placeholder="this.$resourceVn.AllPositionApply"/>
+                 <ComboboxTag v-if="clickedPosition" 
+                 :nameCombobox="this.$resourceVn.POSITION" 
+                 :listObjectData="dataPosition" 
+                 :placeholder="this.$resourceVn.AllPositionApply"/>
             </div>
             <div class="wrap-policy-name" :class="{'background-active' : clickedEmployee}">
                  <div class="box-flex checkbox-policy-name" @click="clickEmployee()">
@@ -30,7 +33,10 @@
                      <div class="name policy-name">{{ this.$resourceVn.EmployeeApply }}</div>
                  </div>
                  <ComboboxText v-if="clickedEmployee" :dataCombobox="dataCombobox.DataComboboxApply"/>
-                 <ComboboxTag v-if="clickedEmployee" :placeholder="this.$resourceVn.AllEmployeeApply"/>
+                 <ComboboxTag v-if="clickedEmployee" 
+                 :placeholder="this.$resourceVn.AllEmployeeApply" 
+                 :nameCombobox="this.$resourceVn.EMPLOYEE" 
+                 :listObjectData="dataEmployee"/>
             </div>
         </div>
         <div class="wrap-footer-filter">
@@ -61,6 +67,20 @@ export default {
             type: Boolean,
             default(){
                 return false;
+            }
+        },
+        // Dữ liệu của vị trí áp dụng ()
+        dataPosition: {
+            type: Array,
+            default(){
+                return [];
+            }
+        },
+        // Dữ liệu nhân viên
+        dataEmployee:{
+            type: Array,
+            deafult(){
+                return [];
             }
         }
     },

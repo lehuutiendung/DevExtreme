@@ -1,5 +1,5 @@
 <template>
-    <div class="div-input-search" :tabindex="0" @click="showBorderInput()">
+    <div class="div-input-search" @click="showBorderInput()">
         <div class="wrap-icon-input-search">
             <div class="icon-20 icon-input-search"></div>
         </div>

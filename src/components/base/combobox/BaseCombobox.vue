@@ -9,6 +9,7 @@
                 :show-selection-controls="true"
                 :search-enabled="true"
                 :placeholder="placeholder"
+                :tabIndex="tabIndex"
                 @value-changed="onValueChanged"
                 />
             </div>
@@ -60,7 +61,15 @@ export default {
           default(){
             return '';
           }
-        }
+        },
+        
+        //tabindex
+        tabIndex: {
+            type: Number,
+            default(){
+                return 1;
+            }
+        },
     },
     data(){
         return {
