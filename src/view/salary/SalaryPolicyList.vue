@@ -7,20 +7,26 @@
             </div>
             <div class="title-row" v-if="mode == this.$resourceVn.AddScreen">
                 <div class="wrap-title">
-                    <div class="icon-36 icon-wrap back-add" @click="clickCancel()" id="back-add" @mouseenter="showTooltip($event)" @mouseleave="hideTooltip()">
+                    <div class="icon-36 icon-wrap back-add" 
+                    @click="clickCancel()" id="back-add" 
+                    @mouseenter="showTooltip($event)" @mouseleave="hideTooltip()">
                         <div class="icon-20 icon-title"></div>
                     </div>
                     <div class="title">Thêm chính sách lương</div>
                 </div>
                 <div class="wrap-button-group">
                     <Button class="button-white" :buttonName="this.$resourceVn.ButtonCancelText" @click.native="showPopup()"/>
-                    <Button class="button-green" :buttonName="this.$resourceVn.ButtonSaveText" @click.native="clickSave()"/>
+                    <Button class="button-green save-tooltip" 
+                    :buttonName="this.$resourceVn.ButtonSaveText" 
+                    @click.native="clickSave()" @mouseenter.native="showTooltip($event)" @mouseleave.native="hideTooltip()"/>
                 </div>
             </div>
             <!--------------------------- Xem chi tiết ---------------------->
             <div class="title-row" v-if="mode == this.$resourceVn.ViewScreen">
                 <div class="wrap-title">
-                    <div class="icon-36 icon-wrap back" @click="clickCancel()" id="back" @mouseenter="showTooltip($event)" @mouseleave="hideTooltip()">
+                    <div class="icon-36 icon-wrap back" 
+                    @click="clickCancel()" id="back"
+                    @mouseenter="showTooltip($event)" @mouseleave="hideTooltip()">
                         <div class="icon-20 icon-title"></div>
                     </div>
                     <div class="title">Xem {{ objectEdit.PolicyName }}</div>
@@ -29,7 +35,7 @@
                     <Button class="button-green" 
                     :buttonName="this.$resourceVn.ButtonEditText" 
                     @click.native="clickButtonEdit()"/>
-                    <div class="icon-36 button-3-dots" @click="clickThreeDots()">
+                    <div class="icon-36 button-3-dots" @click="clickThreeDots()" v-click-outside="hideGroupThreeDots">
                         <div class="icon-20 icon-button-3-dots"></div>
                     </div>
                     <div class="wrap-duplicate-delete-popup" :class="{'show-popup' : clickedThreeDots}">
@@ -54,7 +60,10 @@
                 </div>
                 <div class="wrap-button-group">
                     <Button class="button-white" :buttonName="this.$resourceVn.ButtonCancelText" @click.native="showPopup()"/>
-                    <Button class="button-green" :buttonName="this.$resourceVn.ButtonSaveText" @click.native="saveEdit()"/>
+                    <Button class="button-green save-tooltip" 
+                    :buttonName="this.$resourceVn.ButtonSaveText" 
+                    @click.native="saveEdit()" 
+                    @mouseenter.native="showTooltip($event)" @mouseleave.native="hideTooltip()"/>
                 </div>
             </div>
         </div>
@@ -74,11 +83,13 @@
                                 @getValueStatusSearch="getValueStatusSearch($event)"/>
                                 <DropdownSingle :treeDataSource="treeDataDepartment" 
                                 @getValueDropdownSingle="getValueDropdownSingle($event)"/>
-                                <div class="filter" @click="showFilterPopup()" id="filter" @mouseenter="showTooltip($event)" @mouseleave="hideTooltip()">
+                                <div class="filter" @click="showFilterPopup()" id="filter" 
+                                @mouseenter="showTooltip($event)" @mouseleave="hideTooltip()">
                                     <div class="icon-20 icon-filter"></div>
                                 </div>
                                 <div v-click-outside="hidePopupEditColumn">
-                                    <div class="setting" @click="showCustomeColumn()" id="setting-column" @mouseenter="showTooltip($event)" @mouseleave="hideTooltip()">
+                                    <div class="setting" @click="showCustomeColumn()" id="setting-column" 
+                                    @mouseenter="showTooltip($event)" @mouseleave="hideTooltip()">
                                     <div class="icon-24 icon-setting"></div>
                                     </div>
                                     <CustomeColumn 
@@ -89,7 +100,9 @@
                                 </div>
                             </div>
                             <!-- THÔNG TIN CHUNG -->
-                            <div class="general-info-wrap" v-if="mode == this.$resourceVn.AddScreen || mode == this.$resourceVn.ViewScreen || mode == this.$resourceVn.EditScreen">
+                            <div class="general-info-wrap" v-if="mode == this.$resourceVn.AddScreen 
+                            || mode == this.$resourceVn.ViewScreen 
+                            || mode == this.$resourceVn.EditScreen">
                                 <div class="general-info-title">
                                     {{ this.$resourceVn.GeneralInformation }}
                                 </div>
@@ -130,7 +143,9 @@
                             </div>
                         </template>
                     </DataGrid>
-                    <div class="content-add-screen-wrap" v-if="mode == this.$resourceVn.AddScreen || mode == this.$resourceVn.ViewScreen || mode == this.$resourceVn.EditScreen">
+                    <div class="content-add-screen-wrap" v-if="mode == this.$resourceVn.AddScreen 
+                    || mode == this.$resourceVn.ViewScreen 
+                    || mode == this.$resourceVn.EditScreen">
                         <div class="row-flex">
                             <div class="label-name">{{ this.$resourceVn.DepartmentApply }}<span class="red-span"> *</span></div>
                             <!-- Hiển thị dropdown với màn thêm mới-->
@@ -261,7 +276,10 @@
                 @updateNextPageNumber="updateNextPageNumber"/>
             </div>
             <div class="responsive-filter">
-                <FilterBox :filterShow="filterShow" :dataPosition="dataPosition" :dataEmployee="dataEmployee" @hideFilterPopup="hideFilterPopup"/>
+                <FilterBox :filterShow="filterShow" 
+                :dataPosition="dataPosition" 
+                :dataEmployee="dataEmployee" 
+                @hideFilterPopup="hideFilterPopup"/>
             </div>
         </div>    
         <SalaryPolicyDetail :modalBoxShow="modalBoxShow" 
@@ -284,13 +302,10 @@
 </template>
 <script>
 import fakeData from '../../js/fake-data/data-grid-main'
-
 import axios from "axios";
 import ClickOutSide from "../../js/detectoutside"
 import { EventBus } from "../../main"
 import draggable from 'vuedraggable'
-
-
 import TheFooter from "../../components/layout/TheFooter.vue"
 import ButtonIcon from "../../components/base/button-icon/BaseButtonIcon.vue"
 import Button from "../../components/base/button/BaseButton.vue"
@@ -452,7 +467,17 @@ export default {
          */
         this.callAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch, this.departmentSearch);
         
+        /**
+         * @description Thêm sự kiện phím tắt
+         */
+        document.addEventListener("keydown", this.keyDoSave);
+
     },
+    
+    beforeDestroy() {
+        document.removeEventListener("keydown", this.keyDoSave);
+    },
+
     methods: {
         /**
          * @description Xử lý sự kiện click button "Thêm mới"
@@ -536,7 +561,6 @@ export default {
         numberOfCheckedGrid(listChecked){
             this.totalChecked = listChecked.length;
             this.queueChecked = listChecked;
-            console.log(this.queueChecked);
         },
 
         /**
@@ -701,8 +725,9 @@ export default {
                     let stringListDepartment = "";
                     arrayListDepartment.forEach(item => {
                     stringListDepartment += item;
-                    stringListDepartment += ';' ;
+                    stringListDepartment += '; ' ;
                     });
+                    stringListDepartment = stringListDepartment.slice(0, -2);
                     this.objectEdit.DepartmentName = stringListDepartment;
                 }
                 this.callAPIPutPolicy(this.objectEdit);
@@ -823,7 +848,6 @@ export default {
          */
         getListComponent(e){
             this.listChoosedComponent = e;
-            console.log(this.listChoosedComponent);
         },
 
         /**
@@ -838,7 +862,6 @@ export default {
             if(index > - 1){
                 this.listChoosedComponent.splice(index, 1);
             }
-            console.log(value);
         },
 
         /**
@@ -854,8 +877,6 @@ export default {
             });
             // Xóa cặp kí tự "; " cuối cùng của chuỗi
             this.objectEdit.DepartmentName = stringListDepartment.slice(0, -2);
-            console.log(this.objectEdit);
-            console.log(stringListDepartment);
         },
 
         /**
@@ -989,7 +1010,6 @@ export default {
          * @date 24/09/2021
          */
         getValueDropdownSingle(e){
-            console.log(e);
             if(e.length > 0){
                 this.departmentSearch = e[0].text;
             }
@@ -1169,6 +1189,9 @@ export default {
             if(e.target.classList.contains('setting')){
                 EventBus.$emit('showTooltip', '#setting-column', this.$resourceVn.SETTING_COLUMN);
             }
+            if(e.target.classList.contains('save-tooltip')){
+                EventBus.$emit('showTooltip', '.save-tooltip', this.$resourceVn.CTRL_S);
+            }
         },
 
         /**
@@ -1197,6 +1220,43 @@ export default {
         clickSaveAddPopup(){
             this.clickSave();
         },
+
+        /**
+         * @description Phím tắt Ctrl + S để "Lưu" dữ liệu
+         * @date 28/09/2021
+         * @created LHTDung
+         */
+        keyDoSave(e){
+            if (!((e.keyCode === 83 && e.ctrlKey)|| e.keyCode === 27)) {
+                return;
+            }
+            e.preventDefault();
+            if(this.mode != this.$resourceVn.MainScreen){
+                //Phím tắt ESC: Tắt form
+                if(e.keyCode === 27){
+                    this.exitModalBox();
+                }
+
+                //Phím tắt Ctrl + S : "Cất"
+                if((e.keyCode === 83 && e.ctrlKey)){
+                    if(this.mode == this.$resourceVn.AddScreen){
+                        this.clickSave();
+                    }
+                    if(this.mode == this.$resourceVn.EditScreen){
+                        this.saveEdit();
+                    }
+                }
+            }
+        },
+
+        /**
+         * @description Bắt sự kiện click ngoài button 3 chấm -> Đóng group (nhân bản, xóa)
+         * @date 28/09/2021
+         * @created LHTDung
+         */
+        hideGroupThreeDots(){
+            this.clickedThreeDots = false;
+        }
         
     },
 

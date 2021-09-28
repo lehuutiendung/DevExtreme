@@ -80,7 +80,6 @@ export default {
          */
         treeView_itemSelectionChanged(e) {
           this.treeBoxValue = e.component.getSelectedNodeKeys();
-          console.log(e.component.getSelectedNodes());
           this.$emit('getValueDropdownSingle', e.component.getSelectedNodes());
         },
 
