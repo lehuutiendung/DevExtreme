@@ -1,5 +1,5 @@
 <template>
-    <input type="text" class="wrap-base-input" :style="{width : width + '!important'}" v-on="inputListeners">
+    <input type="text" class="wrap-base-input" :style="{width : width}" :tabIndex="tabIndex" v-on="inputListeners">
 </template>
 <script>
 export default {
@@ -10,7 +10,15 @@ export default {
             default(){
                 return '748px';
             }
-        }
+        },
+
+        //tabindex
+        tabIndex: {
+            type: Number,
+            default(){
+                return 1;
+            }
+        },
     },
     computed: {
       inputListeners: function () {

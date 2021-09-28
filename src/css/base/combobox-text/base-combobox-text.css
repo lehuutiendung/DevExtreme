@@ -80,6 +80,7 @@
     display: flex;
     cursor: pointer;
     padding-left: 18px;
+    font-size: 13.33px;
 }
 
 .combobox-data li.combobox-data-item:hover{

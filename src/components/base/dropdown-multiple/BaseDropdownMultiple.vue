@@ -5,6 +5,7 @@
           :value="treeBoxValue"
           :show-clear-button="false"
           :data-source="treeDataSource"
+          :tabIndex="tabIndex"
           value-expr="DepartmentName"
           display-expr="DepartmentName"
           @value-changed="syncTreeViewSelection($event)"
@@ -66,6 +67,14 @@ export default {
 
         //Dữ liệu Đơn vị áp dụng của bản ghi (xem chi tiết/sửa)
         value:[String, Array],
+        
+        //tabindex
+        tabIndex: {
+            type: Number,
+            default(){
+                return 1;
+            }
+        },
     },
     data() {
         return {

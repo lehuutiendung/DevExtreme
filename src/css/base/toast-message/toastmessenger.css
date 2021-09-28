@@ -1,0 +1,71 @@
+.box-toast{
+    position: absolute;
+    z-index: 88;
+    top: 0;
+    right: 650px;
+    visibility: hidden;
+    z-index: 100;
+}
+
+.box-toast.show{
+    visibility: visible;
+    -webkit-animation: fadeout 0.5s 1.75s;
+    animation: fadeout 0.5s 1.75s;
+}
+  
+@keyframes fadeout {
+    from {top: 0; right: 650px; opacity: 1;}
+    to {top: 0; right: 0; opacity: 0;}
+}
+
+.toast{
+    height: 48px;
+    width: 250px;
+    border-radius: 4px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+}
+
+.wrap-start-toast{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    text-align: center;
+}
+
+.icon-toast{
+    background: url(../../../assets/img/Sprites.64af8f61.svg);
+    margin: 0 10px;
+}
+
+.icon-success{
+    background-position: -1600px -256px;
+}
+
+.background-success{
+    background-color: #BAFFE7;
+}
+
+.toast-error{
+    background-color: #EB5757;
+}
+
+.toast-warning{  
+    background-color: #F1C04E;
+}
+
+.toast-done{
+    background-color: #01B075;
+}
+
+.toast-notice{
+    background-color: #4388D9;
+}
+
+.wrap-start-toast .toast-content .toast-text{
+    margin: 0;
+    text-align: start;
+    color: #000000;
+}

@@ -7,20 +7,20 @@
             </div>
             <div class="title-row" v-if="mode == this.$resourceVn.AddScreen">
                 <div class="wrap-title">
-                    <div class="icon-36 icon-wrap" @click="clickCancel()">
+                    <div class="icon-36 icon-wrap back-add" @click="clickCancel()" id="back-add" @mouseenter="showTooltip($event)" @mouseleave="hideTooltip()">
                         <div class="icon-20 icon-title"></div>
                     </div>
                     <div class="title">Thêm chính sách lương</div>
                 </div>
                 <div class="wrap-button-group">
-                    <Button class="button-white" :buttonName="this.$resourceVn.ButtonCancelText" @click.native="clickCancel()"/>
+                    <Button class="button-white" :buttonName="this.$resourceVn.ButtonCancelText" @click.native="showPopup()"/>
                     <Button class="button-green" :buttonName="this.$resourceVn.ButtonSaveText" @click.native="clickSave()"/>
                 </div>
             </div>
             <!--------------------------- Xem chi tiết ---------------------->
             <div class="title-row" v-if="mode == this.$resourceVn.ViewScreen">
                 <div class="wrap-title">
-                    <div class="icon-36 icon-wrap" @click="clickCancel()">
+                    <div class="icon-36 icon-wrap back" @click="clickCancel()" id="back" @mouseenter="showTooltip($event)" @mouseleave="hideTooltip()">
                         <div class="icon-20 icon-title"></div>
                     </div>
                     <div class="title">Xem {{ objectEdit.PolicyName }}</div>
@@ -33,11 +33,11 @@
                         <div class="icon-20 icon-button-3-dots"></div>
                     </div>
                     <div class="wrap-duplicate-delete-popup" :class="{'show-popup' : clickedThreeDots}">
-                        <div class="item-popup-3-dots">
+                        <div class="item-popup-3-dots" @click="handleDuplicatePolicy()">
                             <div class="icon-20 icon-duplicate"></div>
                             <div>{{ this.$resourceVn.DuplicateText }}</div>
                         </div>
-                        <div class="item-popup-3-dots">
+                        <div class="item-popup-3-dots" @click="handleDeleteInViewScreen()">
                             <div class="icon-20 icon-delete"></div>
                             <div>{{ this.$resourceVn.DeleteText }}</div>
                         </div>
@@ -74,11 +74,11 @@
                                 @getValueStatusSearch="getValueStatusSearch($event)"/>
                                 <DropdownSingle :treeDataSource="treeDataDepartment" 
                                 @getValueDropdownSingle="getValueDropdownSingle($event)"/>
-                                <div class="filter" @click="showFilterPopup()">
+                                <div class="filter" @click="showFilterPopup()" id="filter" @mouseenter="showTooltip($event)" @mouseleave="hideTooltip()">
                                     <div class="icon-20 icon-filter"></div>
                                 </div>
                                 <div v-click-outside="hidePopupEditColumn">
-                                    <div class="setting" @click="showCustomeColumn()">
+                                    <div class="setting" @click="showCustomeColumn()" id="setting-column" @mouseenter="showTooltip($event)" @mouseleave="hideTooltip()">
                                     <div class="icon-24 icon-setting"></div>
                                     </div>
                                     <CustomeColumn 
@@ -140,6 +140,7 @@
                             @updateValueDropdownMulti="updateValueDropdownMulti($event)"
                             :treeDataSource="treeDataDepartment"
                             v-if="mode == this.$resourceVn.AddScreen || mode == this.$resourceVn.EditScreen"
+                            :tabIndex="1"
                             />
                             <!-- Hiển thị với màn xem chi tiết -->
                             <div class="view-object" v-if="mode == this.$resourceVn.ViewScreen">
@@ -156,6 +157,7 @@
                             :nameCombobox="this.$resourceVn.POSITION"
                             v-model="objectEdit.PositionName"
                             v-if="mode == this.$resourceVn.AddScreen || mode == this.$resourceVn.EditScreen"
+                            :tabIndex="2"
                             />
                             <!-- Hiển thị với màn xem chi tiết -->
                             <div class="view-object" v-if="mode == this.$resourceVn.ViewScreen">
@@ -171,6 +173,7 @@
                             :nameCombobox="this.$resourceVn.EMPLOYEE"
                             v-model="objectEdit.FullName"
                             v-if="mode == this.$resourceVn.AddScreen || mode == this.$resourceVn.EditScreen"
+                            :tabIndex="3"
                             />
                             <!-- Hiển thị với màn xem chi tiết -->
                             <div class="view-object" v-if="mode == this.$resourceVn.ViewScreen">
@@ -181,10 +184,12 @@
                             <div class="label-name">{{ this.$resourceVn.PolicyName }}<span class="red-span"> *</span></div>
                             <!-- Hiển thị input với màn thêm mới-->
                             <Input ref="inputRequired" 
+                            width="748px!important"
                             @blur.native="checkValidate($event)" 
                             @focus.native="inputValidate($event)"
                             v-model="objectEdit.PolicyName"
                             v-if="mode == this.$resourceVn.AddScreen || mode == this.$resourceVn.EditScreen"
+                            :tabIndex="4"
                             />
                             <!-- Hiển thị với màn xem chi tiết -->
                             <div class="view-object" v-if="mode == this.$resourceVn.ViewScreen">
@@ -226,15 +231,15 @@
                                 <transition-group>
                                     <div class="group-input-component" v-for="(item, index) in listChoosedComponent" :key="index">
                                         <div class="icon-20 icon-move"></div>
-                                        <Input width="30%" class="noHover" 
+                                        <Input width="30%!important" class="noHover" 
                                         :value="item.ComponentName" 
                                         disabled :style="{background: '#E8EAEF'}"/>
                                         <div class="space"></div>
-                                        <Input width="20%" class="noHover" 
+                                        <Input width="20%!important" class="noHover" 
                                         :value="item.ComponentCode" 
                                         disabled :style="{background: '#E8EAEF'}"/>
                                         <div class="space"></div>
-                                        <Input width="50%" v-model="item.ComponentValue"/>
+                                        <Input width="50%!important" v-model="item.ComponentValue"/>
                                         <div class="icon-20 create-group"></div>
                                         <div class="icon-20 icon-delete-component" @click="deleteComponent(item)"></div>
                                     </div>
@@ -256,7 +261,7 @@
                 @updateNextPageNumber="updateNextPageNumber"/>
             </div>
             <div class="responsive-filter">
-                <FilterBox :filterShow="filterShow" @hideFilterPopup="hideFilterPopup"/>
+                <FilterBox :filterShow="filterShow" :dataPosition="dataPosition" :dataEmployee="dataEmployee" @hideFilterPopup="hideFilterPopup"/>
             </div>
         </div>    
         <SalaryPolicyDetail :modalBoxShow="modalBoxShow" 
@@ -265,7 +270,16 @@
         :mode="mode"
         @getListComponent="getListComponent($event)"
         @exitModalBox="exitModalBox"/>
-        <Popup @moveToMainScreen="moveToMainScreen" @acceptDelete="acceptDelete" @changeStatusSingle="changeStatusSingle($event)" @changeStatusMulti="changeStatusMulti"/>
+        <Popup 
+        :mode="mode"
+        @clickSaveEditPopup="clickSaveEditPopup"
+        @clickSaveAddPopup="clickSaveAddPopup"
+        @moveToMainScreen="moveToMainScreen" 
+        @acceptDelete="acceptDelete" 
+        @changeStatusSingle="changeStatusSingle($event)" 
+        @changeStatusMulti="changeStatusMulti"/>
+        <ToastMessenger/>
+        <Tooltip/>
     </div>
 </template>
 <script>
@@ -291,7 +305,8 @@ import SalaryPolicyDetail from "../salary/SalaryPolicyDetail.vue"
 import CustomeColumn from "../../components/layout/CustomeColumn.vue"
 import FilterBox from "../../components/base/filter/Filter.vue"
 import Popup from "../../components/base/popup/BasePopup.vue"
-
+import ToastMessenger from "../../components/base/toast-message/BaseToastMessenger.vue"
+import Tooltip from "../../components/base/tooltip/BaseTooltip.vue"
 export default {
     name: "SalaryPolicyList",
     directives: {
@@ -312,7 +327,9 @@ export default {
         SalaryPolicyDetail,
         CustomeColumn,
         FilterBox,
-        Popup
+        Popup,
+        ToastMessenger,
+        Tooltip
     },
     data(){
         return {
@@ -452,6 +469,7 @@ export default {
          * @createdBy LHTDung
          */
         clickCancel(){
+            EventBus.$emit('hideTooltip');
             this.mode = this.$resourceVn.MainScreen;
         },
 
@@ -619,6 +637,8 @@ export default {
                     this.mode = this.$resourceVn.MainScreen;
                     this.callAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch, this.departmentSearch);
                     this.checkForm = false;
+                    EventBus.$emit('hidePopup');
+                    EventBus.$emit('showToast', this.$resourceVn.ButtonIconAddText, this.$resourceVn.TOAST_SUCCESS);
                 })
                 .catch(err => {
                     console.error(err); 
@@ -660,6 +680,8 @@ export default {
                 this.mode = this.$resourceVn.MainScreen;
                 this.callAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch, this.departmentSearch);
                 this.checkForm = false;
+            }).then( () => {
+                EventBus.$emit('showToast', this.$resourceVn.UPDATE_TEXT, this.$resourceVn.TOAST_SUCCESS);
             })
             .catch(err => {
                 console.error(err); 
@@ -763,6 +785,7 @@ export default {
                     if(countItemChanged == this.queueChecked.length){
                         this.callAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch, this.departmentSearch);
                     }
+                    EventBus.$emit('showToast', this.$resourceVn.UPDATE_TEXT, this.$resourceVn.TOAST_SUCCESS);
                 })
                 .catch(err => {
                     console.error(err); 
@@ -776,7 +799,11 @@ export default {
          * @createdBy LHTDung
          */
         showPopup(){
-            EventBus.$emit('showPopupCancelEditForm', this.$resourceVn.POPUP_EXIT_EDIT_TYPE);
+            if( (this.mode == this.$resourceVn.AddScreen || this.mode == this.$resourceVn.EditScreen ) && Object.keys(this.objectEdit).length > 0 ){
+                EventBus.$emit('showPopupCancelEditForm', this.$resourceVn.POPUP_EXIT_EDIT_TYPE);
+            }else{
+                this.clickCancel();
+            }
         },
 
         /**
@@ -1007,6 +1034,9 @@ export default {
             }).then( () => {
                 this.queueDelete = [];
                 this.queueChecked = [];
+                this.mode = this.$resourceVn.MainScreen;
+                EventBus.$emit('showToast', this.$resourceVn.DeleteText, this.$resourceVn.TOAST_SUCCESS);
+                
             })
             .catch(err => {
                 console.error(err); 
@@ -1044,6 +1074,40 @@ export default {
         acceptDelete(){
             //Gọi API thực hiện xóa
             this.callAPIDelete(this.queueDelete);
+        },
+
+        /**
+         * @description Xử lý sự kiện click Xóa trong màn xem chi tiết
+         * @date 28/09/2021
+         * @created LHTDung
+         */
+        handleDeleteInViewScreen(){
+            this.queueDelete.push(this.objectEdit.PolicyId);
+            this.clickedThreeDots = false;
+            EventBus.$emit('showPopupDeleteSingle', this.objectEdit.PolicyName, this.$resourceVn.POPUP_DELETE_TYPE);
+        },
+
+        /**
+         * @description Xử lý sự kiện click Nhân bản
+         * @date 28/09/2021
+         * @created LHTDung
+         */
+        handleDuplicatePolicy(){
+            let duplicateObject = {...this.objectEdit};
+            this.clickedThreeDots = false;
+            // Gọi API thực hiện thêm mới - nhân bản
+            axios.post(this.$resourceVn.URL_POLICY_COMMON, duplicateObject)
+            .then(res => {
+                console.log(res);
+            })
+            .then(() => {
+                this.mode = this.$resourceVn.MainScreen;
+                this.callAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch, this.departmentSearch);
+                EventBus.$emit('showToast', this.$resourceVn.ButtonIconAddText, this.$resourceVn.TOAST_SUCCESS);
+            })
+            .catch(err => {
+                console.error(err); 
+            })
         },
 
         /**
@@ -1085,7 +1149,54 @@ export default {
          */
         clearSelectionDataGrid(){
             EventBus.$emit('clearSelectionDataGrid');
-        }
+        },
+
+        /**
+         * @description Hiển thị tooltip
+         * @created LHTDung
+         * @date 28/09/2021
+         */
+        showTooltip(e){
+            if(e.target.classList.contains('back')){
+                EventBus.$emit('showTooltip', '#back' , this.$resourceVn.BACK_TEXT);
+            }
+            if(e.target.classList.contains('back-add')){
+                EventBus.$emit('showTooltip', '#back-add', this.$resourceVn.BACK_TEXT);
+            }
+            if(e.target.classList.contains('filter')){
+                EventBus.$emit('showTooltip', '#filter', this.$resourceVn.FilterText);
+            }
+            if(e.target.classList.contains('setting')){
+                EventBus.$emit('showTooltip', '#setting-column', this.$resourceVn.SETTING_COLUMN);
+            }
+        },
+
+        /**
+         * @description Ẩn tooltip
+         * @created LHTDung
+         * @date 28/09/2021
+         */
+        hideTooltip(){
+            EventBus.$emit('hideTooltip');
+        },
+
+        /**
+         * @description Xử lý sự kiện click button Lưu (Popup) - Lưu khi hủy form sửa
+         * @date 28/09/2021
+         * @created LHTDung
+         */
+        clickSaveEditPopup(){
+            this.saveEdit();
+        },
+
+        /**
+         * @description Xử lý sự kiện click button Lưu (Popup) - Lưu khi hủy form thêm mới
+         * @date 28/09/2021
+         * @created LHTDung
+         */
+        clickSaveAddPopup(){
+            this.clickSave();
+        },
         
     },
 
