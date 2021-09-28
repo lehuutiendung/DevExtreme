@@ -7,18 +7,18 @@
                     <div class="icon-20 icon-refresh"></div>
                 </div>
             </div>
-            <InputSearch/>
+            <InputSearch @input.native="handleInputSearch($event)"/>
             <draggable class="draggable" v-model="headersCustome">
                 <transition-group>
                     <div class="wrap-item-column" v-for="(item, index) in headersCustome" :key="index">
-                        <div class="wrap-input-checkbox">
+                        <div class="wrap-input-checkbox" v-if="show(item)">
                             <div :class="{'input-checkbox-default' : item.Checked == false, 
                             'input-checkbox-checked' : item.Checked == true}" 
                             @click="clickCheckBox(item)">
                             </div>
                             <div class="title-item">{{ item.Caption }}</div>
                         </div>
-                        <div class="icon-24 wrap-button-move">
+                        <div class="icon-24 wrap-button-move" v-if="show(item)">
                             <div class="icon-20 icon-button-move"></div>
                         </div>
                     </div>
@@ -59,6 +59,7 @@ export default {
     data() {
         return {
             headersCustome: [],
+            inputSearch: "",            //Chứa dữ liệu được nhập input search
         }
     },
     created() {
@@ -104,6 +105,24 @@ export default {
          */
         refreshHeader(){
             this.$emit('updateListHeaderDefault');
+        },
+
+        /**
+         * @description Xử lý sự kiện enter trong input search
+         * @created LHTDung
+         * @date 28/09/2021
+         */
+        handleInputSearch(e){
+            this.inputSearch = e.target.value;
+        },
+
+        /**
+         * @description Tìm kiếm trong tùy chỉnh cột
+         * @created LHTDung
+         * @date 28/09/2021
+         */
+        show(item){
+            return item.Caption.toLowerCase().includes(this.inputSearch.toLowerCase());
         }
     },
     watch: {

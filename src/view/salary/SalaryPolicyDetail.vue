@@ -6,7 +6,8 @@
                     <div class="title">{{ this.$resourceVn.ChooseComponent }}</div>
                 </div>
                 <div class="menu-wrap">
-                    <div class="icon-36 flex-icon" @click="clickCancel()">
+                    <div class="icon-36 flex-icon exit-modalbox" 
+                    @click="clickCancel()" @mouseenter="showTooltip()" @mouseleave="hideTooltip()">
                         <div class="icon-20 exit"></div>
                     </div>
                 </div>
@@ -262,7 +263,6 @@ export default {
                 this.totalRecord = res.data.TotalRecord;
                 this.dataSource = res.data.Data;
                 this.dataSourceWithoutCheck = res.data.Data;
-                console.log(this.dataSourceWithoutCheck);
                 let objPage = this.paginate(this.totalRecord, this.pageNumber, this.pageSize, this.maxPages, this.totalPage);
                 this.startIndex = objPage.startIndex;
                 this.endIndex = objPage.endIndex;
@@ -321,7 +321,25 @@ export default {
                 this.componentType = value;
             }
             console.log(value);
-        }
+        },
+
+        /**
+         * @description Hiển thị tooltip
+         * @created LHTDung
+         * @date 28/09/2021
+         */
+        showTooltip(){
+            EventBus.$emit('showTooltip', '.exit-modalbox' , this.$resourceVn.ESC);
+        },
+
+        /**
+         * @description Ẩn tooltip
+         * @created LHTDung
+         * @date 28/09/2021
+         */
+        hideTooltip(){
+            EventBus.$emit('hideTooltip');
+        },
     },
 
     watch:{
@@ -364,9 +382,12 @@ export default {
          */
         mode: function(){
             this.pageNumber = 1;
-            this.calAPIFilterComponent(this.pageSize, this.pageNumber, this.filterSearch, this.componentType)
+            if(this.mode == this.$resourceVn.EditScreen || this.mode == this.$resourceVn.AddScreen){
+                this.calAPIFilterComponent(this.pageSize, this.pageNumber, this.filterSearch, this.componentType)
+            }
             if(this.mode == this.$resourceVn.MainScreen){
                 this.listItem = [];
+                
             }
         },
 

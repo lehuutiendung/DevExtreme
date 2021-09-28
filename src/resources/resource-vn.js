@@ -1,4 +1,7 @@
 module.exports = {
+    CTRL_S: "Lưu ( Ctrl + S)",
+    ESC: "Đóng ( ESC)",
+
     DuplicateText: "Nhân bản",
     DeleteText: "Xóa",
     UPDATE_TEXT: "Cập nhật",

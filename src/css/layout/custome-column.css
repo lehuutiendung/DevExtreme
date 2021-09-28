@@ -65,7 +65,6 @@
 .wrap-custome-column .wrap-item-column{
     display: flex;
     align-items: center;
-    padding: 8px;
     justify-content: space-between;
 }
 
@@ -79,6 +78,9 @@
     display: flex;   
     justify-content: center;
     align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
 }
 
 /* CSS cho check box ở trạng thái mặc định */
@@ -104,6 +106,7 @@
     align-items: center;
     justify-content: center;
     cursor: all-scroll;
+    padding-right: 10px;
 }
 
 .wrap-button-move .icon-button-move{

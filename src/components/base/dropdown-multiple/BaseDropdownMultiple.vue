@@ -22,7 +22,7 @@
                     </div>
                 </div>
             </div> -->
-          <template #content="{  }">
+          <template #content="{ }">
             <DxTreeView
               :ref="treeViewRefName"
               :value="treeBoxValue"
@@ -46,8 +46,6 @@
     </div>
 </template>
 <script>
-// import treeData from "../../../js/fake-data/data-dropdown-single"
-// import DxTextBox from "devextreme-vue/text-box";
 import DxDropDownBox from 'devextreme-vue/drop-down-box';
 import DxTreeView from 'devextreme-vue/tree-view';
 export default {
@@ -55,7 +53,6 @@ export default {
     components: {
         DxDropDownBox,
         DxTreeView,
-        // DxTextBox
     },
     props:{
         treeDataSource:{
