@@ -1,6 +1,7 @@
 module.exports = {
     CTRL_S: "Lưu ( Ctrl + S)",
     ESC: "Đóng ( ESC)",
+    CTRL_SHIFT_S: "Áp dụng ( Ctrl + Shift + S)",
 
     DuplicateText: "Nhân bản",
     DeleteText: "Xóa",
@@ -9,6 +10,7 @@ module.exports = {
     ButtonIconAddText: "Thêm mới",
     ButtonIconAddComponentText: "Thêm thành phần",
     ButtonIconApplyText: "Ngưng áp dụng",
+    ButtonIconActiveApplyText: "Đang áp dụng",
     ButtonIconDeleteText: "Xóa",
 
     ChooseComponent: "Chọn thành phần",
@@ -34,6 +36,7 @@ module.exports = {
     POPUP_DELETE: "Bạn có chắc muốn xóa chính sách lương ",
     POPUP_DELETE_MULTIPLE: "Bạn có chắc chắn muốn xóa chính sách lương đã chọn không?",
     POPUP_STOPAPPLY_MULTIPLE: "Bạn có chắc chắn muốn chuyển trạng thái các chính sách lương đã chọn sang ngừng áp dụng không?",
+    POPUP_APPLY_MULTIPLE: "Bạn có chắc chắn muốn chuyển trạng thái các chính sách lương đã chọn sang đang áp dụng không?",
     POPUP_EXIT_EDIT_TYPE: 0,            //Popup cảnh báo với chỉnh sửa
     POPUP_ADD_TYPE: 1,                  //Popup cảnh báo với thêm mới
     POPUP_DELETE_TYPE: 2,               //Popup cảnh báo với xóa đơn
@@ -41,6 +44,7 @@ module.exports = {
     POPUP_STOPAPPLY_TYPE: 4,            //Popup cảnh báo với ngừng áp dụng
     POPUP_ACTIVEAPPLY_TYPE: 5,          //Popup cảnh báo với ngừng áp dụng 1 chính sách
     POPUP_STOPAPPLY_MULTI_TYPE: 6,      //Popup cảnh báo với ngừng áp dụng nhiều chính sách
+    POPUP_APPLY_MULTI_TYPE: 7,          //Popup cảnh báo với đang áp dụng nhiều chính sách
     CLOSE: "Đóng",
 
     //Popover
@@ -115,6 +119,7 @@ module.exports = {
     ButtonIconAdd: 0,           //Button Icon Thêm mới
     ButtonIconApply: 1,         //Button Icon Ngưng áp dụng
     ButtonIconDelete: 2,        //Button Icon Xóa
+    ButtonIconActiveApply: 3,   //Button Icon Đang áp dụng
 
     //Loại toast messenger
     TOAST_SUCCESS: 0,               //Toast thực hiện thành công

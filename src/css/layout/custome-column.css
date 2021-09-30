@@ -102,11 +102,15 @@
 }
 
 .wrap-button-move{
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     cursor: all-scroll;
     padding-right: 10px;
+}
+
+.wrap-item-column:hover .wrap-button-move{
+    display: flex !important;
 }
 
 .wrap-button-move .icon-button-move{

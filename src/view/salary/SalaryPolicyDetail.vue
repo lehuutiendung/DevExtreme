@@ -1,5 +1,6 @@
 <template>
-    <div class="wrap-modal-box" :style="{ display: modalBoxState }">
+    <!-- <div class="wrap-modal-box" :style="{ display: modalBoxState }"> -->
+    <div class="wrap-modal-box" :class="{'show-modal' : modalBoxShow}">
         <div class="box-info">
             <div class="title-box div-flex">
                 <div class="title-wrap">
@@ -33,12 +34,16 @@
                         </template>
                     </DataGrid>
                 </div>
-                <TheFooter class="footer-custome" :totalRecord="totalRecord" :startIndex="startIndex" :endIndex="endIndex"/>
+                <TheFooter class="footer-custome" 
+                :totalRecord="totalRecord" 
+                :startIndex="startIndex" 
+                :endIndex="endIndex" 
+                />
                 <div class="space-footer-button"></div>
             </div>
             <div class="flex-wrap-button">
                 <Button class="button-white" :buttonName="this.$resourceVn.ButtonCancelText" @click.native="clickCancel()"/>
-                <Button class="button-green" :buttonName="this.$resourceVn.ButtonApplyText" @click.native="clickApply()"/>
+                <Button class="button-green tooltip-apply" :buttonName="this.$resourceVn.ButtonApplyText" @click.native="clickApply()" @mouseenter.native="showTooltipApply()" @mouseleave.native="hideTooltip()"/>
             </div>
         </div>
     </div>
@@ -102,7 +107,7 @@ export default {
         return {
             listHeader: fakeData.listHeader,                //Dữ liệu các tiêu đề của grid Thành phần
             listItem: [],                                   //Danh sách chứa dữ liệu được chọn từ Datagrid Thành phần
-            dataSourceWithoutCheck: this.dataSource,        //Dữ liệu chứa các bản ghi chưa được chọn trong bảng Thành phần (dùng để bind lên Table)
+            dataSourceWithoutCheck: [],        //Dữ liệu chứa các bản ghi chưa được chọn trong bảng Thành phần (dùng để bind lên Table)
             dataSource: [],                                 //Dữ liệu của grid Thành phần
             totalRecord: 0,                                 //Tổng số bản ghi
             totalPage: 0,                                   //Tổng số trang
@@ -141,9 +146,33 @@ export default {
          */
         EventBus.$on('updateNextPageComponent', () => {
             this.updateNextPageNumber();
-        })
+        }),
+
+        /**
+         * @description Update trang khi click số bản ghi/trang
+         * @created LHTDung
+         * @date 29/09/2021
+         */
+        EventBus.$on('getValueFromDropdownCustomize', (value) => {
+            //Nếu nhận emit được là số thì gán giá trị cho pageSize
+            if(isNaN(parseInt(value,10)) == false){
+                this.pageSize = parseInt(value, 10);
+            }
+        }),
+
+        /**
+         * @description Thêm sự kiện phím tắt
+         * @created LHTDung
+         * @date 30/09/2021
+         */
+        document.addEventListener("keydown", this.keyDoApply);
 
     },
+    
+    beforeDestroy() {
+        document.removeEventListener("keydown", this.keyDoApply);
+    },
+
     computed: {
         /**
          * @description Thay đổi trạng thái của popup
@@ -167,6 +196,7 @@ export default {
          */
         clickCancel(){
             this.$emit("exitModalBox");        
+            EventBus.$emit('hideTooltip');
         },
 
         /**
@@ -179,20 +209,39 @@ export default {
         },
 
         /**
+         * @description Xử lý sự kiện phím tắt Ctrl Shift S cho "Áp dụng"
+         * @date 30/09/2021
+         * @created LHTDung
+         */
+        keyDoApply(e){
+            if (!((e.keyCode === 83 && e.ctrlKey)|| e.keyCode === 27)) {
+                return;
+            }
+            e.preventDefault();
+            if(this.mode != this.$resourceVn.MainScreen && this.mode != this.$resourceVn.ViewScreen){
+                //Phím tắt Ctrl + Shift + S : "Áp dụng"
+                if((e.ctrlKey && e.shiftKey && e.keyCode === 83)){
+                    console.log('apply');
+                    this.clickApply();
+                }
+            }
+        },
+
+        /**
          * @description Emit danh sách các thành phần được chọn đến SalaryPolicyList để hiển thị ra màn thêm mới
          * @date 21/9/2021
          * @createdBy LHTDung
          */
         clickApply(){
-            this.listItem.forEach(itemList => {
-                let index = this.dataSourceWithoutCheck.indexOf(itemList);
-                if(index > - 1){
-                    this.dataSourceWithoutCheck.splice(index, 1);
-                }
-            });
-            console.log(this.dataSource);
+            // this.listItem.forEach(itemList => {
+            //     let index = this.dataSourceWithoutCheck.indexOf(itemList);
+            //     if(index > - 1){
+            //         this.dataSourceWithoutCheck.splice(index, 1);
+            //     }
+            // });
             this.$emit('getListComponent', this.listItem);
             this.$emit("exitModalBox"); 
+            EventBus.$emit('hideTooltip');
             console.log(this.listItem);       
         },
 
@@ -266,6 +315,14 @@ export default {
                 let objPage = this.paginate(this.totalRecord, this.pageNumber, this.pageSize, this.maxPages, this.totalPage);
                 this.startIndex = objPage.startIndex;
                 this.endIndex = objPage.endIndex;
+            }).then( () => {
+                this.listChoosedComponent.forEach(item => {
+                    // let index = this.dataSourceWithoutCheck.indexOf(item);
+                    let index = this.dataSourceWithoutCheck.findIndex(i => i.ComponentId === item.ComponentId);
+                    if(index > - 1){
+                        this.dataSourceWithoutCheck.splice(index, 1);
+                    }
+                });
             })
             .catch(err => {
                 console.error(err); 
@@ -333,6 +390,15 @@ export default {
         },
 
         /**
+         * @description Hiển thị tooltip "Áp dụng (Ctrl + Shift + S)"
+         * @created LHTDung
+         * @date 30/09/2021
+         */
+        showTooltipApply(){
+            EventBus.$emit('showTooltip', '.tooltip-apply' , this.$resourceVn.CTRL_SHIFT_S);
+        },
+
+        /**
          * @description Ẩn tooltip
          * @created LHTDung
          * @date 28/09/2021
@@ -370,7 +436,12 @@ export default {
         pageNumber: function(){
             this.calAPIFilterComponent(this.pageSize, this.pageNumber, this.filterSearch, this.componentType)
         },
-
+        
+        /**
+         * @description Loại thành phần muốn filter
+         * @created LHTDung
+         * @date 23/09/2021
+         */
         componentType: function(){
             this.calAPIFilterComponent(this.pageSize, this.pageNumber, this.filterSearch, this.componentType)
         },
@@ -383,11 +454,13 @@ export default {
         mode: function(){
             this.pageNumber = 1;
             if(this.mode == this.$resourceVn.EditScreen || this.mode == this.$resourceVn.AddScreen){
-                this.calAPIFilterComponent(this.pageSize, this.pageNumber, this.filterSearch, this.componentType)
+                if(this.modalBoxShow == true){
+                    this.calAPIFilterComponent(this.pageSize, this.pageNumber, this.filterSearch, this.componentType);
+                }
             }
             if(this.mode == this.$resourceVn.MainScreen){
-                this.listItem = [];
-                
+                // this.listItem = [];
+            
             }
         },
 

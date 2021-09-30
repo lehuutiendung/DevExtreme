@@ -15,6 +15,7 @@
         <div class="popup-content" v-if="typePopup == this.$resourceVn.POPUP_STOPAPPLY_TYPE"> Bạn có chắc chắn muốn chuyển trạng thái chính sách lương <span class="content">{{ content.PolicyName }}</span> sang ngừng áp dụng không?</div>
         <div class="popup-content" v-if="typePopup == this.$resourceVn.POPUP_ACTIVEAPPLY_TYPE"> Bạn có chắc chắn muốn chuyển trạng thái chính sách lương <span class="content">{{ content.PolicyName }}</span> sang đang áp dụng không?</div>
         <div class="popup-content" v-if="typePopup == this.$resourceVn.POPUP_STOPAPPLY_MULTI_TYPE">{{ this.$resourceVn.POPUP_STOPAPPLY_MULTIPLE }}</div>
+        <div class="popup-content" v-if="typePopup == this.$resourceVn.POPUP_APPLY_MULTI_TYPE">{{ this.$resourceVn.POPUP_APPLY_MULTIPLE }}</div>
 
         <div class="popup-button" v-if="typePopup == this.$resourceVn.POPUP_EXIT_EDIT_TYPE">
             <Button class="button-white" :buttonName="this.$resourceVn.ButtonCancelText_2" width="80px" @click.native="clickCancel()"/>
@@ -28,7 +29,7 @@
             <Button class="button-white" :buttonName="this.$resourceVn.ButtonCancelText_2" width="80px" @click.native="clickCancel()"/>
             <Button class="button-red" :buttonName="this.$resourceVn.DeleteText" width="80px" @click.native="clickDelete()"/>
         </div>
-        <div class="popup-button" v-if="typePopup == this.$resourceVn.POPUP_STOPAPPLY_TYPE || typePopup == this.$resourceVn.POPUP_ACTIVEAPPLY_TYPE || typePopup == this.$resourceVn.POPUP_STOPAPPLY_MULTI_TYPE">
+        <div class="popup-button" v-if="typePopup == this.$resourceVn.POPUP_STOPAPPLY_TYPE || typePopup == this.$resourceVn.POPUP_ACTIVEAPPLY_TYPE || typePopup == this.$resourceVn.POPUP_STOPAPPLY_MULTI_TYPE || typePopup == this.$resourceVn.POPUP_APPLY_MULTI_TYPE">
             <Button class="button-white" :buttonName="this.$resourceVn.ButtonCancelText_2" width="80px" @click.native="clickCancel()"/>
             <Button class="button-green" :buttonName="this.$resourceVn.ButtonAgreeText" width="80px" @click.native="clickAgree()"/>
         </div>
@@ -131,6 +132,16 @@ export default {
             this.showPopup = true;
             this.typePopup = value;
         }),
+
+        /**
+         * Show popup cảnh báo đang áp dụng nhiều chính sách
+         * @created LHTDung
+         * @date 29/09/2021
+         */
+        EventBus.$on('showPopupApplyMultiple', (value) => {
+            this.showPopup = true;
+            this.typePopup = value;
+        }),
         
         /**
          * Ẩn popup
@@ -183,6 +194,9 @@ export default {
             }
             if(this.typePopup == this.$resourceVn.POPUP_STOPAPPLY_MULTI_TYPE){
                 this.$emit('changeStatusMulti');
+            }
+            if(this.typePopup == this.$resourceVn.POPUP_APPLY_MULTI_TYPE){
+                this.$emit('activeStatusMulti');
             }
         },
 

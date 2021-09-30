@@ -33,6 +33,11 @@
     background-color: #f90!important;
 }
 
+.ic-active-apply{
+    -webkit-mask-position: -180px -40px;
+    background-color: #25b973!important;
+}
+
 .ic-delete{
     -webkit-mask-position: -120px -20px;
     background-color: #ff6161!important;
@@ -76,6 +81,20 @@
     border: 1px solid rgb(255, 153, 0);
 }
 /*Kết thúc: CSS cho button background màu cam */
+
+/*Bắt đầu: CSS cho button background màu trắng, text màu xanh */
+.button-icon-green {
+    color: #25B973;
+    background-color: #ffffff;
+    border: 1px solid #f0f0f0;
+}
+
+.button-icon-green:hover{
+    color: #25B973;
+    background-color: #ffffff;
+    border: 1px solid #25B973;
+}
+/*Kết thúc: CSS cho button background màu trắng, text màu xanh */
 
 /*Bắt đầu: CSS cho button background màu đỏ */
 .button-icon-red {

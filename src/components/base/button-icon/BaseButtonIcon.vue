@@ -2,6 +2,7 @@
     <div class="wrap-button-icon">
         <div class="icon-20 icon-button ic-add" v-if="typeButton == this.$resourceVn.ButtonIconAdd"></div>
         <div class="icon-20 icon-button ic-apply" v-if="typeButton == this.$resourceVn.ButtonIconApply"></div>
+        <div class="icon-20 icon-button ic-active-apply" v-if="typeButton == this.$resourceVn.ButtonIconActiveApply"></div>
         <div class="icon-20 icon-button ic-delete" v-if="typeButton == this.$resourceVn.ButtonIconDelete"></div>
 
         <div class="text-button">{{ buttonName }}</div>
