@@ -24,8 +24,7 @@
             </div> -->
           <template #content="{ }">
             <DxTreeView
-              :ref="treeViewRefName"
-              :value="treeBoxValue"
+              ref="treeView"
               :data-source="treeDataSource"
               :select-by-click="true"
               :searchEnabled="true"
@@ -38,7 +37,7 @@
               selection-mode="multiple"
               show-check-boxes-mode="normal"
               display-expr="DepartmentName"
-              @content-ready="$event.component.selectItem(treeBoxValue)"
+              @content-ready="contentReady"
               @item-selection-changed="treeView_itemSelectionChanged($event)"
             />
           </template>
@@ -76,7 +75,7 @@ export default {
     data() {
         return {
             treeBoxValue: this.value,
-            treeViewRefName: 'tree-view',
+            isFirst: true
         };
     },
     
@@ -87,14 +86,23 @@ export default {
          * @CreatedBy LHTDung
          */
         syncTreeViewSelection() {
-          if (!this.$refs[this.textBoxRefName]) return;
-          if (!this.treeBoxValue) {
-            this.$refs[this.textBoxRefName].instance.unselectAll();
+          if (!this.$refs.treeView) return;
+          if (!this.treeBoxValue || this.treeBoxValue.length == 0) {
+            this.$refs.treeView.instance.unselectAll();
           } else {
-            this.$refs[this.textBoxRefName].instance.selectItem(this.treeBoxValue);
+            for(var i = 0; i <this.treeBoxValue.length; i++){
+              var id = this.treeDataSource.find(x => x.DepartmentName == this.treeBoxValue[i]);
+              this.$refs.treeView.instance.selectItem(id.DepartmentId);
+            }
           }
         },
-
+        contentReady(){
+          if(this.isFirst){
+            this.$refs.treeView.instance.unselectAll();
+            this.syncTreeViewSelection();
+            this.isFirst = false;
+          }
+        },
         /**
          * @Description Xử lý sự kiện cho item được trọn trong tree data
          * @Date 18/9/2021
@@ -103,14 +111,15 @@ export default {
         treeView_itemSelectionChanged(e) {
           this.$emit('updateValueDropdownMulti', e.component.getSelectedNodes());
           let nodes = e.component.getSelectedNodes();
-          let arrayName = [];
-          // Mảng arrayName chứa các tên đơn vị áp dụng được chọn
-          nodes.forEach(node => {
-            arrayName.push(node.text);
-          });
-          console.log(arrayName);
-          // Gán lại mảng cho treeBoxValue (phụ thuộc vào selectItem)
-          this.treeBoxValue = arrayName;
+          this.treeBoxValue = nodes.map(x => x.text)
+          // let arrayName = [];
+          // // Mảng arrayName chứa các tên đơn vị áp dụng được chọn
+          // nodes.forEach(node => {
+          //   arrayName.push(node.text);
+          // });
+          // console.log(arrayName);
+          // // Gán lại mảng cho treeBoxValue (phụ thuộc vào selectItem)
+          // this.treeBoxValue = arrayName;
         },
     },
 }

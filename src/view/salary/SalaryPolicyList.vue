@@ -114,11 +114,19 @@
                             </div>
                             <div class="stop-apply" @click="clearSelectionDataGrid()">{{ this.$resourceVn.UnChecked }}</div>
                             <ButtonIcon class="button-icon-orange" 
+                                v-if="showButtonStopApply"
                                 :typeButton="this.$resourceVn.ButtonIconApply" 
                                 :buttonName="this.$resourceVn.ButtonIconApplyText" 
                                 @click.native="clickStopApplyMultiple()"
                             />
-                            <div class="space"></div>
+                            <div class="space" v-if="showButtonStopApply"></div>
+                            <ButtonIcon class="button-icon-green" 
+                                v-if="showButtonApply"
+                                :typeButton="this.$resourceVn.ButtonIconActiveApply" 
+                                :buttonName="this.$resourceVn.ButtonIconActiveApplyText" 
+                                @click.native="clickApplyMultiple()"
+                            />
+                            <div class="space" v-if="showButtonApply"></div>
                             <ButtonIcon class="button-icon-red" 
                                 :typeButton="this.$resourceVn.ButtonIconDelete" 
                                 :buttonName="this.$resourceVn.ButtonIconDeleteText" 
@@ -282,7 +290,9 @@
                 @hideFilterPopup="hideFilterPopup"/>
             </div>
         </div>    
-        <SalaryPolicyDetail :modalBoxShow="modalBoxShow" 
+        <SalaryPolicyDetail 
+        v-if="modalBoxShow"
+        :modalBoxShow="modalBoxShow" 
         :updateItemSource="updateItemSource"
         :listChoosedComponent="listChoosedComponent"
         :mode="mode"
@@ -295,9 +305,11 @@
         @moveToMainScreen="moveToMainScreen" 
         @acceptDelete="acceptDelete" 
         @changeStatusSingle="changeStatusSingle($event)" 
-        @changeStatusMulti="changeStatusMulti"/>
+        @changeStatusMulti="changeStatusMulti"
+        @activeStatusMulti="activeStatusMulti"/>
         <ToastMessenger/>
         <Tooltip/>
+        <Loading :showLoading="showLoading"/>
     </div>
 </template>
 <script>
@@ -322,6 +334,7 @@ import FilterBox from "../../components/base/filter/Filter.vue"
 import Popup from "../../components/base/popup/BasePopup.vue"
 import ToastMessenger from "../../components/base/toast-message/BaseToastMessenger.vue"
 import Tooltip from "../../components/base/tooltip/BaseTooltip.vue"
+import Loading from "../../components/base/loading/BaseLoading.vue"
 export default {
     name: "SalaryPolicyList",
     directives: {
@@ -344,7 +357,8 @@ export default {
         FilterBox,
         Popup,
         ToastMessenger,
-        Tooltip
+        Tooltip,
+        Loading
     },
     data(){
         return {
@@ -379,6 +393,9 @@ export default {
             statusSearch: "",                   //Filter theo trạng thái
             departmentSearch: "",               //Filter theo cơ cấu tổ chức (đơn vị)
             checkForm: false,                   //Check trước khi thêm mới, nếu checkForm == true -> Thỏa mãn các điều kiện có thể gọi API
+            showLoading: false,                 //Ẩn loading
+            showButtonStopApply: false,         //Ẩn - hiện button Ngừng áp dụng
+            showButtonApply: false,             //Ẩn - hiện button Đang áp dụng
         }
     },
     mounted() {
@@ -791,6 +808,15 @@ export default {
         },
 
         /**
+         * @description Xử lý sự kiện click button "Đang áp dụng" nhiều chính sách
+         * @created LHTDung
+         * @date 29/09/2021
+         */
+        clickApplyMultiple(){
+            EventBus.$emit('showPopupApplyMultiple', this.$resourceVn.POPUP_APPLY_MULTI_TYPE);
+        },
+
+        /**
          * @description Nhận $emit "Đồng ý" ngừng áp dụng nhiều chính sách từ Popup
          * @created LHTDung
          * @date 24/09/2021
@@ -801,6 +827,34 @@ export default {
             for(let i = 0 ; i < this.queueChecked.length; i++){
                 let item = this.queueChecked[i];
                 item.Status = this.$resourceVn.Status[2].Value;
+                axios.put(`https://localhost:44330/api/Policies/${item.PolicyId}`, item)
+                .then(res => {
+                    console.log(res);
+                    countItemChanged++;
+                }).then( () => {
+                    // Khi cập nhật xong các đối tượng => Gọi lại API phân trang làm mới dữ liệu
+                    if(countItemChanged == this.queueChecked.length){
+                        this.callAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch, this.departmentSearch);
+                    }
+                    EventBus.$emit('showToast', this.$resourceVn.UPDATE_TEXT, this.$resourceVn.TOAST_SUCCESS);
+                })
+                .catch(err => {
+                    console.error(err); 
+                })
+            }
+        },
+
+        /**
+         * @description Nhận $emit "Đồng ý" đang áp dụng nhiều chính sách từ Popup
+         * @created LHTDung
+         * @date 29/09/2021
+         */
+        activeStatusMulti(){
+            // Biến đếm kiểm tra cập nhật xong tất cả các đối tượng
+            let countItemChanged = 0;
+            for(let i = 0 ; i < this.queueChecked.length; i++){
+                let item = this.queueChecked[i];
+                item.Status = this.$resourceVn.Status[1].Value;
                 axios.put(`https://localhost:44330/api/Policies/${item.PolicyId}`, item)
                 .then(res => {
                     console.log(res);
@@ -847,7 +901,10 @@ export default {
          * @createdBy LHTDung
          */
         getListComponent(e){
-            this.listChoosedComponent = e;
+            // this.listChoosedComponent = e;
+            e.forEach(item => {
+                this.listChoosedComponent.push(item);
+            });
         },
 
         /**
@@ -940,6 +997,7 @@ export default {
          * @description Gọi API thực hiện phân trang, tìm kiếm (Chính sách)
          */
         callAPIFilterPolicy(pageSize, pageNumber, filter, status, department){
+            this.showLoading = true;
             axios.get(`https://localhost:44330/api/Policies/Filter?pageSize=${pageSize}&pageNumber=${pageNumber}&filter=${filter}&status=${status}&departmentName=${department}`)
             .then(res => {
                 this.totalPage = res.data.TotalPage;
@@ -948,6 +1006,7 @@ export default {
                 let objPage = this.paginate(this.totalRecord, this.pageNumber, this.pageSize, this.maxPages, this.totalPage);
                 this.startIndex = objPage.startIndex;
                 this.endIndex = objPage.endIndex;
+                this.showLoading = false;
             })
             .catch(err => {
                 console.error(err); 
@@ -1238,7 +1297,8 @@ export default {
                 }
 
                 //Phím tắt Ctrl + S : "Cất"
-                if((e.keyCode === 83 && e.ctrlKey)){
+                if((e.keyCode === 83 && e.ctrlKey) && (this.modalBoxShow == false)){
+                    console.log('save');
                     if(this.mode == this.$resourceVn.AddScreen){
                         this.clickSave();
                     }
@@ -1274,6 +1334,7 @@ export default {
                 })
             }
             if(this.mode == this.$resourceVn.MainScreen){
+                this.pageSize = 15;
                 this.objectEdit = {};
             }
         },
@@ -1314,6 +1375,29 @@ export default {
          */
         departmentSearch: function(){
             this.callAPIFilterPolicy(this.pageSize, this.pageNumber, this.inputSearch, this.statusSearch, this.departmentSearch);
+        },
+
+        queueChecked: function(){
+            let countActive = 0;
+            let countDontActive = 0;
+            for(let i = 0; i < this.queueChecked.length; i++){
+                if(this.queueChecked[i].Status == this.$resourceVn.Status[1].Value){
+                    countActive++;
+                }else{
+                    countDontActive++;
+                }
+            }
+            if(countActive ==  this.queueChecked.length){
+                this.showButtonStopApply = true;
+                this.showButtonApply = false;
+            }
+            else if(countDontActive == this.queueChecked.length){
+                this.showButtonApply = true;
+                this.showButtonStopApply = false;
+            }else{
+                this.showButtonStopApply = true;
+                this.showButtonApply = true;
+            }
         }
     }
 }

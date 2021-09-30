@@ -2,7 +2,7 @@
     <div class="wrap-tooltip">
         <DxTooltip
         :visible="defaultVisible"
-        :close-on-outside-click="false"
+        :close-on-outside-click="true"
         :target="element"
         >
             <div>{{ content }}</div>

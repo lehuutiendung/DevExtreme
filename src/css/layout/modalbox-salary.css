@@ -4,11 +4,15 @@
     right: 0;
     left: 0;
     bottom: 0;
-    display: flex;
+    display: none;
     position: fixed;
     justify-content: center;
     overflow-y: scroll;
     z-index: 20; 
+}
+
+.wrap-modal-box.show-modal {
+    display: flex;
 }
 
 .box-info{
